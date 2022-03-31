@@ -3,3 +3,5 @@ dist/
 node_modules/
 thumbs.db
 archive/
+src/electron/build/
+src/front/public/build/
