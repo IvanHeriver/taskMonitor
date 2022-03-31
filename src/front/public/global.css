@@ -1,0 +1,100 @@
+:root {
+  --background-color: hsl(200, 0%, 100%);
+  --background-light-color: hsl(200, 5%, 95%);
+  --foreground-color: hsl(200, 5%, 10%);
+  --btn-background: hsl(200, 5%, 95%);
+  --btn-background-highlight: hsl(200, 5%, 90%);
+  --btn-background-selected: hsl(200, 5%, 80%);
+  --background-overlay-disable: hsl(0, 0%, 0%, 0.75);
+  --outline-color: hsl(200, 5%, 50%);
+  --outline-highlight-color: hsl(200, 100%, 50%);
+}
+[data-theme="dark"] {
+  --background-color: hsl(200, 0%, 10%);
+  --background-light-color: hsl(200, 5%, 5%);
+  --foreground-color: hsl(200, 5%, 90%);
+  --btn-background: hsl(200, 5%, 5%);
+  --btn-background-highlight: hsl(200, 5%, 10%);
+  --btn-background-selected: hsl(208, 5%, 20%);
+  --background-overlay-disable: hsl(0, 0%, 0%, 0.75);
+  --outline-color: hsl(200, 5%, 15%);
+  --outline-highlight-color: hsl(200, 100%, 50%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  color: var(--foreground-color)
+}
+
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  background-color: var(--background-color);
+}
+
+button {
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  background-color: var(--btn-background);
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+button:hover,
+button:focus {
+  background-color: var(--btn-background-highlight);
+}
+
+hr {
+  border-style: solid;
+}
+
+
+.disabling-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--background-overlay-disable);
+    pointer-events: none;
+    z-index: 100;
+}
+
+textarea, input {
+  font-family: inherit;
+  font-size: 0.9rem;
+  border: none;
+  background-color: var(--background-light-color);
+  color: var(--foreground-color);
+  padding: 0.25rem 0.25rem;
+}
+
+textarea:focus, input:focus, button:focus {
+  outline: 1px solid var(--outline-highlight-color);
+  outline-offset: -1px;
+}
+
+.sr-separator {
+  background-color: var(--outline-color);
+  width: 1px;
+  height: 1px;
+}
+.sr-separator-highlight {
+  background-color: var(--outline-highlight-color);
+    width: 2px;
+  height: 2px;
+}

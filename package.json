@@ -1,0 +1,57 @@
+{
+  "name": "electron-svelte-typescript-boilerplate",
+  "main": "./src/electron/build/index.js",
+  "build": {
+    "appId": "electron-svelte-typescript-boilerplate",
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "ihdev_icon_src_icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "ihdev_icon_src_icon.ico",
+      "uninstallerIcon": "ihdev_icon_src_icon.ico",
+      "uninstallDisplayName": "electron-svelte-typescript-boilerplate",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "buildOLD": "rollup -c",
+    "devOLD": "rollup -c -w",
+    "dev-electron": "rollup -c ./src/electron/rollup.config.js && npm run electron",
+    "dev-front": "rollup -c ./src/front/rollup.config.js -w",
+    "build-electron": "rollup -c ./src/electron/rollup.config.js",
+    "build-front": "rollup -c ./src/front/rollup.config.js",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "start": "sirv ./src/front/public --no-clear",
+    "electron": "set ISDEV= && electron ./src/electron/build/index.js",
+    "dist": "npm run build-front && npm run build-electron && electron-builder"
+  },
+  "devDependencies": {
+    "@ivanheriver/section-resizer": "^0.0.2022-03-29",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@tsconfig/svelte": "^2.0.0",
+    "electron": "8.2.0",
+    "electron-builder": "^22.4.1",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "sirv-cli": "^2.0.2",
+    "source-map-support": "^0.5.16",
+    "svelte": "^3.0.0",
+    "svelte-check": "^2.0.0",
+    "svelte-preprocess": "^4.0.0",
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.0"
+  },
+  "type": "module"
+}
