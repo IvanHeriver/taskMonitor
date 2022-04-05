@@ -1,6 +1,6 @@
 <script lang="ts">
   import sectionResizer from "@ivanheriver/section-resizer";
-  import Tasks from "./Tasks.svelte";
+  import Tasks from "./Task/Tasks.svelte";
   import Tags from "./Tags.svelte";
   import Timer from "./Timer.svelte";
   import { onMount } from "svelte";
@@ -48,7 +48,7 @@
     </div>
     <div class="main" bind:this={mainElement}>
       {#if taskPanel}
-        <Tasks />
+        <Tasks {project} />
       {/if}
       {#if tagPanel}
         <Tags />

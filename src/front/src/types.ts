@@ -1,43 +1,44 @@
-
 export interface tmProject {
-  id: string,
-  name: string
-  description: string
-  filePath: string
-  state: "unsaved" | "saved"
-  tasks: Array<tmTask>
-  tags: Array<tmTag>
-  timer: tmTimer
-  created: Date,
-  updated: Date,
+  id: string;
+  name: string;
+  description: string;
+  filePath: string;
+  state: "unsaved" | "saved";
+  tasks: Array<tmTask>;
+  tags: Array<tmTag>;
+  timer: tmTimer;
+  created: Date;
+  updated: Date;
 }
 
 export interface tmTask {
-  id: string,
-  dateTime: Date,
-  duration: number
+  id: string;
+  date: Date;
+  duration: number;
   title: string;
-  description: string,
-  tags_id: Array<number>
+  description: string;
+  tags_id: Array<string>;
+  created: Date;
+  updated: Date;
 }
 
 export interface tmTag {
-  id: string,
-  name: string,
-  description: string,
-  color: string
+  id: string;
+  name: string;
+  description: string;
+  color: { h: number; s: number; l: number };
 }
 
 export interface tmTimer {
-  state: "stoped" | "started" | "paused"
-  startDateTime: Date,
-  startTime: number,
-  currentTime: number,
-  history: Array<tmTimerHistoryItem>
+  state: "stopped" | "started" | "paused";
+  startDateTime: Date;
+  startTime: number;
+  currentTime: number;
+  history: Array<tmTimerHistoryItem>;
 }
 
 export interface tmTimerHistoryItem {
-  startDateTime: Date
-  endDateTime: Date
-  duration: number
+  startDateTime: Date;
+  endDateTime: Date;
+  duration: number;
 }

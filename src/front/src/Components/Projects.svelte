@@ -3,6 +3,7 @@
   import type { tmProject } from "../types";
   import Project from "./Project.svelte";
   import NewProject from "./NewProject.svelte";
+  import { onMount } from "svelte";
   // export let tabsInfo;
   let currentProject: tmProject = null;
 
@@ -10,6 +11,11 @@
     newProject = true;
   }
 
+  onMount(() => {
+    if ($projects.length !== 0 && currentProject === null) {
+      currentProject = $projects[0];
+    }
+  });
   let newProject = false;
 </script>
 

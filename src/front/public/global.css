@@ -25,7 +25,9 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  color: var(--foreground-color)
+  color: var(--foreground-color);
+
+  font-family: Montserrat, sans-serif;
 }
 
 html,
@@ -33,6 +35,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
+  font-size: 13px;
 }
 
 body {
@@ -62,19 +65,19 @@ hr {
   border-style: solid;
 }
 
-
 .disabling-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--background-overlay-disable);
-    pointer-events: none;
-    z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--background-overlay-disable);
+  pointer-events: none;
+  z-index: 100;
 }
 
-textarea, input {
+textarea,
+input {
   font-family: inherit;
   font-size: 0.9rem;
   border: none;
@@ -83,7 +86,9 @@ textarea, input {
   padding: 0.25rem 0.25rem;
 }
 
-textarea:focus, input:focus, button:focus {
+textarea:focus,
+input:focus,
+button:focus {
   outline: 1px solid var(--outline-highlight-color);
   outline-offset: -1px;
 }
@@ -95,6 +100,6 @@ textarea:focus, input:focus, button:focus {
 }
 .sr-separator-highlight {
   background-color: var(--outline-highlight-color);
-    width: 2px;
+  width: 2px;
   height: 2px;
 }
