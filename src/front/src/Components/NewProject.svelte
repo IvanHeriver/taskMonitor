@@ -88,7 +88,7 @@
   .inside {
     display: flex;
     flex-direction: column;
-    background-color: var(--background-color);
+    background-color: var(--bg);
     width: 400px;
     padding: 1rem;
   }

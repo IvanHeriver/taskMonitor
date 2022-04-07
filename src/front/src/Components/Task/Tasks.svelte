@@ -1,25 +1,33 @@
 <script lang="ts">
-  import type { tmProject, tmTask } from "../../types";
+  // import type { tmTask } from "../../types";
   import Task from "./Task.svelte";
-  export let project: tmProject;
-  const emptyTask: tmTask = {
-    id: "",
-    title: "",
-    description: "",
-    duration: 0,
-    tags_id: [],
-    date: new Date(),
-    created: null,
-    updated: null,
-  };
+  import { project } from "../../stores";
+
+  // const emptyTask: tmTask = {
+  //   id: "",
+  //   title: "",
+  //   description: "",
+  //   duration: 0,
+  //   tags_id: [],
+  //   date: new Date(),
+  //   created: null,
+  //   updated: null,
+  // };
+
+  let tasks = $project.tasks;
+  $: {
+    console.log($project);
+    console.log(tasks);
+  }
 </script>
 
 <div class="container">
   <div class="header">Tasks</div>
-  <!-- <button> + New task </button> -->
-  <Task task={emptyTask} mode={"big"} allTags={project.tags} />
-  {#each project.tasks as task}
-    <Task {task} mode={"small"} allTags={project.tags} />
+  <button> + New task </button>
+  <!-- <Task task={emptyTask} mode={"new"} allTags={$project.tags} /> -->
+  <!-- {#each tasks as task (task.id)} -->
+  {#each $project.tasks as task (task.id)}
+    <Task {task} mode={"view"} />
   {/each}
 </div>
 
@@ -27,6 +35,6 @@
   .header {
     text-transform: uppercase;
     padding: 0 0.25rem;
-    background-color: var(--background-light-color);
+    background-color: var(--bg-light);
   }
 </style>

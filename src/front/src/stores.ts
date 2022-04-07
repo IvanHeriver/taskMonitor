@@ -4,6 +4,7 @@ import type { tmProject, tmTag, tmTask, tmTimer } from "./types";
 export const projects: Writable<Array<tmProject>> = writable(
   createDefaultDevProjects()
 );
+export const project: Writable<tmProject> = writable(null)
 
 // export const projID: Writable<number> = writable(null)
 

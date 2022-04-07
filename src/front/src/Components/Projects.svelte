@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { projects } from "../stores";
+  import { projects, project } from "../stores";
   import type { tmProject } from "../types";
   import Project from "./Project.svelte";
   import NewProject from "./NewProject.svelte";
   import { onMount } from "svelte";
   // export let tabsInfo;
-  let currentProject: tmProject = null;
+  // let currentProject: tmProject = null;
 
   function createNewProject() {
     newProject = true;
   }
 
   onMount(() => {
-    if ($projects.length !== 0 && currentProject === null) {
-      currentProject = $projects[0];
+    if ($projects.length !== 0 && $project === null) {
+      $project = $projects[0];
     }
   });
   let newProject = false;
@@ -24,7 +24,7 @@
     on:done={(event) => {
       console.log(event.detail);
       if (event.detail) {
-        currentProject = event.detail;
+        $project = event.detail;
       }
       newProject = false;
     }}
@@ -33,22 +33,22 @@
 
 <div class="projects">
   <div class="header">
-    {#each $projects as project}
+    {#each $projects as p}
       <button
         class="title"
-        class:selected={currentProject === project}
+        class:selected={$project === p}
         on:click={() => {
-          currentProject = project;
+          $project = p;
         }}
       >
-        {project.state === "saved" ? project.name : `${project.name}*`}
+        {p.state === "saved" ? p.name : `${p.name}*`}
       </button>
     {/each}
     <button on:click={createNewProject}>+ New Project</button>
   </div>
   <div class="content">
-    {#if currentProject !== null}
-      <Project project={currentProject} />
+    {#if $project !== null}
+      <Project />
     {/if}
   </div>
 </div>
@@ -70,6 +70,6 @@
     border: none;
   }
   .selected {
-    background-color: var(--btn-background-selected);
+    background-color: var(--bg-light);
   }
 </style>

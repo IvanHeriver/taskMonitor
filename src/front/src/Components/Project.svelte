@@ -1,10 +1,11 @@
 <script lang="ts">
   import sectionResizer from "@ivanheriver/section-resizer";
   import Tasks from "./Task/Tasks.svelte";
-  import Tags from "./Tags.svelte";
-  import Timer from "./Timer.svelte";
+  import Tags from "./Tag/Tags.svelte";
+  import Timer from "./Timer/Timer.svelte";
   import { onMount } from "svelte";
-  export let project;
+  import { project } from "../stores";
+  // export let project;
 
   onMount(() => {
     projectElementResizer = sectionResizer(projectElement, {
@@ -16,7 +17,9 @@
       mode: "horizontal",
     });
     mainElementResizer.configure({ min: 200 });
+    mainElementResizer.resize([{ index: 0, size: 800 }]);
   });
+
   let taskPanel = true;
   let tagPanel = true;
   let timerPanel = true;
@@ -28,9 +31,9 @@
 <div class="project" bind:this={projectElement}>
   <div class="info">
     <div class="name">
-      {project.name}
+      {$project.name}
     </div>
-    <div class="desc">{project.description}</div>
+    <div class="desc">{$project.description}</div>
   </div>
   <div class="content">
     <div class="sidebar">
@@ -48,7 +51,7 @@
     </div>
     <div class="main" bind:this={mainElement}>
       {#if taskPanel}
-        <Tasks {project} />
+        <Tasks />
       {/if}
       {#if tagPanel}
         <Tags />
@@ -62,7 +65,7 @@
 
 <style>
   .project {
-    background-color: var(--btn-background-selected);
+    background-color: var(--bg-light);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -72,13 +75,13 @@
   .content {
     display: grid;
     grid-template-columns: 50px auto;
-    background-color: var(--background-color);
+    background-color: var(--bg);
   }
   .sidebar {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid var(--outline-color);
-    background-color: var(--btn-background-selected);
+    border-right: 1px solid var(--fg-xxlight);
+    background-color: var(--bg-light);
   }
   .info {
     padding: 1rem;
@@ -88,10 +91,10 @@
     font-weight: 900;
   }
   .selected {
-    background-color: var(--btn-background-selected);
+    background-color: var(--bg-light);
   }
   .selected:hover,
   .selected:focus {
-    background-color: var(--btn-background-highlight);
+    background-color: var(--bg-xlight);
   }
 </style>

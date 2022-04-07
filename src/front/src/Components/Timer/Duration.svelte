@@ -1,19 +1,17 @@
 <script lang="ts">
   export let duration: number;
-  export let mode: "normal" | "small" = "normal";
-  // let task_tags = task.tags_id.map((t_id) => tags.find((t) => t.id === t_id));
-
+  export let mode: "big" | "small" = "big";
   function getValueUnit(
     value: number,
     unit: "m" | "h" | "d",
-    mode: "normal" | "small" = "normal"
+    mode: "big" | "small" = "big"
   ) {
     const units = {
       m: ["minute", "minutes", "m"],
       h: ["hour", "hours", "h"],
       d: ["work day", "work days", "d"],
     };
-    if (mode === "normal") {
+    if (mode === "big") {
       const u = units[unit][value === 1 ? 0 : 1];
       //   return value !== 0 ? ` ${value} ${u}` : "";
       return { value: value !== 0 ? value.toString() : "", unit: u };
@@ -27,15 +25,18 @@
   }
 
   const workDayDuration = 8 * 60;
-  let minutes = duration;
-  const workDays = Math.floor(minutes / workDayDuration);
-  minutes -= workDays * workDayDuration;
-  const hours = Math.floor(minutes / 60);
-  minutes -= hours * 60;
+  let d, h, m;
+  $: {
+    let minutes = duration;
+    const workDays = Math.floor(minutes / workDayDuration);
+    minutes -= workDays * workDayDuration;
+    const hours = Math.floor(minutes / 60);
+    minutes -= hours * 60;
 
-  const d = getValueUnit(workDays, "d", mode);
-  const h = getValueUnit(hours, "h", mode);
-  const m = getValueUnit(minutes, "m", mode);
+    d = getValueUnit(workDays, "d", mode);
+    h = getValueUnit(hours, "h", mode);
+    m = getValueUnit(minutes, "m", mode);
+  }
 </script>
 
 <div class={`container ${mode}`}>
@@ -58,7 +59,7 @@
     display: flex;
   }
   .value {
-    font-weight: 600;
+    font-weight: 800;
   }
   .unit,
   .value {

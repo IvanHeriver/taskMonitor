@@ -1,8 +1,8 @@
 {
-  "name": "electron-svelte-typescript-boilerplate",
+  "name": "tatimo",
   "main": "./src/electron/build/index.js",
   "build": {
-    "appId": "electron-svelte-typescript-boilerplate",
+    "appId": "ivanheriver-tatimo",
     "asar": true,
     "win": {
       "target": [
