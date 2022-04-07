@@ -8,11 +8,11 @@
   // export let project;
 
   onMount(() => {
-    projectElementResizer = sectionResizer(projectElement, {
-      mode: "vertical",
-    });
-    projectElementResizer.configure([{ index: 0, min: 25, max: 300 }]);
-    projectElementResizer.resize([{ index: 1, size: 10000 }]);
+    // projectElementResizer = sectionResizer(projectElement, {
+    //   mode: "vertical",
+    // });
+    // projectElementResizer.configure([{ index: 0, min: 25, max: 300 }]);
+    // projectElementResizer.resize([{ index: 1, size: 10000 }]);
     mainElementResizer = sectionResizer(mainElement, {
       mode: "horizontal",
     });
@@ -24,11 +24,12 @@
   let tagPanel = true;
   let timerPanel = true;
 
-  let projectElement, projectElementResizer;
+  // let projectElement, projectElementResizer;
   let mainElement, mainElementResizer;
 </script>
 
-<div class="project" bind:this={projectElement}>
+<!-- <div class="project" bind:this={projectElement}> -->
+<div class="project">
   <div class="info">
     <div class="name">
       {$project.name}
@@ -51,13 +52,13 @@
     </div>
     <div class="main" bind:this={mainElement}>
       {#if taskPanel}
-        <Tasks />
+        <div><Tasks /></div>
       {/if}
       {#if tagPanel}
-        <Tags />
+        <div><Tags /></div>
       {/if}
       {#if timerPanel}
-        <Timer />
+        <div><Timer /></div>
       {/if}
     </div>
   </div>
@@ -71,11 +72,16 @@
     bottom: 0;
     left: 0;
     right: 0;
+    --header-size: 75px;
   }
   .content {
     display: grid;
     grid-template-columns: 50px auto;
     background-color: var(--bg);
+    height: calc(100% - var(--header-size));
+  }
+  .main > div {
+    overflow: auto;
   }
   .sidebar {
     display: flex;
@@ -86,12 +92,14 @@
   .info {
     padding: 1rem;
     overflow: auto;
+    height: var(--header-size);
+    border-bottom: 1px solid var(--fg-xxlight);
   }
   .name {
     font-weight: 900;
   }
   .selected {
-    background-color: var(--bg-light);
+    background-color: var(--bg-xxlight);
   }
   .selected:hover,
   .selected:focus {
