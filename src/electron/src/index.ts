@@ -11,6 +11,7 @@ import {
 import path from "path";
 import { setupIPC } from "./ipc";
 import { setupMainMenu } from "./menu";
+// import { saveSession } from "./files";
 
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 const isDevelopment = "ISDEV" in process.env;
@@ -29,11 +30,26 @@ function createMainWindow() {
     },
   });
 
+  // window.on("close", function (e) {
+  //   saveSession()
+  //   // const choice = dialog.showMessageBoxSync(this, {
+  //   //   type: "question",
+  //   //   buttons: ["Yes", "No"],
+  //   //   title: "Confirm",
+  //   //   message:
+  //   //     "Some files are not saved and any modification will be lost. Are you sure you wan't to quite?",
+  //   // });
+  //   // if (choice === 1) {
+  //   //   e.preventDefault();
+  //   // }
+  // });
+
   if (isDevelopment) {
     // this is for me only since I have a big monitor
     // and I split my screen in a specific way when developing
-    window.setSize(1940, 1090);
-    window.setPosition(1510, 0);
+    // window.setSize(1940, 1090);
+    // window.setPosition(1510, 0);
+    window.maximize();
   } else {
     window.maximize();
   }
@@ -86,4 +102,3 @@ app.on("ready", () => {
   setupMainMenu(mainWindow, isDevelopment, isMac, app.name);
   setupIPC(mainWindow);
 });
-

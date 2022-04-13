@@ -1,71 +1,67 @@
 <script lang="ts">
+  type unit = "days" | "hours" | "minutes" | "auto" | "seconds";
   export let duration: number;
-  export let mode: "big" | "small" = "big";
-  function getValueUnit(
-    value: number,
-    unit: "m" | "h" | "d",
-    mode: "big" | "small" = "big"
-  ) {
-    const units = {
-      m: ["minute", "minutes", "m"],
-      h: ["hour", "hours", "h"],
-      d: ["work day", "work days", "d"],
-    };
-    if (mode === "big") {
-      const u = units[unit][value === 1 ? 0 : 1];
-      //   return value !== 0 ? ` ${value} ${u}` : "";
-      return { value: value !== 0 ? value.toString() : "", unit: u };
-    } else {
-      const u = units[unit][2];
-      const v =
-        unit === "d" ? value.toString() : value.toString().padStart(2, "0");
-      //   return `${v}${u}`;
-      return { value: v, unit: u };
-    }
-  }
+  export let unit: unit = "auto";
 
-  const workDayDuration = 8 * 60;
-  let d, h, m;
+  const units: Array<unit> = ["auto", "seconds", "minutes", "hours", "days"];
+
+  let unit_index = units.findIndex((u) => u === unit);
+
+  $: seconds = duration * 60;
+  $: minutes = duration;
+  $: hours = duration / 60;
+  $: days = duration / 60 / 8;
+
+  $: best = "days";
   $: {
-    let minutes = duration;
-    const workDays = Math.floor(minutes / workDayDuration);
-    minutes -= workDays * workDayDuration;
-    const hours = Math.floor(minutes / 60);
-    minutes -= hours * 60;
-
-    d = getValueUnit(workDays, "d", mode);
-    h = getValueUnit(hours, "h", mode);
-    m = getValueUnit(minutes, "m", mode);
+    if (Math.abs(days) < 1) {
+      if (Math.abs(hours) < 1) {
+        if (Math.abs(minutes) < 1) {
+          best = "seconds";
+        } else {
+          best = "minutes";
+        }
+      } else {
+        best = "hours";
+      }
+    }
   }
 </script>
 
-<div class={`container ${mode}`}>
-  {#if d.value !== ""}
-    <span class="value">{d.value}</span>
-    <span class="unit">{d.unit}</span>
-  {/if}
-  {#if h.value !== ""}
-    <span class="value">{h.value}</span>
-    <span class="unit">{h.unit}</span>
-  {/if}
-  {#if m.value !== ""}
-    <span class="value">{m.value}</span>
-    <span class="unit">{m.unit}</span>
+<div
+  class="container"
+  on:click={() => {
+    unit_index++;
+    if (unit_index >= units.length) unit_index = 0;
+    unit = units[unit_index];
+  }}
+  title={`Click to change the time unit`}
+>
+  {#if unit === "seconds" || (unit === "auto" && best === "seconds")}
+    <span class="value">{seconds.toFixed(2)}</span>
+    <span class="unit">seconds</span>
+  {:else if unit === "minutes" || (unit === "auto" && best === "minutes")}
+    <span class="value">{minutes.toFixed(2)}</span>
+    <span class="unit">minutes</span>
+  {:else if unit === "hours" || (unit === "auto" && best === "hours")}
+    <span class="value">{hours.toFixed(2)}</span>
+    <span class="unit">hours</span>
+  {:else if unit === "days" || (unit === "auto" && best === "days")}
+    <span class="value">{days.toFixed(2)}</span>
+    <span class="unit">work days</span>
   {/if}
 </div>
 
 <style>
   .container {
     display: flex;
-  }
-  .value {
-    font-weight: 800;
+    cursor: pointer;
   }
   .unit,
   .value {
     padding: 0 0.125rem;
   }
-  .container.small > .value {
-    padding: 0;
+  .value {
+    font-weight: 800;
   }
 </style>

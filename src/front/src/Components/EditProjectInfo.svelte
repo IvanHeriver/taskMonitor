@@ -1,47 +1,26 @@
 <script lang="ts">
-  import { projects, saveSession } from "../stores";
+  import { registerModification } from "../stores";
   import type { IProject } from "../types";
   import { createEventDispatcher, onMount } from "svelte";
-
   const eventDispatcher = createEventDispatcher();
-  function createNewProject() {
-    if (name === "") return;
-    projects.update((prevProjects: Array<IProject>): Array<IProject> => {
-      newProject = {
-        id: id,
-        name: name,
-        description: description,
-        filePath: "",
-        state: "unsaved",
-        tasks: [],
-        tags: [],
-        timerLogs: [],
-        created: new Date().toISOString(),
-        updated: new Date().toISOString(),
-        stats: {
-          allocatedDuration: null,
-        },
-        ui: {
-          newTagOpen: false,
-          newTaskOpen: false,
-          taskPanelOpen: true,
-          tagPanelOpen: true,
-          timerPanelOpen: true,
-          statPanelOpen: true,
-        },
-      };
-      return [...prevProjects, newProject];
-    });
-    saveSession();
-    eventDispatcher("done", newProject);
-  }
+
   onMount(() => {
+    name = project.name;
+    description = project.description;
     projectNameInputElement.focus();
   });
 
-  const id: string = Math.random().toString().slice(2);
-  let newProject: IProject;
-  // let name = `Untitled-${id}`;
+  export let project: IProject;
+
+  function saveProjectInfo() {
+    project.name = name;
+    project.description = description;
+    registerModification(project.id, "edit project name", ["name"]);
+    registerModification(project.id, "edit project description", [
+      "description",
+    ]);
+    eventDispatcher("done");
+  }
   let name = "";
   let description = "";
   let projectNameInputElement;
@@ -51,7 +30,7 @@
 <div class="outside">
   <div class="inside">
     <!-- <form on:submit|preventDefault={createNewProject}> -->
-    <div class="title">Create a new project</div>
+    <div class="title">Edit project information</div>
     <label for="name">Project name:</label>
     <input
       type="text"
@@ -62,7 +41,7 @@
       maxlength="20"
       on:keyup={(event) => {
         if (event.key === "Enter") {
-          createNewProject();
+          saveProjectInfo();
         }
       }}
       bind:this={projectNameInputElement}
@@ -77,13 +56,6 @@
       placeholder="Write a project description here"
       style="resize: none"
     />
-    <!-- <input
-      type="text"
-      name="description"
-      id="description"
-      bind:value={description}
-      placeholder="Write a project description here"
-    /> -->
     <div class="actions">
       <button
         id="cancel"
@@ -91,9 +63,8 @@
           eventDispatcher("done");
         }}>Cancel</button
       >
-      <button id="create" on:click={createNewProject}>Create project</button>
+      <button id="create" on:click={saveProjectInfo}>Save</button>
     </div>
-    <!-- </form> -->
   </div>
 </div>
 

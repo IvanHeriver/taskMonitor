@@ -1,9 +1,10 @@
 :root {
   --bg-xstrong: hsl(200, 5%, 97.5%);
-  --bg-strong: hsl(200, 2.5%, 95%);
+  --bg-strong: hsl(200, 2.5%, 92.5%);
   --bg: hsl(200, 0%, 90%);
   --bg-light: hsl(200, 2.5%, 85%);
   --bg-xlight: hsl(200, 5%, 80%);
+  --bg-xxlight: hsl(200, 50%, 75%);
 
   --fg-xstrong: hsl(200, 100%, 50%);
   --fg-strong: hsl(200, 50%, 25%);
@@ -13,29 +14,33 @@
   --fg-xxlight: hsl(200, 0%, 75%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);
+
+  --danger: hsl(0, 50%, 30%);
 }
 [data-theme="dark"] {
   --bg-xstrong: hsl(200, 5%, 2.5%);
-  --bg-strong: hsl(200, 2.5%, 5%);
+  --bg-strong: hsl(200, 2.5%, 7.5%);
   --bg: hsl(200, 0%, 10%);
   --bg-light: hsl(200, 2.5%, 15%);
   --bg-xlight: hsl(200, 5%, 20%);
+  --bg-xxlight: hsl(200, 50%, 25%);
 
   --fg-xstrong: hsl(200, 100%, 50%);
-  --fg-strong: hsl(200, 50%, 75%);
-  --fg: hsl(200, 5%, 90%);
-  --fg-light: hsl(200, 2.5%, 75%);
-  --fg-xlight: hsl(200, 0%, 50%);
+  --fg-strong: hsl(200, 50%, 70%);
+  --fg: hsl(200, 5%, 75%);
+  --fg-light: hsl(200, 2.5%, 60%);
+  --fg-xlight: hsl(200, 0%, 40%);
   --fg-xxlight: hsl(200, 0%, 25%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);
+
+  --danger: hsl(0, 90%, 50%);
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-
 
   /* font-family: Montserrat, sans-serif; */
   font-family: OpenSans, sans-serif;
@@ -46,7 +51,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 body {
@@ -55,7 +60,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background-color: var(--bg);
-    color: var(--fg);
+  color: var(--fg);
 }
 
 button {
@@ -66,12 +71,24 @@ button {
   cursor: pointer;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    color: inherit
+  color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button.primary {
+  background-color: var(--bg-xxlight);
+}
+button.secondary {
+  background-color: var(--bg-xlight);
 }
 
-button:hover,
-button:focus {
+button:hover {
   background-color: var(--bg-light);
+}
+button:focus {
+  outline: 1px solid var(--bg-light);
+  outline-offset: -1px;
 }
 
 button.icon {
@@ -81,9 +98,21 @@ button.icon {
   justify-content: center;
   align-items: center;
 }
-button.icon:hover,
+button.icon:hover {
+  color: var(--fg-xstrong);
+}
+
 button.icon:focus {
-  color: var(--fg-xtrong);
+  outline: 1px solid var(--fg-xstrong);
+  outline-offset: -1px;
+}
+
+button.danger:hover {
+  color: var(--danger);
+}
+button.danger:focus {
+  outline: 1px solid var(--danger);
+  outline-offset: -1px;
 }
 
 hr {
@@ -109,16 +138,64 @@ input {
   background-color: var(--bg-light);
   outline: 1px solid var(--bg-xlight);
   outline-offset: -1px;
-  /* color: var(--fg); */
+  color: var(--fg);
   padding: 0.25rem 0.25rem;
+}
+input {
+  height: 1.5rem;
+}
+input[type="color"] {
+  padding: 0.125rem 0.25rem;
+  height: 2.5rem;
 }
 
 textarea:focus,
 input:focus,
 button:focus {
-  outline: 1px solid  var(--fg-xtrong);
+  outline: 1px solid var(--fg-xstrong);
   outline-offset: -1px;
 }
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+input[type="radio"]:checked + label {
+  outline: 1px solid var(--bg-xxlight);
+  background-color: var(--bg-xxlight);
+}
+input[type="radio"]:focus + label,
+input[type="radio"]:hover + label {
+  outline: 1px solid var(--fg-xstrong);
+}
+input[type="radio"] + label {
+  height: 1.5rem;
+  outline: 1px solid var(--bg-xlight);
+  outline-offset: -1px;
+  padding: 0 0.25rem;
+  background-color: var(--bg-light);
+}
+
+button.small {
+  padding: 0 0.25rem;
+  height: 1.5rem;
+  outline: 1px solid var(--bg-xlight);
+  outline-offset: -1px;
+}
+button.small:hover,
+button.small:focus {
+  outline: 1px solid var(--fg-xstrong);
+}
+
+/* input[type="color"] {
+  position: absolute;
+  opacity: 0.5;
+  pointer-events: none;
+}
+input[type="color"] + label {
+  background-color: ;
+} */
 
 .sr-separator {
   background-color: var(--fg-xxlight);
@@ -126,33 +203,40 @@ button:focus {
   height: 1px;
 }
 .sr-separator-highlight {
-  background-color:var(--fg-xstrong);
+  background-color: var(--fg-xstrong);
   width: 2px;
   height: 2px;
 }
 
-
 .scroll_enabled {
-    overflow: scroll;
-    height: 1000px; /* define your custom height */
+  overflow: scroll;
+  height: 1000px; /* define your custom height */
 }
 
 *::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+  width: 10px;
+  height: 10px;
 }
 *::-webkit-scrollbar-corner {
-    background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
 }
 *::-webkit-scrollbar-thumb {
-    background-color: rgba(204, 204, 204, 0.5);
-    /* border-radius: 6px; */
-    /* border: 4px solid rgba(0,0,0,0); */
-    /* background-clip: content-box; */
-    /* margin: 0; */
-    /* min-width: 32px;
-    min-height: 32px; */
+  background-color: rgba(204, 204, 204, 0.5);
 }
 *::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.small-sb::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.small-sb::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0);
+}
+.small-sb::-webkit-scrollbar-thumb {
+  background-color: rgba(204, 204, 204, 0.5);
+}
+.small-sb::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.5);
 }

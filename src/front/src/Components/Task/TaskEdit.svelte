@@ -1,217 +1,173 @@
 <script lang="ts">
-  // import { fade } from "svelte/transition";
-  import type { tmTag, tmTask } from "../../types";
-  import { project } from "../../stores";
-  // import Tags from "./Tags.svelte";
-  import Tag from "../Tag/TagLabel.svelte";
+  import type { ITag, ITask, ITimerLog } from "../../types";
+  import DurationInput from "../Timer/DurationInput.svelte";
+  import TagsInput from "../Tag/TagsInput.svelte";
 
-  import Duration from "../Timer/Duration.svelte";
-  // export let allTags: Array<tmTag>;
-  export let task: tmTask;
-  export let mode: "new" | "edit" | "small" | "big";
-  $: isBig = mode === "big";
-  $: isNew = mode === "new";
+  import { createEventDispatcher, onMount } from "svelte";
+  export let task: ITask = null;
+  export let tags: Array<ITag>;
+  export let timerLogs: Array<ITimerLog>;
 
-  let date = task.date.toISOString().slice(0, 10);
-  let time = task.date.toISOString().slice(11, 19);
+  const eventDispatcher = createEventDispatcher();
+
+  let currentDate = new Date().toISOString().slice(0, 10);
+  let id = Math.random().toString().slice(2);
+  let title = "";
+  let date = currentDate;
+  let duration = 0;
+  let duration_unit: "minutes" | "hours" | "days" = "hours";
+  let description = "";
+  let tags_id = [];
+  //   let date_created = new Date().toISOString()
+  // let date_create
+  if (task !== null) {
+    id = task.id;
+    title = task.title;
+    date = new Date(task.date).toISOString().slice(0, 10);
+    duration = task.duration;
+    description = task.description;
+    tags_id = task.tags_id;
+  }
+
+  function save() {
+    let created = new Date().toISOString();
+    let updated = new Date().toISOString();
+    if (task !== null) {
+      created = task.created;
+    }
+    const newTask: ITask = {
+      id,
+      title,
+      date: new Date(date).toISOString(),
+      duration: duration,
+      description,
+      tags_id,
+      created,
+      updated,
+      mode: "large-view",
+    };
+    eventDispatcher("save", newTask);
+  }
+  let titleInputElement;
+  onMount(() => {
+    titleInputElement.focus();
+  });
 </script>
 
-<div class={`container  ${mode}`}>
-  {#if mode === "big" || mode === "small"}
-    <div class="title">{task.title}</div>
-    <div class="date">{task.date.toLocaleDateString()}</div>
-    <div class="duration">
-      <Duration duration={task.duration} mode={isBig ? "normal" : "small"} />
+<div class="container">
+  <!-- <div class="header"> -->
+  <div class="title-date">
+    <div class="title">
+      <label for="title">Title: </label>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        bind:value={title}
+        placeholder="Title"
+        bind:this={titleInputElement}
+        on:keyup={(e) => {
+          e.key === "Enter" && save();
+        }}
+      />
     </div>
-    <div class="tags">
-      <!-- <Tags {allTags} tagsIds={task.tags_id} mode={isBig ? "big" : "small"} /> -->
+
+    <div class="date">
+      <label for="date">Date:</label>
+      <input type="date" name="date" id="date" bind:value={date} />
     </div>
-    {#if isBig}
-      <div class="desc">{task.description}</div>
-      <div class="created">
-        {`Created: ${task.created?.toLocaleDateString()} ${task.created?.toLocaleTimeString()}`}
-      </div>
-      <div class="updated">
-        {`Modified: ${task.updated?.toLocaleDateString()} ${task.updated?.toLocaleTimeString()}`}
-      </div>
-    {/if}
-    <div class="actions">
-      <button on:click={() => (mode = isBig ? "small" : "big")}>
-        <span class="maticons">
-          {isBig ? "expand_less" : "expand_more"}
-        </span>
-      </button>
-      <button on:click={() => (mode = "edit")}>
-        <span class="maticons">mode_edit</span>
-      </button>
-      <button>
-        <span class="maticons">delete</span>
-      </button>
-    </div>
-  {:else}
-    <label style="grid-area: title-label" for="title">Title:</label>
-    <input
-      type="text"
-      style="grid-area: title-input"
-      name="title"
-      id="title"
-      placeholder="Task title"
-      bind:value={task.title}
-    />
-    <label style="grid-area: desc-label" for="desc">Description:</label>
+  </div>
+  <div class="duration">
+    <label for="duration">{`Duration (${duration_unit}): `} </label>
+    <DurationInput bind:duration bind:unit={duration_unit} bind:timerLogs />
+  </div>
+  <div class="desc">
+    <label for="description">Description: </label>
     <textarea
-      style="grid-area: desc-input"
-      name="desc"
-      id="desc"
+      name="description"
+      id="description"
       cols="30"
       rows="3"
-      bind:value={task.description}
-      placeholder="Task description"
+      style="resize: none;"
+      bind:value={description}
     />
-    <label for="datetime" style="grid-area: datetime-label"
-      >Date and time:
-    </label>
-    <div id="datetime" style="grid-area: datetime-input">
-      <input
-        type="date"
-        name="date"
-        id="date"
-        placeholder="Task date"
-        bind:value={date}
-      />
-      <input
-        type="time"
-        name="time"
-        id="time"
-        placeholder="Task Time"
-        bind:value={time}
-      />
-    </div>
-    <label for="duration">Duration (min): </label>
-    <input
-      type="number"
-      name="duration"
-      id="duration"
-      bind:value={task.duration}
-    />
-    <label for="tags-input" style="grid-area: tags-label">Tags:</label>
-    <div id="tags-input" style="grid-area: tags-input">Tags input</div>
-    <div class="actions">
-      <button on:click={() => (mode = "big")}>
-        <span class="maticons"> check </span>
-        <span>{mode === "new" ? "Create task" : "Save"}</span>
-      </button>
-      {#if mode === "edit"}
-        <button on:click={() => (mode = "big")}>
-          <span class="maticons">close</span>
-          <span>Cancel</span>
-        </button>
-      {/if}
-    </div>
-  {/if}
+  </div>
+
+  <div class="tags">
+    <label for="tags">Tags: </label>
+    <TagsInput bind:tags_id bind:tags />
+  </div>
+  <!-- </div> -->
+  <div class="actions">
+    <button class="primary" on:click={() => save()}>
+      <!-- <span class="maticons">save</span> -->
+
+      <span class="maticons">done</span>
+      <span>Save</span>
+    </button>
+    <button
+      class="secondary"
+      on:click={() => {
+        task.mode = "large-view";
+        eventDispatcher("cancel");
+      }}
+    >
+      <span class="maticons">close</span>
+      <span>Cancel</span>
+    </button>
+  </div>
 </div>
 
 <style>
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 0.25rem;
-    background-color: transparent;
-    padding: 0;
-  }
-  button:hover > * {
-    color: var(--fg-xtrong);
-  }
-  button:last-child {
-    margin: 0;
-  }
-  .container:focus {
-    outline: 1px solid var(--fg-xtrong);
-    outline-offset: -1px;
-  }
   .container {
+    padding: 0.5rem;
+    background-color: var(--bg-strong);
+    outline: 1px solid var(--bg-xxlight);
+    outline-offset: -1px;
     display: grid;
-    gap: 0.125rem;
-    margin: 0.125rem;
-    padding: 0.25rem;
-    background-color: var(--bg-light);
-    overflow-x: auto;
+    grid-template-columns: 100%;
+    row-gap: 0.5rem;
   }
-  .container.big {
-    grid-template-areas:
-      "title title actions"
-      "date duration duration"
-      "desc desc desc"
-      "tags tags tags"
-      "created . updated";
-    gap: 0.25rem;
-    /* grid-template-rows: 2rem 2rem auto auto auto; */
-  }
-  .container.small {
-    grid-template-areas: "date duration title  tags actions";
-    column-gap: 0.5rem;
-    grid-template-columns: 10ch 10ch auto max-content max-content;
-  }
-  .container.new,
-  .container.edit {
-    grid-template-areas:
-      "title-label title-input"
-      "desc-label desc-input"
-      "datetime-label datetime-input"
-      "duration-label duration-input"
-      "tags-label tags-input"
-      ". actions";
-    grid-template-columns: max-content auto;
-    column-gap: 0.5rem;
-  }
-  #datetime {
+  .title-date {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 0.125rem;
+    gap: 0.5rem;
   }
   .title {
-    grid-area: title;
     font-weight: 600;
-    justify-self: start;
-    text-transform: uppercase;
-  }
-  .date {
-    grid-area: date;
-  }
-  .duration {
-    grid-area: duration;
-  }
-  .big > .duration {
-    justify-self: end;
-  }
-  .desc {
-    grid-area: desc;
-    font-weight: 100;
-  }
-  .tags {
-    grid-area: tags;
-  }
-  .container.big > .tags {
-    justify-self: start;
-  }
-  .created {
-    grid-area: created;
-  }
-  .updated {
-    grid-area: updated;
-    justify-self: end;
-  }
-  .actions {
-    grid-area: actions;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-self: end;
   }
-  .created,
-  .updated {
-    /* margin-top: 0.5rem; */
-    font-size: 0.8rem;
+  .date {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .duration {
+    width: 100%;
+  }
+  label {
     font-weight: 100;
+    font-size: 0.8;
+    color: var(--fg-light);
+    padding-right: 0.5rem;
+  }
+  input {
+    width: 100%;
+  }
+  textarea {
+    width: 100%;
+  }
+  .desc {
+    color: var(--fg-light);
+    font-weight: 100;
+  }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .actions > button {
+    margin-left: 0.5rem;
   }
 </style>

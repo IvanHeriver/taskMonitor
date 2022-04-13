@@ -1,44 +1,75 @@
-export interface tmProject {
+export interface IProject {
   id: string;
   name: string;
   description: string;
   filePath: string;
   state: "unsaved" | "saved";
-  tasks: Array<tmTask>;
-  tags: Array<tmTag>;
-  timer: tmTimer;
-  created: Date;
-  updated: Date;
+  tasks: Array<ITask>;
+  tags: Array<ITag>;
+  timerLogs: Array<ITimerLog>;
+  created: string;
+  updated: string;
+  stats: IStats;
+  ui: IUi;
 }
 
-export interface tmTask {
+export interface ITask {
   id: string;
-  date: Date;
+  date: string;
   duration: number;
   title: string;
   description: string;
   tags_id: Array<string>;
-  created: Date;
-  updated: Date;
+  created: string;
+  updated: string;
+  mode: "large-view" | "small-view" | "edit";
 }
 
-export interface tmTag {
+export interface ITag {
   id: string;
   name: string;
   description: string;
   color: { h: number; s: number; l: number };
 }
 
-export interface tmTimer {
-  state: "stopped" | "started" | "paused";
+export interface ITimer {
+  started: boolean;
   startDateTime: Date;
   startTime: number;
   currentTime: number;
-  history: Array<tmTimerHistoryItem>;
+  offsetTime: number;
 }
 
-export interface tmTimerHistoryItem {
-  startDateTime: Date;
-  endDateTime: Date;
+export interface ITimerLog {
+  id: string;
+  startDateTime: string;
+  endDateTime: string;
   duration: number;
+  used: boolean;
+}
+
+export interface IUi {
+  newTaskOpen: boolean;
+  newTagOpen: boolean;
+  taskPanelOpen: boolean;
+  tagPanelOpen: boolean;
+  timerPanelOpen: boolean;
+  statPanelOpen: boolean;
+}
+
+export interface IStats {
+  allocatedDuration: number;
+}
+
+declare global {
+  interface Window {
+    electronAPI: {
+      toggleDarkMode: Function;
+      onSaveProject: Function;
+      onLoadProject: Function;
+      saveProject: Function;
+      saveSession: Function;
+      retrieveSession: Function;
+    }; // 👈️ turn off type checking
+  }
 }

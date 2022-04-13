@@ -3,62 +3,102 @@
   import Tasks from "./Task/Tasks.svelte";
   import Tags from "./Tag/Tags.svelte";
   import Timer from "./Timer/Timer.svelte";
-  import { onMount } from "svelte";
-  import { project } from "../stores";
-  // export let project;
+  // import { onMount } from "svelte";
+  import ProjectHeader from "./ProjectHeader.svelte";
+  // import { project } from "../stores";
+  export let project;
 
-  onMount(() => {
-    // projectElementResizer = sectionResizer(projectElement, {
-    //   mode: "vertical",
-    // });
-    // projectElementResizer.configure([{ index: 0, min: 25, max: 300 }]);
-    // projectElementResizer.resize([{ index: 1, size: 10000 }]);
-    mainElementResizer = sectionResizer(mainElement, {
-      mode: "horizontal",
-    });
-    mainElementResizer.configure({ min: 200 });
-    mainElementResizer.resize([{ index: 0, size: 800 }]);
-  });
+  let mainElement, mainElementResizer;
+  let secondaryElement, secondaryElementResizer;
+  let utilsElement, utilsElementResizer;
+  $: {
+    if (mainElement) {
+      mainElementResizer = sectionResizer(mainElement, {
+        mode: "horizontal",
+      });
+      mainElementResizer.configure({ min: 200 });
+      mainElementResizer.resize([{ index: 0, size: 400 }]);
+    }
+  }
+  $: {
+    if (secondaryElement) {
+      secondaryElementResizer = sectionResizer(secondaryElement, {
+        mode: "vertical",
+      });
+      secondaryElementResizer.resize([{ index: 0, size: 100 }]);
+    }
+  }
+  $: {
+    if (utilsElement) {
+      utilsElementResizer = sectionResizer(utilsElement, {
+        mode: "horizontal",
+      });
+    }
+  }
 
-  let taskPanel = true;
-  let tagPanel = true;
-  let timerPanel = true;
+  // let taskPanel = true;
+  // let tagPanel = true;
+  // let timerPanel = true;
 
   // let projectElement, projectElementResizer;
-  let mainElement, mainElementResizer;
 </script>
 
 <!-- <div class="project" bind:this={projectElement}> -->
 <div class="project">
-  <div class="info">
-    <div class="name">
-      {$project.name}
-    </div>
-    <div class="desc">{$project.description}</div>
-  </div>
+  <ProjectHeader bind:project />
   <div class="content">
     <div class="sidebar">
       <button
-        class:selected={taskPanel}
-        on:click={() => (taskPanel = !taskPanel)}>task</button
+        class="icon"
+        class:selected={project.ui.taskPanelOpen}
+        on:click={() => (project.ui.taskPanelOpen = !project.ui.taskPanelOpen)}
+        title="Show/hide tasks panel"
       >
-      <button class:selected={tagPanel} on:click={() => (tagPanel = !tagPanel)}
-        >tag</button
+        <span class="maticons">assignment_turned_in</span>
+      </button>
+      <button
+        class="icon"
+        class:selected={project.ui.tagPanelOpen}
+        on:click={() => (project.ui.tagPanelOpen = !project.ui.tagPanelOpen)}
+        title="Show/hide tag panel"
+        ><span class="maticons">local_offer</span></button
       >
       <button
-        class:selected={timerPanel}
-        on:click={() => (timerPanel = !timerPanel)}>timer</button
+        class="icon"
+        class:selected={project.ui.timerPanelOpen}
+        on:click={() =>
+          (project.ui.timerPanelOpen = !project.ui.timerPanelOpen)}
+        title="Show/hide timer panel"
+        ><span class="maticons">timer</span></button
+      >
+      <button
+        class="icon"
+        class:selected={project.ui.statPanelOpen}
+        on:click={() => (project.ui.statPanelOpen = !project.ui.statPanelOpen)}
+        title="Show/hide statistics panel"
+        ><span class="maticons">bar_chart</span></button
       >
     </div>
     <div class="main" bind:this={mainElement}>
-      {#if taskPanel}
-        <div><Tasks /></div>
+      {#if project.ui.taskPanelOpen}
+        <div><Tasks bind:project /></div>
       {/if}
-      {#if tagPanel}
-        <div><Tags /></div>
-      {/if}
-      {#if timerPanel}
-        <div><Timer /></div>
+      {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen || project.ui.statPanelOpen}
+        <div class="secondary" bind:this={secondaryElement}>
+          {#if project.ui.statPanelOpen}
+            <div class="stats">Stats</div>
+          {/if}
+          {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen}
+            <div class="utils" bind:this={utilsElement}>
+              {#if project.ui.tagPanelOpen}
+                <div><Tags bind:project /></div>
+              {/if}
+              {#if project.ui.timerPanelOpen}
+                <div><Timer bind:project /></div>
+              {/if}
+            </div>
+          {/if}
+        </div>
       {/if}
     </div>
   </div>
@@ -72,7 +112,12 @@
     bottom: 0;
     left: 0;
     right: 0;
-    --header-size: 75px;
+    --header-size: 3.5rem;
+  }
+  .stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .content {
     display: grid;
@@ -88,21 +133,21 @@
     flex-direction: column;
     border-right: 1px solid var(--fg-xxlight);
     background-color: var(--bg-light);
+    padding: 0.5rem;
   }
-  .info {
-    padding: 1rem;
-    overflow: auto;
-    height: var(--header-size);
-    border-bottom: 1px solid var(--fg-xxlight);
-  }
-  .name {
-    font-weight: 900;
+
+  button {
+    padding: 0.25rem 0;
+    color: var(--fg-xlight);
   }
   .selected {
-    background-color: var(--bg-xxlight);
+    color: var(--fg);
   }
-  .selected:hover,
+  .selected:hover {
+    color: var(--fg-xstrong);
+  }
   .selected:focus {
-    background-color: var(--bg-xlight);
+    outline: 1px solid var(--fg-xstrong);
+    outline-offset: -1px;
   }
 </style>

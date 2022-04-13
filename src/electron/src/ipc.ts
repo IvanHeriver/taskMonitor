@@ -1,5 +1,5 @@
 import { ipcMain, Menu, MenuItem, nativeTheme } from "electron";
-
+import { retrieveSession, saveProjectToFile, saveSession } from "./files";
 // setup Inter Process Communication (IPC)
 export function setupIPC(window) {
   ipcMain.handle("toggle-dark-mode", () => {
@@ -9,6 +9,23 @@ export function setupIPC(window) {
       nativeTheme.themeSource = "dark";
     }
     return nativeTheme.shouldUseDarkColors;
+  });
+
+  ipcMain.handle("save-project", (_, project) => {
+    return saveProjectToFile(window, project);
+  });
+
+  // let debouncer = null;
+  ipcMain.handle(
+    "save-session",
+    async (_, projects, currentProjectId): Promise<boolean> => {
+      saveSession(projects, currentProjectId);
+      return true;
+    }
+  );
+
+  ipcMain.handle("retrieve-session", () => {
+    return retrieveSession();
   });
 
   // will be available only in dev mode

@@ -1,10 +1,54 @@
 <script lang="ts">
-  import type { tmTag } from "../../types";
+  import type { ITag } from "../../types";
 
-  export let tag: tmTag;
-  export let mode: "small" | "big" = "big";
+  export let tag: ITag;
+  export let mode: "small" | "large" = "large";
+
+  $: color = `hsl(${tag.color.h}, ${tag.color.s}%, ${tag.color.l}%)`;
+  let style;
+  $: {
+    if (mode === "large") {
+      style = `--color: ${color}; --text-bg: var(--bg); --size: 1.5rem`;
+    } else {
+      style = `--color: ${color}; --text-bg: ${color}; --size: 0.5rem`;
+    }
+  }
 </script>
 
-<div class="container">
-  {tag.name}
+<div
+  class="container"
+  {style}
+  title={`${tag.name}${tag.description !== "" ? ` - ${tag.description}` : ""}`}
+>
+  <div class="color" />
+  <div class="text">
+    {#if mode === "large"}
+      {tag.name}
+    {/if}
+  </div>
 </div>
+
+<style>
+  .container {
+    outline: 1px solid var(--color);
+    outline-offset: -1px;
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 0.125rem;
+    margin-left: 0.25rem;
+  }
+  .container:first-child {
+    margin-left: 0;
+  }
+
+  .color {
+    width: 1rem;
+    background-color: var(--color);
+  }
+  .text {
+    padding: 0 0.25rem;
+    transform: translateY(-0.125rem);
+    min-height: var(--size);
+    min-width: var(--size);
+  }
+</style>
