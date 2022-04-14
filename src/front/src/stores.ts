@@ -75,6 +75,16 @@ export const question: Writable<{
   answer: Function;
 }> = writable(null);
 
+
+export const message: Writable<{
+  title: string;
+  message: string;
+  duration: number;
+  type: string;
+}> = writable(null);
+
+
+
 // export const projID: Writable<number> = writable(null)
 
 // function createDefaultDevProjects() {

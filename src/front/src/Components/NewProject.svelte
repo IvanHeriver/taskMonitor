@@ -1,11 +1,20 @@
 <script lang="ts">
-  import { projects, saveSession } from "../stores";
+  import { projects, saveSession, message } from "../stores";
   import type { IProject } from "../types";
   import { createEventDispatcher, onMount } from "svelte";
 
   const eventDispatcher = createEventDispatcher();
   function createNewProject() {
     if (name === "") return;
+    if (/[~`!#$%\^&*+=\-\[\]\\'();,/{}|\\":<>\?]/g.test(name)) {
+      $message = {
+        title: "Invalid character",
+        message: "You cannot use special character for the project name.",
+        duration: 5000,
+        type: "error",
+      };
+      return;
+    }
     projects.update((prevProjects: Array<IProject>): Array<IProject> => {
       newProject = {
         id: id,
@@ -27,7 +36,7 @@
           taskPanelOpen: true,
           tagPanelOpen: true,
           timerPanelOpen: true,
-          statPanelOpen: true,
+          statPanelOpen: false,
         },
       };
       return [...prevProjects, newProject];
@@ -69,7 +78,7 @@
     />
     <label for="description">Project description:</label>
     <textarea
-      rows="5"
+      rows="3"
       cols="33"
       name="description"
       id="description"

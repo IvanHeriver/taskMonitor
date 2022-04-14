@@ -25,6 +25,11 @@
         best = "hours";
       }
     }
+    // console.log("best", best);
+    // console.log("seconds", seconds);
+    // console.log("minutes", minutes);
+    // console.log("hours", hours);
+    // console.log("days", days);
   }
 </script>
 

@@ -14,6 +14,7 @@
   --fg-xxlight: hsl(200, 0%, 75%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);
+--bg-error: hsl(0, 90%, 75%);
 
   --danger: hsl(0, 90%,  50%);
 }
@@ -34,6 +35,7 @@
   --fg-xxlight: hsl(200, 0%, 25%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);
+  --bg-error: hsl(0, 90%, 25%);
 
   --danger: hsl(0, 90%, 50%);
 }
@@ -52,7 +54,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 body {

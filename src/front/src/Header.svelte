@@ -27,7 +27,7 @@
       {` - `}
     </span>
     <span class="secondary">
-      {`Task time monitoring`}
+      {`Tasks Time Monitoring`}
     </span>
   </div>
   <div class="right">

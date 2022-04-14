@@ -71,13 +71,13 @@
         title="Show/hide timer panel"
         ><span class="maticons">timer</span></button
       >
-      <button
+      <!-- <button
         class="icon"
         class:selected={project.ui.statPanelOpen}
         on:click={() => (project.ui.statPanelOpen = !project.ui.statPanelOpen)}
         title="Show/hide statistics panel"
         ><span class="maticons">bar_chart</span></button
-      >
+      > -->
     </div>
     <div class="main" bind:this={mainElement}>
       {#if project.ui.taskPanelOpen}

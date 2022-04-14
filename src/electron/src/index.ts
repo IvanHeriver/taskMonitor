@@ -80,8 +80,6 @@ function createMainWindow() {
 
   window.on("ready-to-show", async () => {
     await window.show();
-    // nativeTheme.themeSource = 'dark'
-    console.log(nativeTheme.shouldUseDarkColors)
     window.webContents.send("set-dark-mode", nativeTheme.shouldUseDarkColors);
     if (isDevelopment) window.webContents.openDevTools();
   });

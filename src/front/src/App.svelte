@@ -1,8 +1,9 @@
 <script>
   import Projects from "./Components/Projects.svelte";
   import Confirm from "./Components/Utils/Confirm.svelte";
+  import Message from "./Components/Utils/Message.svelte";
   import { onMount } from "svelte";
-  import { currentProjectId, projects } from "./stores";
+  import { currentProjectId, projects, message } from "./stores";
   import Header from "./Header.svelte";
 
   onMount(async () => {
@@ -34,6 +35,7 @@
 <Header />
 
 <Confirm />
+<Message />
 
 {#if sessionRetrieved}
   <Projects />

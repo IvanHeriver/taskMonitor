@@ -10,7 +10,7 @@ export async function saveProjectToFile(
   let filePath = project.filePath;
   let canceled = false;
   if (filePath === "") {
-    const res = await dialog.showSaveDialog(browserWindow);
+    const res = await dialog.showSaveDialog(browserWindow, {filters:[{name: "Tatimo file", extensions: ["ttm"]}], defaultPath: project.name});
     canceled = res.canceled;
     filePath = res.filePath;
   }
