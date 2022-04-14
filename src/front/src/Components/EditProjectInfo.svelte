@@ -1,15 +1,18 @@
 <script lang="ts">
-  import { registerModification } from "../stores";
+  import { overlay, registerModification } from "../stores";
   import type { IProject } from "../types";
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
   const eventDispatcher = createEventDispatcher();
 
   onMount(() => {
     name = project.name;
     description = project.description;
     projectNameInputElement.focus();
+    $overlay = true;
   });
-
+  onDestroy(() => {
+    $overlay = false;
+  });
   export let project: IProject;
 
   function saveProjectInfo() {
@@ -26,7 +29,7 @@
   let projectNameInputElement;
 </script>
 
-<div class="disabling-overlay" />
+<!-- <div class="disabling-overlay" /> -->
 <div class="outside">
   <div class="inside">
     <!-- <form on:submit|preventDefault={createNewProject}> -->

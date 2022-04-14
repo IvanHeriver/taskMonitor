@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { question } from "../../stores";
+  import { overlay, question } from "../../stores";
   // onMount(() => {
   //   validateBtnElement.focus();
   // });
@@ -11,6 +11,13 @@
     // $question
     if (validateBtnElement) {
       validateBtnElement.focus();
+    }
+  }
+  $: {
+    if ($question !== null) {
+      $overlay = true;
+    } else {
+      $overlay = false;
     }
   }
 </script>
@@ -63,7 +70,7 @@
     justify-content: center;
     align-items: center;
     z-index: 101;
-    background-color: var(--bg-overlay);
+    /* background-color: var(--bg-overlay); */
   }
   .inside {
     display: flex;

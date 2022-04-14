@@ -38,7 +38,7 @@
 <style>
   .container {
     display: grid;
-    grid-template-columns: minmax(50px, 1fr) 10ch 100px 1fr max-content;
+    grid-template-columns: minmax(50px, 1fr) 9ch 120px 125px max-content;
     column-gap: 0.5rem;
     align-items: center;
     padding: 0.25rem;
@@ -61,5 +61,9 @@
     white-space: nowrap;
     overflow: hidden;
     font-weight: 600;
+  }
+  .date {
+    font-weight: 200;
+    font-size: 0.9rem;
   }
 </style>

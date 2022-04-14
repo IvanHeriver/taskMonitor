@@ -84,6 +84,8 @@ export const message: Writable<{
 }> = writable(null);
 
 
+export const overlay: Writable<boolean> = writable(false)
+
 
 // export const projID: Writable<number> = writable(null)
 

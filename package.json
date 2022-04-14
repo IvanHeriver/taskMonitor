@@ -13,12 +13,12 @@
     "nsis": {
       "installerIcon": "ihdev_icon_src_icon.ico",
       "uninstallerIcon": "ihdev_icon_src_icon.ico",
-      "uninstallDisplayName": "electron-svelte-typescript-boilerplate",
+      "uninstallDisplayName": "tatimo",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "scripts": {
     "buildOLD": "rollup -c",

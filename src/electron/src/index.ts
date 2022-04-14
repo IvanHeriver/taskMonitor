@@ -80,7 +80,7 @@ function createMainWindow() {
 
   window.on("ready-to-show", async () => {
     await window.show();
-    window.webContents.send("set-dark-mode", nativeTheme.shouldUseDarkColors);
+    // window.webContents.send("set-dark-mode", nativeTheme.shouldUseDarkColors);
     if (isDevelopment) window.webContents.openDevTools();
   });
 
@@ -107,5 +107,6 @@ app.on("ready", () => {
   app.allowRendererProcessReuse = true;
   mainWindow = createMainWindow();
   mainMenu = setupMainMenu(mainWindow, isDevelopment, isMac, app.name);
-  setupIPC(mainWindow, mainMenu);
+  console.log("app.getPath(\"userData\")", app.getPath("userData"))
+  setupIPC(mainWindow, mainMenu, app.getPath("userData"));
 });

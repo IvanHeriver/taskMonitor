@@ -64,6 +64,7 @@ export interface IStats {
 declare global {
   interface Window {
     electronAPI: {
+      shoudUseDarkMode: Function;
       onSetDarkMode: Function;
       // toggleDarkMode: Function;
       onSaveProject: Function;

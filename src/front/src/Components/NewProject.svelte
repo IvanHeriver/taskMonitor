@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { projects, saveSession, message } from "../stores";
+  import { projects, saveSession, message, overlay } from "../stores";
   import type { IProject } from "../types";
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
 
   const eventDispatcher = createEventDispatcher();
   function createNewProject() {
@@ -46,6 +46,10 @@
   }
   onMount(() => {
     projectNameInputElement.focus();
+    $overlay = true;
+  });
+  onDestroy(() => {
+    $overlay = false;
   });
 
   const id: string = Math.random().toString().slice(2);
@@ -56,7 +60,7 @@
   let projectNameInputElement;
 </script>
 
-<div class="disabling-overlay" />
+<!-- <div class="disabling-overlay" /> -->
 <div class="outside">
   <div class="inside">
     <!-- <form on:submit|preventDefault={createNewProject}> -->

@@ -1,7 +1,7 @@
 import { ipcMain, Menu, MenuItem, nativeTheme } from "electron";
 import { retrieveSession, saveProjectToFile, saveSession, openProjectFromFile } from "./files";
 // setup Inter Process Communication (IPC)
-export function setupIPC(window, menue) {
+export function setupIPC(window, menue, userDataPath) {
   // ipcMain.handle("toggle-dark-mode", () => {
   //   if (nativeTheme.shouldUseDarkColors) {
   //     nativeTheme.themeSource = "light";
@@ -10,6 +10,9 @@ export function setupIPC(window, menue) {
   //   }
   //   return nativeTheme.shouldUseDarkColors;
   // });
+  ipcMain.on("should-use-dark-mode", () => {
+    window.webContents.send("set-dark-mode", nativeTheme.shouldUseDarkColors);
+  })
 
   ipcMain.handle("save-project", (_, project) => {
     return saveProjectToFile(window, project);
@@ -24,13 +27,13 @@ export function setupIPC(window, menue) {
   ipcMain.handle(
     "save-session",
     async (_, projects, currentProjectId): Promise<boolean> => {
-      saveSession(projects, currentProjectId);
+      saveSession(projects, currentProjectId, userDataPath);
       return true;
     }
   );
 
   ipcMain.handle("retrieve-session", () => {
-    return retrieveSession();
+    return retrieveSession(userDataPath);
   });
 
 

@@ -58,16 +58,17 @@ export async function openProject(
 
 export function saveSession(
   projects: Array<IProject>,
-  currentProjectId: string
+  currentProjectId: string,
+  userDataPath: string,
 ) {
   fs.writeFileSync(
-    path.join(__dirname, "last_session"),
+    path.join(userDataPath, "last_session"),
     JSON.stringify({ projects, currentProjectId })
   );
 }
 
-export function retrieveSession() {
-  const filePath = path.join(__dirname, "last_session");
+export function retrieveSession(userDataPath) {
+  const filePath = path.join(userDataPath, "last_session");
   if (fs.existsSync(filePath)) {
     const projectsJSON = fs.readFileSync(filePath, "utf8");
     const { projects, currentProjectId } = JSON.parse(projectsJSON);

@@ -118,6 +118,9 @@
         <span class="value">
           {formattedTime.s.v}
         </span>
+        <button class="icon save" on:click={() => addTimerLog()}>
+          <span class="maticons">download</span>
+        </button>
       </div>
     </div>
     <div class="controls">
@@ -132,13 +135,6 @@
       {/if}
       <button class="icon" on:click={resetTimer}>
         <span class="maticons">restart_alt</span>
-      </button>
-      <button
-        class="icon"
-        on:click={() => !timer.started && addTimerLog()}
-        class:disabled={timer.started || timer.currentTime === 0}
-      >
-        <span class="maticons">save</span>
       </button>
     </div>
     <div class="history">
@@ -157,10 +153,16 @@
 
 <style>
   button > .maticons {
-    font-size: 24px;
+    font-size: 28px;
   }
-  button.disabled > * {
+  /* button.disabled > * {
     color: var(--fg-xlight);
+  } */
+  button.save {
+    position: absolute;
+    right: -0.5rem;
+    top: 52%;
+    transform: translate(100%, -50%);
   }
   .container {
     position: relative;
@@ -192,6 +194,9 @@
     display: flex;
     justify-content: center;
     font-size: 2rem;
+  }
+  .s {
+    position: relative;
   }
   .time > div {
     display: flex;

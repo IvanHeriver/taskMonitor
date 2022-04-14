@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("electronAPI", {
+  shoudUseDarkMode: () => ipcRenderer.send("should-use-dark-mode"),
   onSetDarkMode: (callback) => ipcRenderer.on("set-dark-mode", callback),
   // toggleDarkMode: async () => await ipcRenderer.invoke("toggle-dark-mode"),
   onSaveProject: (callback) => {
