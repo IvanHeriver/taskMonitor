@@ -45,7 +45,7 @@
   .description {
     padding: 0 0.5rem;
     font-size: 0.9rem;
-    font-weight: 100;
+    font-weight: 200;
     color: var(--fg-light);
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -55,5 +55,6 @@
     display: flex;
     align-items: center;
     justify-self: end;
+    padding: 0.25rem 0;
   }
 </style>

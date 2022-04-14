@@ -3,12 +3,22 @@
   import Confirm from "./Components/Utils/Confirm.svelte";
   import { onMount } from "svelte";
   import { currentProjectId, projects } from "./stores";
+  import Header from "./Header.svelte";
 
   onMount(async () => {
-    const shouldUseDarkMode = true;
+    // const shouldUseDarkMode = true;
+    window.electronAPI.onSetDarkMode(async (_, isDarkMode) => {
+      darkMode = isDarkMode;
+      console.log("isDarkMode", isDarkMode);
+      // console.log(await window.electronAPI.toggleDarkMode(darkMode));
+      document.documentElement.setAttribute(
+        "data-theme",
+        darkMode ? "dark" : "light"
+      );
+    });
     document.documentElement.setAttribute(
       "data-theme",
-      shouldUseDarkMode ? "dark" : "light"
+      darkMode ? "dark" : "light"
     );
     let session = await window.electronAPI.retrieveSession();
     console.log(session);
@@ -17,8 +27,11 @@
     sessionRetrieved = true;
   });
 
+  let darkMode = true;
   let sessionRetrieved = false;
 </script>
+
+<Header />
 
 <Confirm />
 
@@ -27,6 +40,3 @@
 {:else}
   <div>Loading previous session...</div>
 {/if}
-
-<style>
-</style>

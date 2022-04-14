@@ -19,6 +19,7 @@ const isMac = process.platform === "darwin";
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
+let mainMenu
 
 function createMainWindow() {
   const window = new BrowserWindow({
@@ -28,6 +29,11 @@ function createMainWindow() {
       contextIsolation: true,
       preload: path.join(__dirname, "..", "preload.js"),
     },
+    minWidth: 920,
+    minHeight: 660,
+    frame: false,
+    title: "Tatimo",
+    icon: path.join(__dirname, "..", "ihdev_icon_src_icon.ico"),
   });
 
   // window.on("close", function (e) {
@@ -47,9 +53,9 @@ function createMainWindow() {
   if (isDevelopment) {
     // this is for me only since I have a big monitor
     // and I split my screen in a specific way when developing
-    // window.setSize(1940, 1090);
-    // window.setPosition(1510, 0);
-    window.maximize();
+    window.setSize(1940, 1090);
+    window.setPosition(1510, 0);
+    // window.maximize();
   } else {
     window.maximize();
   }
@@ -72,8 +78,11 @@ function createMainWindow() {
     mainWindow = null;
   });
 
-  window.on("ready-to-show", () => {
-    window.show();
+  window.on("ready-to-show", async () => {
+    await window.show();
+    // nativeTheme.themeSource = 'dark'
+    console.log(nativeTheme.shouldUseDarkColors)
+    window.webContents.send("set-dark-mode", nativeTheme.shouldUseDarkColors);
     if (isDevelopment) window.webContents.openDevTools();
   });
 
@@ -99,6 +108,6 @@ app.on("activate", () => {
 app.on("ready", () => {
   app.allowRendererProcessReuse = true;
   mainWindow = createMainWindow();
-  setupMainMenu(mainWindow, isDevelopment, isMac, app.name);
-  setupIPC(mainWindow);
+  mainMenu = setupMainMenu(mainWindow, isDevelopment, isMac, app.name);
+  setupIPC(mainWindow, mainMenu);
 });

@@ -108,7 +108,7 @@
     <button
       class="secondary"
       on:click={() => {
-        task.mode = "large-view";
+        // task.mode = "large-view";
         eventDispatcher("cancel");
       }}
     >
@@ -148,7 +148,7 @@
     width: 100%;
   }
   label {
-    font-weight: 100;
+    font-weight: 200;
     font-size: 0.8;
     color: var(--fg-light);
     padding-right: 0.5rem;
@@ -161,7 +161,7 @@
   }
   .desc {
     color: var(--fg-light);
-    font-weight: 100;
+    font-weight: 200;
   }
   .actions {
     display: flex;

@@ -100,7 +100,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 100;
+    font-weight: 200;
     background-color: transparent;
   }
   .actions > button > span {

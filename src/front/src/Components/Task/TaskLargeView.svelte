@@ -93,7 +93,7 @@
   .desc,
   .info {
     color: var(--fg-light);
-    font-weight: 100;
+    font-weight: 200;
   }
   .desc {
     padding-top: 0.25rem;

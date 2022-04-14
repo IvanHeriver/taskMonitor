@@ -73,7 +73,7 @@
     overflow: auto;
   }
   label {
-    font-weight: 100;
+    font-weight: 200;
     font-size: 0.8;
     color: var(--fg-light);
   }

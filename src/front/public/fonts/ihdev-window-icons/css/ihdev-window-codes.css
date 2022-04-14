@@ -1,0 +1,5 @@
+
+.icon-maximize:before { content: '\e800'; } /* '' */
+.icon-minimize:before { content: '\e801'; } /* '' */
+.icon-restore:before { content: '\e802'; } /* '' */
+.icon-close:before { content: '\e803'; } /* '' */

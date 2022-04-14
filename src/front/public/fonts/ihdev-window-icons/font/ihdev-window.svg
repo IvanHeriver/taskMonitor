@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2022 by original authors @ fontello.com</metadata>
+<defs>
+<font id="ihdev-window" horiz-adv-x="1000" >
+<font-face font-family="ihdev-window" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="maximize" unicode="&#xe800;" d="M31 819v-938h938v938h-696z m32-31h875v-876h-875z" horiz-adv-x="1000" />
+
+<glyph glyph-name="minimize" unicode="&#xe801;" d="M31 350v-31h938v31h-922z" horiz-adv-x="1000" />
+
+<glyph glyph-name="restore" unicode="&#xe802;" d="M31 819v-762h178v-177h762v762h-178v177z m32-31h699v-146h-553v-554h-146z m178-177h699v-699h-699z" horiz-adv-x="1000" />
+
+<glyph glyph-name="close" unicode="&#xe803;" d="M49 808l-23-22 441-441-430-430-11-11 23-22 11 11 430 430 441-441 22 22-441 441 430 430 11 11-22 22-11-11-430-430-430 430z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

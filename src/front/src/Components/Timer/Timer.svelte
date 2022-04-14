@@ -156,6 +156,9 @@
 </div>
 
 <style>
+  button > .maticons {
+    font-size: 24px;
+  }
   button.disabled > * {
     color: var(--fg-xlight);
   }

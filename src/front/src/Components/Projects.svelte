@@ -57,6 +57,11 @@
       }
     });
   });
+
+  async function openExistingProject() {
+    let response = await window.electronAPI.loadProject();
+    console.log(response);
+  }
   function createNewProject() {
     newProject = true;
   }
@@ -146,17 +151,40 @@
         </button>
       </button>
     {/each}
-    <button class="new" on:click={createNewProject}>
-      <span class="maticons">add</span> <span>New Project</span></button
-    >
+    {#if $projects.length !== 0}
+      <button class="new" on:click={createNewProject}>
+        <span class="maticons">add</span> <span>New Project</span>
+      </button>
+      <button class="open" on:click={openExistingProject}>
+        <span class="maticons">file_open</span> <span>Open Project</span>
+      </button>
+    {/if}
   </div>
+
   <div class="content">
     {#each $projects as p (p.id)}
       {#if p.id === $currentProjectId}
         <Project bind:project={p} />
       {/if}
     {:else}
-      <div class="no-project">No project</div>
+      <div class="no-project">
+        <div class="no-project-content">
+          <div class="actions">
+            <button class="primary" on:click={createNewProject}>
+              <span class="maticons">add</span>
+              <span>Create a new project</span>
+            </button>
+            <button class="primary" on:click={openExistingProject}>
+              <span class="maticons">file_open</span>
+              <span>Open an existing project</span>
+            </button>
+          </div>
+          <div class="recent">
+            <!-- <div class="label">Recently open files:</div>
+            <div class="recent-files">...recent files...</div> -->
+          </div>
+        </div>
+      </div>
     {/each}
     <!-- {#if $project !== null}
       <Project />
@@ -165,6 +193,29 @@
 </div>
 
 <style>
+  .no-project {
+    position: absolute;
+    top: 28px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10rem;
+  }
+  .no-project-content {
+    display: grid;
+    grid-template-columns: 100%;
+    row-gap: 1rem;
+  }
+  .actions {
+    display: grid;
+    grid-template-columns: 100%;
+    row-gap: 1rem;
+  }
+
   button.close {
     margin-left: 0.5rem;
   }
@@ -176,7 +227,7 @@
   }
   .projects {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 28px);
     display: grid;
     grid-template-rows: min-content auto;
   }

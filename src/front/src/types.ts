@@ -64,12 +64,21 @@ export interface IStats {
 declare global {
   interface Window {
     electronAPI: {
-      toggleDarkMode: Function;
+      onSetDarkMode: Function;
+      // toggleDarkMode: Function;
       onSaveProject: Function;
       onLoadProject: Function;
       saveProject: Function;
+      loadProject: Function;
       saveSession: Function;
       retrieveSession: Function;
+      onResize: Function;
+      isNormal: Function;
+      minimize: Function;
+      maximize: Function;
+      restore: Function;
+      close: Function;
+      openMainMenue: Function;
     }; // 👈️ turn off type checking
   }
 }

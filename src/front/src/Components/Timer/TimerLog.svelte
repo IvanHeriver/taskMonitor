@@ -61,7 +61,7 @@
   }
   .start-date,
   .end-date {
-    font-weight: 100;
+    font-weight: 200;
     font-size: 0.8rem;
     /* display: flex;
     align-items: center; */

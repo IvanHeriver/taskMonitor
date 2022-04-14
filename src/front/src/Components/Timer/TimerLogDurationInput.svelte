@@ -30,7 +30,7 @@
 
 <div class="container">
   <div class="header">
-    <div>Select timer records to use their duration:</div>
+    <div class="label">Select timer records to use their duration:</div>
     <div class="actions">
       <button on:click={applySelected}>
         <span class="maticons">arrow_upward</span><span>Apply</span>
@@ -77,7 +77,7 @@
     height: 1.5rem;
     padding: 0 0.25rem;
     padding-top: 1px;
-    font-weight: 100;
+    font-weight: 200;
     background-color: var(--bg-light);
   }
   .records {
@@ -95,6 +95,10 @@
     justify-content: space-between;
     align-items: stretch;
   }
+  .label {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .actions {
     display: flex;
   }
@@ -102,7 +106,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 100;
+    font-weight: 200;
     background-color: transparent;
   }
   .actions > button:hover {
@@ -136,7 +140,7 @@
   }
   .start-date,
   .end-date {
-    font-weight: 100;
+    font-weight: 200;
     font-size: 0.8rem;
     display: flex;
     align-items: center;

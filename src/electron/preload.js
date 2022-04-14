@@ -1,7 +1,8 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  toggleDarkMode: () => ipcRenderer.invoke("toggle-dark-mode"),
+  onSetDarkMode: (callback) => ipcRenderer.on("set-dark-mode", callback),
+  // toggleDarkMode: async () => await ipcRenderer.invoke("toggle-dark-mode"),
   onSaveProject: (callback) => {
     ipcRenderer.on("save-project", async () => {
       callback();
@@ -9,6 +10,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
   },
   saveProject: async (project) => {
     return await ipcRenderer.invoke("save-project", project);
+  },
+  loadProject: async () => {
+    return await ipcRenderer.invoke("load-project");
   },
   onLoadProject: (callback) => {
     ipcRenderer.on("load-project", (_, loadedProject) => {
@@ -21,6 +25,13 @@ contextBridge.exposeInMainWorld("electronAPI", {
   retrieveSession: async () => {
     return await ipcRenderer.invoke("retrieve-session");
   },
+  onResize: (callback) => ipcRenderer.on("resize", callback),
+  isNormal: async ()=>ipcRenderer.invoke("isNormal"),
+  minimize: ()=>ipcRenderer.send("minimize"),
+  maximize: ()=>ipcRenderer.send("maximize"),
+  restore: ()=>ipcRenderer.send("restore"),
+  close: ()=>ipcRenderer.send("close"),
+  openMainMenue: () => ipcRenderer.send("menue")
 });
 
 const isDevelopment = "ISDEV" in process.env;

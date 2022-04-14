@@ -143,7 +143,7 @@
     pointer-events: none;
   } */
   label {
-    font-weight: 100;
+    font-weight: 200;
     font-size: 0.8;
     color: var(--fg-light);
     padding-right: 0.5rem;

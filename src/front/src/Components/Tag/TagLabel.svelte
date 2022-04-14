@@ -47,7 +47,8 @@
   }
   .text {
     padding: 0 0.25rem;
-    transform: translateY(-0.125rem);
+    /* transform: translateY(-0.125rem); */
+    line-height: 1.3;
     min-height: var(--size);
     min-width: var(--size);
   }
