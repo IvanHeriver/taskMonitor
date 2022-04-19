@@ -4,7 +4,12 @@
   import Message from "./Components/Utils/Message.svelte";
   import Overlay from "./Components/Utils/Overlay.svelte";
   import { onMount } from "svelte";
-  import { currentProjectId, projects, message } from "./stores";
+  import {
+    currentProjectId,
+    projects,
+    message,
+    processLoadedProject,
+  } from "./stores";
   import Header from "./Header.svelte";
 
   onMount(async () => {
@@ -19,13 +24,23 @@
       );
     });
     window.electronAPI.shoudUseDarkMode();
+    const currentAppVersion = await window.electronAPI.checkAndUpdateApp();
+    console.log("currentAppVersion", currentAppVersion);
+    window.electronAPI.onUpdateAvailable((e, args) => {
+      console.log("onUpdateAvailable", e);
+      console.log("onUpdateAvailable", args);
+    });
+    window.electronAPI.onUpdateDownloaded((e, args) => {
+      console.log("onUpdateDownloaded", e);
+      console.log("onUpdateDownloaded", args);
+    });
     // document.documentElement.setAttribute(
     //   "data-theme",
     //   darkMode ? "dark" : "light"
     // );
     let session = await window.electronAPI.retrieveSession();
     console.log(session);
-    $projects = session.projects;
+    $projects = session.projects.map((p) => processLoadedProject(p));
     $currentProjectId = session.currentProjectId;
     sessionRetrieved = true;
   });
@@ -44,5 +59,15 @@
 {#if sessionRetrieved}
   <Projects />
 {:else}
-  <div>Loading previous session...</div>
+  <div class="loading">Loading previous session...</div>
 {/if}
+
+<style>
+  .loading {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 28px);
+  }
+</style>

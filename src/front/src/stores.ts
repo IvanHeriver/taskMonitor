@@ -52,6 +52,7 @@ export function saveSession() {
       });
       p.ui.newTagOpen = false;
       p.ui.newTaskOpen = false;
+      p.ui.newTodoOpen = false;
       return p;
     });
 
@@ -62,6 +63,18 @@ export function saveSession() {
   }, 500);
 }
 
+export function processLoadedProject(loadedProject: IProject): IProject {
+    if (!("version" in loadedProject)) {
+      loadedProject.version = 0;
+    }
+    if (loadedProject.version === 0) {
+      loadedProject.todos = [];
+      loadedProject.ui.newTodoOpen = false
+      loadedProject.ui.todoPanelOpen = true
+      loadedProject.version = 1
+    }
+    return loadedProject;
+  }
 // projects.subscribe((ps)=>{
 //   ps.
 // })
@@ -86,105 +99,3 @@ export const message: Writable<{
 
 export const overlay: Writable<boolean> = writable(false)
 
-
-// export const projID: Writable<number> = writable(null)
-
-// function createDefaultDevProjects() {
-//   const tags: Array<ITag> = [
-//     {
-//       id: "0",
-//       name: "main",
-//       description: "main activities",
-//       color: { h: 100, s: 50, l: 50 },
-//     },
-//     {
-//       id: "1",
-//       name: "secondary",
-//       description: "secondary activities",
-//       color: { h: 200, s: 100, l: 50 },
-//     },
-//     {
-//       id: "2",
-//       name: "urgent",
-//       description: "urgent activities",
-//       color: { h: 0, s: 100, l: 50 },
-//     },
-//     {
-//       id: "3",
-//       name: "incomplete",
-//       description: "Still some work to be done",
-//       color: { h: 50, s: 90, l: 75 },
-//     },
-//     {
-//       id: "4",
-//       name: "uncertain",
-//       description:
-//         "There is some uncertainty regarding the duration of the task",
-//       color: { h: 220, s: 90, l: 10 },
-//     },
-//   ];
-
-//   const tasks: Array<ITask> = [
-//     {
-//       id: "0",
-//       title: "project start",
-//       description: "Working environment setup",
-//       duration: 120,
-//       tags_id: ["0"],
-//       date: new Date().toISOString(),
-//       created: new Date().toISOString(),
-//       updated: new Date().toISOString(),
-//       mode: "large-view",
-//     },
-//     {
-//       id: "1",
-//       title: "first meeting",
-//       description: "Discussions on planning",
-//       duration: 45,
-//       tags_id: ["1"],
-//       date: new Date().toISOString(),
-//       created: new Date().toISOString(),
-//       updated: new Date().toISOString(),
-//       mode: "large-view",
-//     },
-//     {
-//       id: "2",
-//       title: "Proof of concept",
-//       description:
-//         "Proof of concept to showcase to the client created. Only features were implemented; no styling.",
-//       duration: 12 * 60 + 30,
-//       tags_id: ["0", "2", "3", "4"],
-//       date: new Date().toISOString(),
-//       created: new Date().toISOString(),
-//       updated: new Date().toISOString(),
-//       mode: "large-view",
-//     },
-//   ];
-
-//   const projects: Array<IProject> = [
-//     {
-//       id: "0",
-//       name: "First Project",
-//       description: "My first client work",
-//       filePath: "",
-//       state: "saved",
-//       tasks: tasks,
-//       tags: tags,
-//       timerLogs: [],
-//       created: new Date().toISOString(),
-//       updated: new Date().toISOString(),
-//       stats: {
-//         allocatedDuration: null,
-//       },
-//       ui: {
-//         newTaskOpen: false,
-//         newTagOpen: false,
-//         taskPanelOpen: true,
-//         tagPanelOpen: true,
-//         timerPanelOpen: true,
-//         statPanelOpen: true,
-//       },
-//     },
-//   ];
-//   return projects;
-// }

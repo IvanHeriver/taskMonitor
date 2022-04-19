@@ -52,11 +52,14 @@
   <div class="stats">
     <div class="allocated">
       <div class="alloc">
-        <div class="label">Time allocated:</div>
+        {#if !editAllocated}
+          <div class="label">Time allocated:</div>
+        {/if}
         <div class="duration">
           {#if editAllocated}
             <DurationSimpleInput
               bind:duration={project.stats.allocatedDuration}
+              autofocus={true}
             />
           {:else}
             <Duration bind:duration={project.stats.allocatedDuration} />
@@ -91,7 +94,7 @@
     </div>
     <div class="remaining">
       <div>Time remaining:</div>
-      <Duration bind:duration={remaining} unit="auto" />
+      <Duration bind:duration={remaining} />
     </div>
   </div>
 </div>
@@ -108,6 +111,7 @@
     /* display: flex; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    user-select: none;
   }
   .stats > * {
     padding: 0 1rem;

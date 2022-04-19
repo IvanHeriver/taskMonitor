@@ -87,9 +87,10 @@ export function setupMainMenu(window, isDev, isMac = false, appName = "") {
           role: isMac ? "close" : "quit",
         },
       ]
-  if (isDev) {
+  // if (isDev) {
     menuTemplate.unshift({
       label: "DEVELOPMENT",
+      visible: isDev,   
       submenu: [
         {
           label: "Refresh",
@@ -109,7 +110,7 @@ export function setupMainMenu(window, isDev, isMac = false, appName = "") {
       },
       ],
     });
-  }
+  // }
   // set up the menu
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);

@@ -29,7 +29,7 @@
     <div class="time">
       <div class="date">{new Date(task.date).toLocaleDateString()}</div>
       <div class="duration">
-        <Duration duration={task.duration} unit="auto" />
+        <Duration duration={task.duration} />
       </div>
     </div>
     <div class="desc">{task.description}</div>
@@ -76,6 +76,7 @@
     background-color: var(--bg);
     outline: 1px solid var(--bg-light);
     outline-offset: -1px;
+    border-left: 0.5rem solid var(--bg-light);
   }
   .content {
     padding: 0.5rem;
@@ -87,13 +88,14 @@
     font-size: 20px;
   } */
   .title {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
+    color: var(--fg-strong);
     font-weight: 600;
   }
   .desc,
   .info {
-    color: var(--fg-light);
-    font-weight: 200;
+    color: var(--fg-xlight);
+    /* font-weight: 200; */
   }
   .desc {
     padding-top: 0.25rem;
@@ -105,9 +107,9 @@
   }
   .info {
     /* padding-top: 0.25rem; */
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
-  .date-info {
+  /* .date-info {
     font-weight: 400;
-  }
+  } */
 </style>

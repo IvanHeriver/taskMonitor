@@ -7,7 +7,7 @@
   // import Duration from "./Duration.svelte";
   import TimerLogDurationInput from "./TimerLogDurationInput.svelte";
   export let duration: number;
-  export let unit: "minutes" | "hours" | "days" = "hours";
+  // export let unit: "minutes" | "hours" | "days" = "hours";
   export let timerLogs: Array<ITimerLog>;
 
   const unitName = Math.random().toString().slice(2);
@@ -46,7 +46,7 @@
 
 <div class="container">
   <div class="custom">
-    <DurationSimpleInput bind:duration bind:unit />
+    <DurationSimpleInput bind:duration />
     <!-- {#if unit === "minutes"}
       <input
         type="number"

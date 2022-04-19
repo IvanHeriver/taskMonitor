@@ -11,6 +11,7 @@ import {
 import path from "path";
 import { setupIPC } from "./ipc";
 import { setupMainMenu } from "./menu";
+import { autoUpdater } from "electron-updater";
 // import { saveSession } from "./files";
 
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
@@ -29,7 +30,7 @@ function createMainWindow() {
       contextIsolation: true,
       preload: path.join(__dirname, "..", "preload.js"),
     },
-    minWidth: 920,
+    minWidth: 1080,
     minHeight: 660,
     frame: false,
     title: "Tatimo",
@@ -56,8 +57,10 @@ function createMainWindow() {
     window.setSize(1940, 1090);
     window.setPosition(1510, 0);
     // window.maximize();
+    
   } else {
-    window.maximize();
+    // window.maximize();
+    window.setSize(1080, 660);
   }
 
   if (isDevelopment) {
@@ -104,9 +107,16 @@ app.on("activate", () => {
 
 // create main BrowserWindow when electron is ready
 app.on("ready", () => {
-  app.allowRendererProcessReuse = true;
+  // app.allowRendererProcessReuse = true;
   mainWindow = createMainWindow();
   mainMenu = setupMainMenu(mainWindow, isDevelopment, isMac, app.name);
-  console.log("app.getPath(\"userData\")", app.getPath("userData"))
-  setupIPC(mainWindow, mainMenu, app.getPath("userData"));
+  console.log("App user date path:", app.getPath("userData"))
+  setupIPC(mainWindow, mainMenu, app, autoUpdater);
 });
+
+autoUpdater.on("update-available", ()=>{
+  mainWindow.webContents.send("update-available")
+})
+autoUpdater.on("update-downloaded", ()=>{
+  mainWindow.webContents.send("update-downloaded")
+})

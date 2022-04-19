@@ -62,6 +62,7 @@
     padding: 0 0.25rem;
     padding-top: 0.25rem;
     min-width: 200px;
+    user-select: none;
   }
   .container:first-child {
     padding-top: 0;

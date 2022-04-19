@@ -1,4 +1,5 @@
 export interface IProject {
+  version: number;
   id: string;
   name: string;
   description: string;
@@ -7,6 +8,7 @@ export interface IProject {
   tasks: Array<ITask>;
   tags: Array<ITag>;
   timerLogs: Array<ITimerLog>;
+  todos: Array<ITodo>;
   created: string;
   updated: string;
   stats: IStats;
@@ -51,10 +53,18 @@ export interface ITimerLog {
 export interface IUi {
   newTaskOpen: boolean;
   newTagOpen: boolean;
+  newTodoOpen: boolean;
   taskPanelOpen: boolean;
   tagPanelOpen: boolean;
   timerPanelOpen: boolean;
   statPanelOpen: boolean;
+  todoPanelOpen: boolean;
+}
+
+export interface ITodo {
+  id: string;
+  text: string;
+  done: boolean;
 }
 
 export interface IStats {
@@ -80,6 +90,9 @@ declare global {
       restore: Function;
       close: Function;
       openMainMenue: Function;
+      checkAndUpdateApp: Function;
+      onUpdateAvailable: Function;
+      onUpdateDownloaded: Function;
     }; // 👈️ turn off type checking
   }
 }

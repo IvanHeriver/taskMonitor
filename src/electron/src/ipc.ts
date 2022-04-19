@@ -1,7 +1,9 @@
 import { ipcMain, Menu, MenuItem, nativeTheme } from "electron";
 import { retrieveSession, saveProjectToFile, saveSession, openProjectFromFile } from "./files";
+
+
 // setup Inter Process Communication (IPC)
-export function setupIPC(window, menue, userDataPath) {
+export function setupIPC(window: Electron.BrowserWindow, menu: Electron.Menu, app: Electron.App, autoUpdater) {
   // ipcMain.handle("toggle-dark-mode", () => {
   //   if (nativeTheme.shouldUseDarkColors) {
   //     nativeTheme.themeSource = "light";
@@ -20,6 +22,7 @@ export function setupIPC(window, menue, userDataPath) {
 
   ipcMain.handle("load-project", async () => {
     const response = await openProjectFromFile(window);
+    console.log(response.project.todos)
     window.webContents.send("load-project", response);
   });
 
@@ -27,13 +30,13 @@ export function setupIPC(window, menue, userDataPath) {
   ipcMain.handle(
     "save-session",
     async (_, projects, currentProjectId): Promise<boolean> => {
-      saveSession(projects, currentProjectId, userDataPath);
+      saveSession(projects, currentProjectId, app.getPath("userData"));
       return true;
     }
   );
 
   ipcMain.handle("retrieve-session", () => {
-    return retrieveSession(userDataPath);
+    return retrieveSession(app.getPath("userData"));
   });
 
 
@@ -46,17 +49,26 @@ export function setupIPC(window, menue, userDataPath) {
     window.webContents.send("resize", window.isNormal())
   })
   ipcMain.on("menue", ()=>{
-    menue.popup({window: window, x:0, y:28})
+    menu.popup({window: window, x:0, y:28})
   })
 
 
+  ipcMain.handle('check-and-update', ()=>{
+    // const currentVersion = app.getVersion()
+    const currentVersion = app.getVersion()
+    console.log("App current version: ", currentVersion)
+    autoUpdater.checkForUpdatesAndNotify()
+    return currentVersion
+  })
+
   // will be available only in dev mode
-  const mouse_position = { x: Number, y: Number };
+  const mouse_position: { x: number, y: number  }= {x: null, y: null};
   const devMenue = new Menu();
   const menueItem = new MenuItem({
     label: "Inspect Element",
     click: () => {
-      window.inspectElement(mouse_position.x, mouse_position.y);
+      window.webContents.inspectElement(mouse_position.x, mouse_position.y);
+      // window.inspect
     },
   });
   devMenue.append(menueItem);
@@ -65,4 +77,5 @@ export function setupIPC(window, menue, userDataPath) {
     mouse_position.y = y;
     devMenue.popup({ window: window });
   });
+
 }

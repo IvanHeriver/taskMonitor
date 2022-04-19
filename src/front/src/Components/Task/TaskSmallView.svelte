@@ -14,7 +14,7 @@
   <div class="title">{task.title}</div>
   <div class="date">{new Date(task.date).toLocaleDateString()}</div>
   <div class="duration">
-    <Duration duration={task.duration} unit="auto" />
+    <Duration duration={task.duration} />
   </div>
   <div class="tags">
     {#each task.tags_id as tag_id}
@@ -38,13 +38,14 @@
 <style>
   .container {
     display: grid;
-    grid-template-columns: minmax(50px, 1fr) 9ch 120px 125px max-content;
+    grid-template-columns: minmax(50px, 1fr) 8ch minmax(100px, 120px) 100px max-content;
     column-gap: 0.5rem;
     align-items: center;
     padding: 0.25rem;
     background-color: var(--bg);
     outline: 1px solid var(--bg-light);
     outline-offset: -1px;
+    border-left: 0.5rem solid var(--bg-light);
   }
   .tags {
     display: flex;
@@ -56,14 +57,15 @@
     display: flex;
   }
   .title {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     font-weight: 600;
+    color: var(--fg-strong);
   }
   .date {
-    font-weight: 200;
-    font-size: 0.9rem;
+    /* font-weight: 200; */
+    font-size: 0.8rem;
   }
 </style>

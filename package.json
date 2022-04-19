@@ -18,8 +18,12 @@
       "allowToChangeInstallationDirectory": true
     }
   },
-  "version": "0.0.2",
+  "version": "0.0.4",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IvanHeriver/taskMonitor.git"
+  },
   "scripts": {
     "buildOLD": "rollup -c",
     "devOLD": "rollup -c -w",
@@ -30,7 +34,8 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "start": "sirv ./src/front/public --no-clear",
     "electron": "set ISDEV= && electron ./src/electron/build/index.js",
-    "dist": "npm run build-front && npm run build-electron && electron-builder"
+    "dist": "npm run build-front && npm run build-electron && electron-builder --publish never",
+    "deploy": "npm run build-front && npm run build-electron && electron-builder --publish always"
   },
   "devDependencies": {
     "@ivanheriver/section-resizer": "^0.0.2022-03-29",
@@ -38,7 +43,7 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-typescript": "^8.0.0",
     "@tsconfig/svelte": "^2.0.0",
-    "electron": "8.2.0",
+    "electron": "18.0.4",
     "electron-builder": "^22.4.1",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
@@ -53,5 +58,8 @@
     "tslib": "^2.0.0",
     "typescript": "^4.0.0"
   },
-  "type": "module"
+  "type": "commonjs",
+  "dependencies": {
+    "electron-updater": "^5.0.1"
+  }
 }

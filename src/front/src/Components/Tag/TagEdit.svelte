@@ -21,11 +21,13 @@
     description = "",
     color = "#808080";
   let isDark = false;
+  let isNew = true;
   if (tag !== null) {
     id = tag.id;
     name = tag.name;
     description = tag.description;
     color = hslToHex(tag.color);
+    isNew = false;
   }
 
   $: {
@@ -73,7 +75,7 @@
   <div class="actions">
     <button class="primary" on:click={() => save()}>
       <span class="maticons">done</span>
-      <span>Save</span>
+      <span>{isNew ? "Create New Tag" : "Save Tag"}</span>
     </button>
     <button class="secondary" on:click={() => eventDispatcher("cancel")}>
       <span class="maticons">close</span>
@@ -84,32 +86,30 @@
 
 <style>
   .container {
-    outline: 1px solid var(--color);
+    /* outline: 1px solid var(--color); */
+    outline: 1px solid var(--bg-xxlight);
 
     outline-offset: -1px;
-    /* background-color: var(--bg-strong); */
     padding: 0.5rem;
     display: grid;
     grid-template-columns: 100%;
     row-gap: 0.5rem;
   }
+  .container:focus-within {
+    outline-color: var(--fg-xstrong);
+  }
   .top {
-    /* display: flex; */
-    /* justify-content: space-between; */
-    /* align-items: center; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 0.5rem;
-    /* background-color: var(--bg); */
-    /* padding: 0.5rem; */
   }
-  /* .description {
-    padding: 0.5rem;
-  } */
   .actions {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+  }
+  .actions > button {
+    margin-left: 0.5rem;
   }
   input {
     width: 100%;
@@ -118,30 +118,8 @@
   .color,
   .description {
     display: flex;
-    /* justify-content: stretch; */
     align-items: center;
   }
-  /* .color {
-    position: relative;
-    overflow: hidden;
-    height: 1.5rem;
-    width: 100%;
-  }
-  input[type="color"] {
-    position: absolute;
-    top: -2rem;
-    left: -2rem;
-    height: 6rem;
-    width: 200%;
-  }
-  .color > label {
-    position: absolute;
-    color: var(--fg-color);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  } */
   label {
     font-weight: 200;
     font-size: 0.8;

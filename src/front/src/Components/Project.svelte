@@ -3,6 +3,7 @@
   import Tasks from "./Task/Tasks.svelte";
   import Tags from "./Tag/Tags.svelte";
   import Timer from "./Timer/Timer.svelte";
+  import Todos from "./Todo/Todos.svelte";
   // import { onMount } from "svelte";
   import ProjectHeader from "./ProjectHeader.svelte";
   // import { project } from "../stores";
@@ -10,6 +11,7 @@
 
   let mainElement, mainElementResizer;
   let secondaryElement, secondaryElementResizer;
+  let terciaryElement, terciaryElementResizer;
   let utilsElement, utilsElementResizer;
   $: {
     if (mainElement) {
@@ -17,7 +19,7 @@
         mode: "horizontal",
       });
       mainElementResizer.configure({ min: 200 });
-      mainElementResizer.resize([{ index: 0, size: 400 }]);
+      // mainElementResizer.resize([{ index: 0, size: 400 }]);
     }
   }
   $: {
@@ -29,9 +31,16 @@
     }
   }
   $: {
+    if (terciaryElement) {
+      terciaryElementResizer = sectionResizer(terciaryElement, {
+        mode: "horizontal",
+      });
+    }
+  }
+  $: {
     if (utilsElement) {
       utilsElementResizer = sectionResizer(utilsElement, {
-        mode: "horizontal",
+        mode: "vertical",
       });
     }
   }
@@ -78,23 +87,40 @@
         title="Show/hide statistics panel"
         ><span class="maticons">bar_chart</span></button
       > -->
+
+      <button
+        class="icon"
+        class:selected={project.ui.todoPanelOpen}
+        on:click={() => (project.ui.todoPanelOpen = !project.ui.todoPanelOpen)}
+        title="Show/hide todos panel"
+        ><span class="maticons">checklist</span></button
+      >
     </div>
     <div class="main" bind:this={mainElement}>
       {#if project.ui.taskPanelOpen}
         <div><Tasks bind:project /></div>
       {/if}
-      {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen || project.ui.statPanelOpen}
+      {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen || project.ui.statPanelOpen || project.ui.todoPanelOpen}
         <div class="secondary" bind:this={secondaryElement}>
           {#if project.ui.statPanelOpen}
             <div class="stats">Stats</div>
           {/if}
-          {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen}
-            <div class="utils" bind:this={utilsElement}>
+          {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen || project.ui.todoPanelOpen}
+            <div class="tags-utils" bind:this={terciaryElement}>
               {#if project.ui.tagPanelOpen}
                 <div><Tags bind:project /></div>
               {/if}
-              {#if project.ui.timerPanelOpen}
-                <div><Timer bind:project /></div>
+              {#if project.ui.timerPanelOpen || project.ui.todoPanelOpen}
+                <div class="utils" bind:this={utilsElement}>
+                  {#if project.ui.timerPanelOpen}
+                    <div><Timer bind:project /></div>
+                  {/if}
+                  {#if project.ui.todoPanelOpen}
+                    <div>
+                      <Todos bind:project />
+                    </div>
+                  {/if}
+                </div>
               {/if}
             </div>
           {/if}

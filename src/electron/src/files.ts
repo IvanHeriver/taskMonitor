@@ -51,6 +51,7 @@ export async function openProject(
 ): Promise<{ success: boolean; project: IProject }> {
   return new Promise((resolve) => {
     fs.readFile(filePath, "utf-8", (err, data) => {
+      console.log(" JSON.parse(data).todos",  JSON.parse(data).todos)
       resolve({ success: !err, project: err ? null : JSON.parse(data) });
     });
   });

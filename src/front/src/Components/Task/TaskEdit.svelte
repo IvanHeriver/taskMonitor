@@ -15,9 +15,10 @@
   let title = "";
   let date = currentDate;
   let duration = 0;
-  let duration_unit: "minutes" | "hours" | "days" = "hours";
+  // let duration_unit: "minutes" | "hours" | "days" = "hours";
   let description = "";
   let tags_id = [];
+  let isNew = true;
   //   let date_created = new Date().toISOString()
   // let date_create
   if (task !== null) {
@@ -27,6 +28,7 @@
     duration = task.duration;
     description = task.description;
     tags_id = task.tags_id;
+    isNew = false;
   }
 
   function save() {
@@ -78,8 +80,9 @@
     </div>
   </div>
   <div class="duration">
-    <label for="duration">{`Duration (${duration_unit}): `} </label>
-    <DurationInput bind:duration bind:unit={duration_unit} bind:timerLogs />
+    <!-- <label for="duration">{`Duration (${duration_unit}): `} </label> -->
+    <label for="duration">{`Duration: `} </label>
+    <DurationInput bind:duration bind:timerLogs />
   </div>
   <div class="desc">
     <label for="description">Description: </label>
@@ -103,7 +106,7 @@
       <!-- <span class="maticons">save</span> -->
 
       <span class="maticons">done</span>
-      <span>Save</span>
+      <span>{isNew ? "Create New Task" : "Save Task"}</span>
     </button>
     <button
       class="secondary"
@@ -122,11 +125,15 @@
   .container {
     padding: 0.5rem;
     background-color: var(--bg-strong);
+    /* outline: 1px solid var(--fg-xstrong); */
     outline: 1px solid var(--bg-xxlight);
     outline-offset: -1px;
     display: grid;
     grid-template-columns: 100%;
     row-gap: 0.5rem;
+  }
+  .container:focus-within {
+    outline-color: var(--fg-xstrong);
   }
   .title-date {
     display: grid;
@@ -159,10 +166,10 @@
   textarea {
     width: 100%;
   }
-  .desc {
+  /* .desc {
     color: var(--fg-light);
     font-weight: 200;
-  }
+  } */
   .actions {
     display: flex;
     justify-content: flex-end;

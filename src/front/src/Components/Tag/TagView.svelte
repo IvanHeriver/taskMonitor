@@ -30,7 +30,8 @@
     outline-offset: -1px;
     background-color: var(--bg-strong);
     display: grid;
-    grid-template-columns: 1rem max-content minmax(0, auto) max-content;
+    grid-template-columns: 0.5rem max-content minmax(0, auto) max-content;
+    column-gap: 0.25rem;
     align-items: center;
     background-color: var(--bg);
   }
@@ -39,14 +40,14 @@
     background-color: var(--color);
   }
   .name {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     padding-left: 0.25rem;
   }
   .description {
     padding: 0 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 200;
-    color: var(--fg-light);
+    font-size: 0.8rem;
+    /* font-weight: 200; */
+    color: var(--fg-xlight);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

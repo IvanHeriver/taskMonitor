@@ -16,8 +16,10 @@ contextBridge.exposeInMainWorld("electronAPI", {
     return await ipcRenderer.invoke("load-project");
   },
   onLoadProject: (callback) => {
-    ipcRenderer.on("load-project", (_, loadedProject) => {
-      callback(loadedProject);
+    ipcRenderer.on("load-project", (_, loadedProjectInfo) => {
+      console.log("*".repeat(210))
+      console.log("loadedProjectInfo", loadedProjectInfo)
+      callback(loadedProjectInfo);
     });
   },
   saveSession: async (projects, currentProjectId) => {
@@ -32,7 +34,10 @@ contextBridge.exposeInMainWorld("electronAPI", {
   maximize: ()=>ipcRenderer.send("maximize"),
   restore: ()=>ipcRenderer.send("restore"),
   close: ()=>ipcRenderer.send("close"),
-  openMainMenue: () => ipcRenderer.send("menue")
+  openMainMenue: () => ipcRenderer.send("menue"),
+  checkAndUpdateApp: () => ipcRenderer.invoke("check-and-update"),
+  onUpdateAvailable: (callback) => ipcRenderer.on("update-available", callback),
+  onUpdateDownloaded: (callback) => ipcRenderer.on("update-downloaded", callback),
 });
 
 const isDevelopment = "ISDEV" in process.env;

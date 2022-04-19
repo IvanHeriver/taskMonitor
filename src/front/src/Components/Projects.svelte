@@ -1,48 +1,28 @@
 <script lang="ts">
-  import { projects, currentProjectId, question, saveSession } from "../stores";
+  import {
+    projects,
+    currentProjectId,
+    question,
+    saveSession,
+    registerModification,
+    processLoadedProject,
+  } from "../stores";
   // import type { tmProject } from "../types";
   import Project from "./Project.svelte";
   import NewProject from "./NewProject.svelte";
   import { onMount } from "svelte";
+  import type { IProject } from "../types";
   // export let tabsInfo;
   // let currentProject: tmProject = null;
 
   onMount(() => {
-    window.electronAPI.onLoadProject((loadedProject) => {
-      if (!loadedProject.success) {
-        console.error("Cannot open file!");
+    window.electronAPI.onLoadProject((loadedProjectInfo) => {
+      console.log("loadedProjectInfo", loadedProjectInfo);
+      if (!loadedProjectInfo.success) {
+        console.warn("The file was not loaded");
         return;
       }
-      const index = $projects.findIndex(
-        (p) => p.id === loadedProject.project.id
-      );
-      if (index === -1) {
-        $projects = [...$projects, loadedProject.project];
-      } else {
-        if (loadedProject.project.filePath !== $projects[index].filePath) {
-          loadedProject.project.id = Math.random().toString().slice(2);
-          console.warn(
-            "Duplicated IDs found with different filePath. The ID of the loaded project was changed"
-          );
-          $projects = [...$projects, loadedProject.project];
-        } else {
-          if ($projects[index].state === "unsaved") {
-            $question = {
-              title: "Overwrite unsaved project?",
-              question:
-                "This file is already loaded with unsaved modification. Do you want to proceed and overwrite the unsaved version?",
-              answer: (res) => {
-                if (res) {
-                  $projects[index] = loadedProject.project;
-                }
-              },
-            };
-          } else {
-            $projects[index] = loadedProject.project;
-          }
-        }
-      }
-      $currentProjectId = loadedProject.project.id;
+      onLoadProject(loadedProjectInfo.project);
     });
     window.electronAPI.onSaveProject(async () => {
       const currentProject = $projects.find((p) => p.id === $currentProjectId);
@@ -57,6 +37,38 @@
       }
     });
   });
+
+  function onLoadProject(loadedProject: IProject) {
+    loadedProject = processLoadedProject(loadedProject);
+    const index = $projects.findIndex((p) => p.id === loadedProject.id);
+    if (index === -1) {
+      $projects = [...$projects, loadedProject];
+    } else {
+      if (loadedProject.filePath !== $projects[index].filePath) {
+        loadedProject.id = Math.random().toString().slice(2);
+        console.warn(
+          "Duplicated IDs found with different filePath. The ID of the loaded project was changed"
+        );
+        $projects = [...$projects, loadedProject];
+      } else {
+        if ($projects[index].state === "unsaved") {
+          $question = {
+            title: "Overwrite unsaved project?",
+            question:
+              "This file is already loaded with unsaved modification. Do you want to proceed and overwrite the unsaved version?",
+            answer: (res) => {
+              if (res) {
+                $projects[index] = loadedProject;
+              }
+            },
+          };
+        } else {
+          $projects[index] = loadedProject;
+        }
+      }
+    }
+    $currentProjectId = loadedProject.id;
+  }
 
   async function openExistingProject() {
     let response = await window.electronAPI.loadProject();
@@ -91,6 +103,7 @@
     if ($projects.length !== 0 && $currentProjectId === null) {
       $currentProjectId = $projects[0].id;
     }
+    console.log($projects);
   }
 </script>
 
@@ -152,10 +165,10 @@
       </button>
     {/each}
     {#if $projects.length !== 0}
-      <button class="new" on:click={createNewProject}>
+      <button class="new primary" on:click={createNewProject}>
         <span class="maticons">add</span> <span>New Project</span>
       </button>
-      <button class="open" on:click={openExistingProject}>
+      <button class="open primary" on:click={openExistingProject}>
         <span class="maticons">file_open</span> <span>Open Project</span>
       </button>
     {/if}

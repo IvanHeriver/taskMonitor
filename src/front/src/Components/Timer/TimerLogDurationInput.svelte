@@ -77,7 +77,7 @@
     height: 1.5rem;
     padding: 0 0.25rem;
     padding-top: 1px;
-    font-weight: 200;
+    /* font-weight: 200; */
     background-color: var(--bg-light);
   }
   .records {
@@ -106,7 +106,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 200;
+    /* font-weight: 200; */
     background-color: transparent;
   }
   .actions > button:hover {
@@ -140,7 +140,7 @@
   }
   .start-date,
   .end-date {
-    font-weight: 200;
+    /* font-weight: 200; */
     font-size: 0.8rem;
     display: flex;
     align-items: center;
@@ -148,43 +148,5 @@
   .duration {
     display: flex;
     justify-content: flex-end;
-  }
-
-  input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-  input[type="checkbox"] + label {
-    width: 100%;
-    height: 100%;
-    /* background-color: var(--fg-xlight); */
-    cursor: pointer;
-    position: relative;
-  }
-  input[type="checkbox"] + label:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0.125rem;
-    transform: translateY(-50%);
-    /* margin: 0.125rem; */
-    width: 1rem;
-    height: 1rem;
-    outline: 1px solid var(--bg-xlight);
-    outline-offset: -1px;
-    background-color: var(--bg-light);
-  }
-  /* input[type="checkbox"]:checked + label {
-    background-color: var(--fg-xstrong);
-  } */
-
-  input[type="checkbox"]:checked + label:before {
-    background-color: var(--fg-xstrong);
-  }
-
-  input[type="checkbox"]:focus + label:before,
-  input[type="checkbox"]:hover + label:before {
-    outline: 1px solid var(--fg-xstrong);
   }
 </style>

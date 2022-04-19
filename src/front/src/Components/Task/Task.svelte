@@ -79,6 +79,7 @@
   .task {
     padding-top: 0.25rem;
     min-width: fit-content;
+    user-select: none;
   }
   .task:first-child {
     padding-top: 0;

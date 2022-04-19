@@ -41,6 +41,7 @@
     width: 100%;
     min-width: fit-content;
     margin: 0 auto;
+    user-select: none;
   }
   .history-item {
     display: grid;
@@ -61,7 +62,8 @@
   }
   .start-date,
   .end-date {
-    font-weight: 200;
+    color: var(--fg-xlight);
+    /* font-weight: 200; */
     font-size: 0.8rem;
     /* display: flex;
     align-items: center; */

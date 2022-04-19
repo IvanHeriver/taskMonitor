@@ -17,6 +17,7 @@
     }
     projects.update((prevProjects: Array<IProject>): Array<IProject> => {
       newProject = {
+        version: 1,
         id: id,
         name: name,
         description: description,
@@ -25,6 +26,7 @@
         tasks: [],
         tags: [],
         timerLogs: [],
+        todos: [],
         created: new Date().toISOString(),
         updated: new Date().toISOString(),
         stats: {
@@ -33,10 +35,12 @@
         ui: {
           newTagOpen: false,
           newTaskOpen: false,
+          newTodoOpen: false,
           taskPanelOpen: true,
           tagPanelOpen: true,
           timerPanelOpen: true,
           statPanelOpen: false,
+          todoPanelOpen: true,
         },
       };
       return [...prevProjects, newProject];
