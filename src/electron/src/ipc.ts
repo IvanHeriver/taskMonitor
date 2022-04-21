@@ -1,4 +1,4 @@
-import { ipcMain, Menu, MenuItem, nativeTheme } from "electron";
+import { ipcMain, Menu, MenuItem, nativeTheme, dialog } from "electron";
 import { retrieveSession, saveProjectToFile, saveSession, openProjectFromFile } from "./files";
 
 
@@ -59,6 +59,17 @@ export function setupIPC(window: Electron.BrowserWindow, menu: Electron.Menu, ap
     console.log("App current version: ", currentVersion)
     autoUpdater.checkForUpdatesAndNotify()
     return currentVersion
+  })
+
+  ipcMain.handle("ask-question", async (_, config) => {
+    const res = await dialog.showMessageBox(window, {
+      title: "Tatimo",
+      message: config.message,
+      type: "question",
+      buttons: config.buttons,
+      cancelId: config.cancelID
+    })
+    return res
   })
 
   // will be available only in dev mode

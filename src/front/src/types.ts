@@ -93,6 +93,11 @@ declare global {
       checkAndUpdateApp: Function;
       onUpdateAvailable: Function;
       onUpdateDownloaded: Function;
+      askQuestion: (config:{
+        message: string,
+        buttons: Array<string>,
+        cancelID: number
+      }) => Promise<{response: number, checkboxChecked: boolean}>;
     }; // 👈️ turn off type checking
   }
 }

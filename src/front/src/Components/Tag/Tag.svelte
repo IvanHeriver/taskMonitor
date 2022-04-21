@@ -42,16 +42,25 @@
     <TagView
       {tag}
       on:edit={() => (mode = "edit")}
-      on:delete={() => {
-        $question = {
-          title: `Delete tag '${tag.name}'?`,
-          question: `Are you sure you want to delete the tag '${tag.name}'?`,
-          answer(res) {
-            if (res) {
-              deleteTag(tag.id);
-            }
-          },
-        };
+      on:delete={async () => {
+        const res = await window.electronAPI.askQuestion({
+          message: `Are you sure you want to delete the tag '${tag.name}'?`,
+          buttons: ["Yes", "Cancel"],
+          cancelID: 1,
+        });
+        console.log(res);
+        if (res.response === 0) {
+          deleteTag(tag.id);
+        }
+        // $question = {
+        //   title: `Delete tag '${tag.name}'?`,
+        //   question: `Are you sure you want to delete the tag '${tag.name}'?`,
+        //   answer(res) {
+        //     if (res) {
+        //       deleteTag(tag.id);
+        //     }
+        //   },
+        // };
       }}
     />
   {/if}

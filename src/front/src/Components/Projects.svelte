@@ -137,24 +137,40 @@
         </span>
         <button
           class="icon close danger"
-          on:click={() => {
+          on:click={async () => {
             if (p.state === "unsaved") {
-              $question = {
-                title: "Save modification?",
-                question: "Do you want to save the modification?",
-                answer: async (response) => {
-                  if (response) {
-                    const res = await window.electronAPI.saveProject(p);
-                    if (!res.canceled && res.success) {
-                      closeProject(p.id);
-                    } else {
-                      console.warn("Project not saved ");
-                    }
-                  } else {
-                    closeProject(p.id);
-                  }
-                },
-              };
+              const res = await window.electronAPI.askQuestion({
+                message: "Do you want to save the modification?",
+                buttons: ["Yes", "No", "Cancel"],
+                cancelID: 1,
+              });
+              console.log(res);
+              if (res.response === 0) {
+                const res = await window.electronAPI.saveProject(p);
+                if (!res.canceled && res.success) {
+                  closeProject(p.id);
+                } else {
+                  console.warn("Project not saved ");
+                }
+              } else if (res.response === 1) {
+                closeProject(p.id);
+              }
+              // $question = {
+              //   title: "Save modification?",
+              //   question: "Do you want to save the modification?",
+              //   answer: async (response) => {
+              //     if (response) {
+              //       const res = await window.electronAPI.saveProject(p);
+              //       if (!res.canceled && res.success) {
+              //         closeProject(p.id);
+              //       } else {
+              //         console.warn("Project not saved ");
+              //       }
+              //     } else {
+              //       closeProject(p.id);
+              //     }
+              //   },
+              // };
             } else {
               closeProject(p.id);
             }

@@ -38,6 +38,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   checkAndUpdateApp: () => ipcRenderer.invoke("check-and-update"),
   onUpdateAvailable: (callback) => ipcRenderer.on("update-available", callback),
   onUpdateDownloaded: (callback) => ipcRenderer.on("update-downloaded", callback),
+  askQuestion: async (config) => ipcRenderer.invoke("ask-question", config)
 });
 
 const isDevelopment = "ISDEV" in process.env;
