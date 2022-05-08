@@ -93,50 +93,57 @@
   </div>
   <div class="content">
     <div class="time">
-      <div class="h">
-        <span class="zeros">
-          {formattedTime.h.z}
-        </span>
-        <span class="value">
-          {formattedTime.h.v}
-        </span>
-      </div>
-      :
-      <div class="m">
-        <span class="zeros">
-          {formattedTime.m.z}
-        </span>
-        <span class="value">
-          {formattedTime.m.v}
-        </span>
-      </div>
-      :
-      <div class="s">
-        <span class="zeros">
-          {formattedTime.s.z}
-        </span>
-        <span class="value">
-          {formattedTime.s.v}
-        </span>
-        <button class="icon save" on:click={() => addTimerLog()}>
-          <span class="maticons">download</span>
-        </button>
+      <div class="digits">
+        <div class="h">
+          <span class="zeros">
+            {formattedTime.h.z}
+          </span>
+          <span class="value">
+            {formattedTime.h.v}
+          </span>
+        </div>
+        :
+        <div class="m">
+          <span class="zeros">
+            {formattedTime.m.z}
+          </span>
+          <span class="value">
+            {formattedTime.m.v}
+          </span>
+        </div>
+        :
+        <div class="s">
+          <span class="zeros">
+            {formattedTime.s.z}
+          </span>
+          <span class="value">
+            {formattedTime.s.v}
+          </span>
+        </div>
+        <div class="right">
+          <button class="icon" on:click={() => addTimerLog()}>
+            <span class="maticons">download</span>
+          </button>
+          <button class="icon" on:click={resetTimer}>
+            <span class="maticons">restart_alt</span>
+          </button>
+        </div>
+        <div class="left">
+          {#if timer.started}
+            <button class="icon playpause" on:click={pauseTimer}>
+              <span class="maticons">pause</span>
+            </button>
+          {:else}
+            <button class="icon playpause" on:click={startTimer}>
+              <span class="maticons">play_arrow</span>
+            </button>
+          {/if}
+        </div>
       </div>
     </div>
-    <div class="controls">
-      {#if timer.started}
-        <button class="icon" on:click={pauseTimer}>
-          <span class="maticons">pause</span>
-        </button>
-      {:else}
-        <button class="icon" on:click={startTimer}>
-          <span class="maticons">play_arrow</span>
-        </button>
-      {/if}
-      <button class="icon" on:click={resetTimer}>
-        <span class="maticons">restart_alt</span>
-      </button>
-    </div>
+    <!-- <div class="controls">
+
+    </div> -->
     <div class="history">
       <TimerLog
         bind:timerLogs={project.timerLogs}
@@ -158,16 +165,25 @@
   /* button.disabled > * {
     color: var(--fg-xlight);
   } */
-  button.save {
+  .right {
     position: absolute;
     right: -0.5rem;
     top: 52%;
     transform: translate(100%, -50%);
   }
+  .left {
+    position: absolute;
+    left: -0.5rem;
+    top: 52%;
+    transform: translate(-100%, -50%);
+  }
   .container {
     position: relative;
     height: 100%;
     overflow: hidden;
+  }
+  .playpause .maticons {
+    font-size: 34px;
   }
   .header {
     display: flex;
@@ -186,18 +202,25 @@
     font-size: 16px;
     padding-right: 0.125rem;
   }
-  .controls {
+  /* .controls {
     display: flex;
     justify-content: center;
-  }
+  } */
   .time {
     display: flex;
     justify-content: center;
     font-size: 2rem;
   }
-  .s {
+  .digits {
     position: relative;
   }
+  .digits > div {
+    display: flex;
+    justify-content: center;
+  }
+  /* .s {
+    position: relative;
+  } */
   .time > div {
     display: flex;
     justify-content: center;

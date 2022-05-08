@@ -93,11 +93,21 @@ declare global {
       checkAndUpdateApp: Function;
       onUpdateAvailable: Function;
       onUpdateDownloaded: Function;
-      askQuestion: (config:{
-        message: string,
-        buttons: Array<string>,
-        cancelID: number
-      }) => Promise<{response: number, checkboxChecked: boolean}>;
+      askQuestion: (config: {
+        message: string;
+        buttons: Array<string>;
+        cancelID: number;
+      }) => Promise<{ response: number; checkboxChecked: boolean }>;
     }; // 👈️ turn off type checking
   }
+}
+
+export interface IMenuItem {
+  label?: string;
+  sublabel?: string;
+  accelerator?: string;
+  click?: Function;
+  role?: string;
+  type?: "separator" | "normal" | "submenu";
+  submenu?: Array<IMenuItem>;
 }

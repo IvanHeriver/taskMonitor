@@ -20,7 +20,7 @@ const isMac = process.platform === "darwin";
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow;
-let mainMenu
+let mainMenu;
 
 function createMainWindow() {
   const window = new BrowserWindow({
@@ -54,10 +54,11 @@ function createMainWindow() {
   if (isDevelopment) {
     // this is for me only since I have a big monitor
     // and I split my screen in a specific way when developing
-    window.setSize(1940, 1090);
-    window.setPosition(1510, 0);
+    // window.setSize(1940, 1090);
+    // window.setPosition(1510, 0);
+
+    window.setSize(1080, 660); // when developing on laptop
     // window.maximize();
-    
   } else {
     // window.maximize();
     window.setSize(1080, 660);
@@ -110,13 +111,13 @@ app.on("ready", () => {
   // app.allowRendererProcessReuse = true;
   mainWindow = createMainWindow();
   mainMenu = setupMainMenu(mainWindow, isDevelopment, isMac, app.name);
-  console.log("App user date path:", app.getPath("userData"))
+  console.log("App user date path:", app.getPath("userData"));
   setupIPC(mainWindow, mainMenu, app, autoUpdater);
 });
 
-autoUpdater.on("update-available", ()=>{
-  mainWindow.webContents.send("update-available")
-})
-autoUpdater.on("update-downloaded", ()=>{
-  mainWindow.webContents.send("update-downloaded")
-})
+autoUpdater.on("update-available", () => {
+  mainWindow.webContents.send("update-available");
+});
+autoUpdater.on("update-downloaded", () => {
+  mainWindow.webContents.send("update-downloaded");
+});

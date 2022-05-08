@@ -14,6 +14,7 @@
   // $: days = duration / 60 / 8;
   // $: best = "days";
   let mode: "days" | "hours";
+  let sign;
   $: {
     if (Math.abs(duration / 60 / 8) > 3) {
       mode = "days";

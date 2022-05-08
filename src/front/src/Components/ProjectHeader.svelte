@@ -9,6 +9,13 @@
   $: spent = project.tasks.reduce((a, t) => a + t.duration, 0);
   $: remaining = project.stats.allocatedDuration - spent;
 
+  $: {
+    console.log(
+      "project.stats.allocatedDuration",
+      project.stats.allocatedDuration
+    );
+    console.log("remaining", remaining);
+  }
   let editAllocated = false;
   let editProjectInfo = false;
 </script>

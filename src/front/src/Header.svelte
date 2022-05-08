@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
 
-  import Menue from "./Components/Menue/Menue.svelte";
+  import Menu from "./Components/Menu/Menu.svelte";
+  import type { IMenuItem } from "./types";
 
   onMount(async () => {
     window.electronAPI.onResize((_, normal) => {
@@ -11,6 +12,43 @@
     isNormal = await window.electronAPI.isNormal();
   });
 
+  // const menuItems: Array<IMenuItem> = [
+  //   {
+  //     label: "File",
+  //     type: "submenu",
+  //     submenu: [
+  //       {
+  //         label: "Toggle Dark Mode",
+  //         sublabel: "Dark is better!",
+  //         click: () => {
+  //           console.log("Toggle Dark Model!");
+  //         },
+  //       },
+  //       { type: "separator" },
+  //       {
+  //         label: "Open",
+  //         accelerator: "Ctrl+O",
+  //         click: async () => {
+  //           console.log("Open");
+  //           // const response = await openProjectFromFile(window);
+  //           // window.webContents.send("load-project", response);
+  //         },
+  //       },
+  //       { type: "separator" },
+  //       {
+  //         label: "Save",
+  //         accelerator: "Ctrl+S",
+  //         click: () => console.log("Save"),
+  //       },
+  //       { type: "separator" },
+  //       {
+  //         label: "Exit",
+  //         accelerator: "Alt+F4",
+  //         role: "close",
+  //       },
+  //     ],
+  //   },
+  // ];
   let isNormal = false;
 </script>
 
@@ -19,7 +57,8 @@
     <button class="icon" on:click={() => window.electronAPI.openMainMenue()}>
       <img src="./ihdev_icon.svg" alt="app-logo" width="20" height="20" />
     </button>
-    <div class="menue"><Menue /></div>
+    <!-- <div class="menu"><Menu main={true} {menuItems} /></div> -->
+    <div class="menu" />
   </div>
   <div class="center">
     <span class="main">{`Tatimo `}</span>
@@ -99,8 +138,9 @@
     justify-content: center;
     align-items: center;
   }
-  .menue {
+  .menu {
     display: flex;
+    align-items: stretch;
   }
   .controls {
     display: flex;
