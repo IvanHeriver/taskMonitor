@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Section from "../Section.svelte";
   import { onDestroy, onMount } from "svelte";
   import { timers, registerModification } from "../../stores";
   import type { IProject, ITimer, ITimerLog } from "../../types";
@@ -86,12 +87,7 @@
 </script>
 
 <div class="container">
-  <div class="header">
-    <div class="title">
-      <span class="maticons">timer</span><span>Timer</span>
-    </div>
-  </div>
-  <div class="content">
+  <Section icon_code="timer" title="Timer" actions={[]}>
     <div class="time">
       <div class="digits">
         <div class="h">
@@ -141,9 +137,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="controls">
-
-    </div> -->
     <div class="history">
       <TimerLog
         bind:timerLogs={project.timerLogs}
@@ -155,16 +148,13 @@
         }}
       />
     </div>
-  </div>
+  </Section>
 </div>
 
 <style>
   button > .maticons {
     font-size: 28px;
   }
-  /* button.disabled > * {
-    color: var(--fg-xlight);
-  } */
   .right {
     position: absolute;
     right: -0.5rem;
@@ -185,27 +175,6 @@
   .playpause .maticons {
     font-size: 34px;
   }
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    background-color: var(--bg-light);
-  }
-  .title {
-    padding: 0 0.25rem;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .title > .maticons {
-    font-size: 16px;
-    padding-right: 0.125rem;
-  }
-  /* .controls {
-    display: flex;
-    justify-content: center;
-  } */
   .time {
     display: flex;
     justify-content: center;
@@ -218,9 +187,6 @@
     display: flex;
     justify-content: center;
   }
-  /* .s {
-    position: relative;
-  } */
   .time > div {
     display: flex;
     justify-content: center;

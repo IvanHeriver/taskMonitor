@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Section from "../Section.svelte";
   import { registerModification } from "../../stores";
 
   import type { IProject } from "../../types";
@@ -14,36 +15,27 @@
       }
     });
   }
+
+  const headerActions = [
+    {
+      icon_code: "add",
+      text: "Add todo",
+      action: () => (project.ui.newTodoOpen = true),
+    },
+    {
+      icon_code: "sort",
+      text: "Sort by status",
+      action: () => {
+        project.todos = [
+          ...project.todos.sort((a, b) => (a.done ? 1 : 0) - (b.done ? 1 : 0)),
+        ];
+      },
+    },
+  ];
 </script>
 
 <div class="container">
-  <div class="header">
-    <div class="title">
-      <span class="maticons">checklist</span><span>Todos</span>
-    </div>
-    <div class="actions">
-      <button
-        on:click={() => {
-          project.ui.newTodoOpen = true;
-        }}
-      >
-        <span class="maticons">add</span><span>Add todo</span>
-      </button>
-      <button
-        on:click={() => {
-          console.log("sort");
-          project.todos = [
-            ...project.todos.sort(
-              (a, b) => (a.done ? 1 : 0) - (b.done ? 1 : 0)
-            ),
-          ];
-        }}
-      >
-        <span class="maticons">sort</span><span>Sort by status</span>
-      </button>
-    </div>
-  </div>
-  <div class="content">
+  <Section icon_code="checklist" title="Todos" actions={headerActions}>
     {#if project.ui.newTodoOpen}
       <Todo
         todo={null}
@@ -77,7 +69,7 @@
         }}
       />
     {/each}
-  </div>
+  </Section>
 </div>
 
 <style>
@@ -85,56 +77,5 @@
     position: relative;
     height: 100%;
     overflow: hidden;
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    background-color: var(--bg-light);
-  }
-  .title {
-    padding: 0 0.25rem;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .title > .maticons {
-    font-size: 16px;
-    padding-right: 0.125rem;
-  }
-  .actions {
-    display: flex;
-  }
-  .actions > button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* font-weight: 200; */
-    background-color: transparent;
-  }
-  .actions > button:hover {
-    color: var(--fg-xstrong);
-  }
-  .actions > button:focus {
-    outline: 1px solid var(--fg-xstrong);
-    outline-offset: -1px;
-  }
-  .actions > button > span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    line-height: 1;
-  }
-
-  .content {
-    padding: 0.25rem;
-    position: absolute;
-    top: 1.5rem;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: auto;
   }
 </style>

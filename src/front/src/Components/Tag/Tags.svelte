@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Section from "../Section.svelte";
   import type { IProject } from "../../types";
   import Tag from "./Tag.svelte";
   import { registerModification } from "../../stores";
@@ -12,22 +13,18 @@
       }
     });
   }
+
+  const headerActions = [
+    {
+      icon_code: "add",
+      text: "Add tag",
+      action: () => (project.ui.newTagOpen = true),
+    },
+  ];
 </script>
 
 <div class="container">
-  <div class="header">
-    <div class="title">
-      <span class="maticons">local_offer</span><span>Tags</span>
-    </div>
-    <div class="content">
-      <div class="actions">
-        <button on:click={() => (project.ui.newTagOpen = true)}>
-          <span class="maticons">add</span><span>Add tag</span>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="tags">
+  <Section icon_code="local_offer" title="Tags" actions={headerActions}>
     {#if project.ui.newTagOpen}
       <Tag
         tag={null}
@@ -66,7 +63,7 @@
         }}
       />
     {/each}
-  </div>
+  </Section>
 </div>
 
 <style>
@@ -74,49 +71,5 @@
     position: relative;
     height: 100%;
     overflow: hidden;
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
-    background-color: var(--bg-light);
-    overflow: auto;
-  }
-  .title {
-    padding: 0 0.25rem;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .title > .maticons {
-    font-size: 16px;
-    padding-right: 0.125rem;
-  }
-  .actions {
-    display: flex;
-  }
-  .actions > button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* font-weight: 200; */
-    background-color: transparent;
-  }
-  .actions > button > span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    line-height: 1;
-  }
-  .tags {
-    padding: 0.25rem;
-    position: absolute;
-    top: 1.5rem;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: auto;
   }
 </style>
