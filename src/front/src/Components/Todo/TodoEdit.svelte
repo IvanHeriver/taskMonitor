@@ -6,6 +6,7 @@
   export let todo: ITodo;
 
   function save() {
+    if (text === undefined || text === "") return;
     const newTodo: ITodo = {
       id,
       text,

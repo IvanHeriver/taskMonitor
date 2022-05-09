@@ -32,6 +32,8 @@
   }
 
   function save() {
+    if (title === undefined || title === "") return;
+
     let created = new Date().toISOString();
     let updated = new Date().toISOString();
     if (task !== null) {
