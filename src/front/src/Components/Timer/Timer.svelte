@@ -158,13 +158,13 @@
   .right {
     position: absolute;
     right: -0.5rem;
-    top: 52%;
+    top: 56%;
     transform: translate(100%, -50%);
   }
   .left {
     position: absolute;
     left: -0.5rem;
-    top: 52%;
+    top: 56%;
     transform: translate(-100%, -50%);
   }
   .container {
@@ -173,7 +173,7 @@
     overflow: hidden;
   }
   .playpause .maticons {
-    font-size: 34px;
+    font-size: 32px;
   }
   .time {
     display: flex;
