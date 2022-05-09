@@ -12,11 +12,7 @@
       icon_code: "add",
       text: "Add task",
       action: () => {
-        project.tasks = project.tasks.map((t) => {
-          if (t.mode === "edit") return t;
-          t.mode = "small-view";
-          return t;
-        });
+        project.ui.newTaskOpen = true;
       },
     },
     {
@@ -25,7 +21,7 @@
       action: () => {
         project.tasks = project.tasks.map((t) => {
           if (t.mode === "edit") return t;
-          t.mode = "large-view";
+          t.mode = "small-view";
           return t;
         });
       },
