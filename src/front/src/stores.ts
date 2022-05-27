@@ -1,5 +1,5 @@
 import { Writable, writable, get } from "svelte/store";
-import type { IProject, ITag, ITask, ITimer } from "./types";
+import type { IDurationItem, IProject, ITag, ITask, ITimer } from "./types";
 import {uuid} from "./utils"
 
 // export const projects: Writable<Array<IProject>> = writable([]);
@@ -86,6 +86,7 @@ export function processLoadedProject(loadedProject: IProject): IProject {
         return task
       })
     }
+    loadedProject.ui.newTaskOpen = true
     return loadedProject;
   }
 
@@ -108,3 +109,4 @@ export const message: Writable<{
 
 export const overlay: Writable<boolean> = writable(false)
 
+export const draggedDurationItem: Writable<IDurationItem> = writable(null)

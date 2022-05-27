@@ -3,8 +3,11 @@
   import Duration from "../Duration/Duration.svelte";
   import DateView from "./DateView.svelte";
   import type { ITimerLog } from "../../types";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   const eventDispatcher = createEventDispatcher();
+
+  import { draggedDurationItem } from "../../stores";
+  import { uuid } from "../../utils";
 
   export let timerLogs: Array<ITimerLog>;
   // function deleteHistoryItem(id) {
@@ -12,9 +15,26 @@
   // }
 </script>
 
+<svelte:window
+  on:pointerup={() => {
+    $draggedDurationItem = null;
+  }}
+/>
+
 <div class="container">
   {#each timerLogs as t, i (t.id)}
-    <div class="history-item">
+    <div
+      class="history-item"
+      on:pointerdown={() => {
+        console.log("HEY");
+        $draggedDurationItem = {
+          id: uuid(),
+          duration: t.duration,
+          date: t.endDateTime,
+        };
+      }}
+    >
+      <div class="handle"><span class="maticons">drag_indicator</span></div>
       <div class="start-date">
         <span>Start: </span><DateView date={t.startDateTime} />
       </div>
@@ -42,13 +62,24 @@
     min-width: fit-content;
     margin: 0 auto;
     user-select: none;
+    cursor: grab;
+  }
+  .handle {
+    display: flex;
+    grid-area: drag;
+    justify-content: center;
+    align-items: center;
+    color: var(--fg-xxlight);
+  }
+  .handle .maticons {
+    font-size: 2rem;
   }
   .history-item {
     display: grid;
-    grid-template-columns: max-content auto max-content;
+    grid-template-columns: 1rem max-content auto max-content;
     grid-template-areas:
-      "start duration actions"
-      "end duration actions";
+      "drag start duration actions"
+      "drag end duration actions";
     column-gap: 0.5rem;
     align-items: center;
     /* justify-items: center; */

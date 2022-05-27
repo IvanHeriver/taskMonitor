@@ -3,12 +3,14 @@
   import Confirm from "./Components/Utils/Confirm.svelte";
   import Message from "./Components/Utils/Message.svelte";
   import Overlay from "./Components/Utils/Overlay.svelte";
+  import DurationItem from "./Components/Duration/DurationItem.svelte";
   import { onMount } from "svelte";
   import {
     currentProjectId,
     projects,
     message,
     processLoadedProject,
+    draggedDurationItem,
   } from "./stores";
   import Header from "./Header.svelte";
 
@@ -43,7 +45,14 @@
     $projects = session.projects.map((p) => processLoadedProject(p));
     $currentProjectId = session.currentProjectId;
     sessionRetrieved = true;
+
+    document.addEventListener("pointermove", (e) => {
+      mouseX = e.x;
+      mouseY = e.y;
+    });
   });
+
+  let mouseX, mouseY;
 
   let darkMode = true;
   let sessionRetrieved = false;
@@ -62,6 +71,13 @@
   <div class="loading">Loading previous session...</div>
 {/if}
 
+{#if $draggedDurationItem}
+  <div class="durationItem" style={`--x: ${mouseX}px; --y: ${mouseY}px`}>
+    <DurationItem durationItem={$draggedDurationItem} editable={false} />
+  </div>
+{/if}
+<svelte:body class:grabbing={$draggedDurationItem !== null} />
+
 <style>
   .loading {
     padding: 1rem;
@@ -69,5 +85,13 @@
     justify-content: center;
     align-items: center;
     height: calc(100% - 28px);
+  }
+
+  .durationItem {
+    position: absolute;
+    top: var(--y, 0);
+    left: var(--x, 0);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
   }
 </style>

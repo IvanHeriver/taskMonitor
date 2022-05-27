@@ -56,6 +56,7 @@
         }}
         on:save={(event) => {
           const newTask = event.detail;
+          console.log("newTask", newTask);
           project.tasks = [newTask, ...project.tasks];
           project.ui.newTaskOpen = false;
           registerModification(project.id, "new task", ["tasks"]);

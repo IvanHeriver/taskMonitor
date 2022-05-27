@@ -67,8 +67,11 @@ body {
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background-color: var(--bg);
   color: var(--fg);
+  overflow: hidden;
 }
-
+.grabbing {
+  cursor: grabbing;
+}
 p {
   margin: 0;
 }

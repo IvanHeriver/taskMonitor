@@ -2,6 +2,7 @@
   import { uuid } from "../../utils";
   import type { IDurationItem, ITimerLog } from "../../types";
   import DurationSimpleInput from "./DurationSimpleInput.svelte";
+  import { draggedDurationItem } from "../../stores";
 
   import DateView from "../Timer/DateView.svelte";
   import Duration from "./Duration.svelte";
@@ -12,6 +13,7 @@
 
   let importDurationOpened = false;
   let newDuration = 0;
+  let highlightDurationInput = false;
 </script>
 
 <div class="container">
@@ -69,7 +71,16 @@
     {/if}
   </div>
   <!-- {/if} -->
-  <div class="existing-durations">
+  <div
+    class="existing-durations"
+    class:target={$draggedDurationItem !== null}
+    on:pointerup={() => {
+      console.log("UP HERE");
+      if ($draggedDurationItem !== null) {
+        durationItems = [$draggedDurationItem, ...durationItems];
+      }
+    }}
+  >
     <div class="label">
       Durations: <p>(You can drag and drop durations from the timer panel)</p>
     </div>
@@ -109,6 +120,12 @@
     overflow-y: auto;
     outline: 1px solid var(--bg-xlight);
     min-height: 5rem;
+  }
+  .existing-durations.target {
+    background-color: var(--bg-light);
+  }
+  .existing-durations.target:hover {
+    background-color: var(--bg-xlight);
   }
   .existing-durations p {
     font-size: 0.9rem;
