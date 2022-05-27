@@ -1,5 +1,6 @@
 import { Writable, writable, get } from "svelte/store";
 import type { IProject, ITag, ITask, ITimer } from "./types";
+import {uuid} from "./utils"
 
 // export const projects: Writable<Array<IProject>> = writable([]);
 function createProjectsStore() {
@@ -73,6 +74,22 @@ export function processLoadedProject(loadedProject: IProject): IProject {
       loadedProject.ui.todoPanelOpen = true
       loadedProject.version = 1
     }
+    if (loadedProject.version === 1) {
+      // do stuff here to modify the task duration element
+      // it should now be an array of IDurationItem
+      loadedProject.tasks = loadedProject.tasks.map(task=>{
+        if (Array.isArray(task.duration)) {
+          console.warn("Already done I think", task.duration)
+          // task.duration[0].id = uuid()
+          // console.warn("Already done I think", task.duration)
+        } else {
+          task.duration = [{id: uuid(), date: new Date().toISOString(), duration: task.duration}]
+        }
+        loadedProject.version = 2
+        return task
+      })
+    }
+    loadedProject.ui.newTaskOpen = true
     return loadedProject;
   }
 // projects.subscribe((ps)=>{

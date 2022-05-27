@@ -32,14 +32,16 @@
       bind:tags
       on:collapse={() => changeMode("small-view")}
       on:edit={() => changeMode("edit")}
-      on:delete={() => {
-        $question = {
-          title: `Delete task '${task.title}'?`,
-          question: `Are you sure you want to delete the task '${task.title}'?`,
-          answer(res) {
-            if (res) deleteTask(task.id);
-          },
-        };
+      on:delete={async () => {
+        const res = await window.electronAPI.askQuestion({
+          message: `Are you sure you want to delete the task '${task.title}'?`,
+          buttons: ["Yes", "Cancel"],
+          cancelID: 1,
+        });
+        console.log(res);
+        if (res.response === 0) {
+          deleteTask(task.id);
+        }
       }}
     />
   {:else if task.mode === "small-view"}
@@ -58,13 +60,6 @@
         if (res.response === 0) {
           deleteTask(task.id);
         }
-        // $question = {
-        //   title: `Delete task '${task.title}'?`,
-        //   question: `Are you sure you want to delete the task '${task.title}'?`,
-        //   answer(res) {
-        //     if (res) deleteTask(task.id);
-        //   },
-        // };
       }}
     />
   {:else if task.mode === "edit"}

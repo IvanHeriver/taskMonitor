@@ -1,6 +1,6 @@
 <script lang="ts">
   // import { project } from "../../stores";
-  import Duration from "./Duration.svelte";
+  import Duration from "../Duration/Duration.svelte";
   import DateView from "./DateView.svelte";
   import type { ITimerLog } from "../../types";
   import { createEventDispatcher } from "svelte";

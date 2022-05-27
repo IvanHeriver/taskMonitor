@@ -1,6 +1,6 @@
 <script lang="ts">
   import Duration from "./Duration.svelte";
-  import DateView from "./DateView.svelte";
+  import DateView from "../Timer/DateView.svelte";
   import type { ITimerLog } from "../../types";
   import { createEventDispatcher } from "svelte";
   const eventDispatcher = createEventDispatcher();

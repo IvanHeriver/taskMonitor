@@ -18,13 +18,19 @@ export interface IProject {
 export interface ITask {
   id: string;
   date: string;
-  duration: number;
+  duration: Array<IDurationItem>;
   title: string;
   description: string;
   tags_id: Array<string>;
   created: string;
   updated: string;
   mode: "large-view" | "small-view" | "edit";
+}
+
+export interface IDurationItem {
+  id: string,
+  date: string,
+  duration: number
 }
 
 export interface ITag {

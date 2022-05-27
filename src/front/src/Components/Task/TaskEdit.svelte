@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ITag, ITask, ITimerLog } from "../../types";
-  import DurationInput from "../Timer/DurationInput.svelte";
+  import DurationInput from "../Duration/DurationInput.svelte";
+  import Duration from "../Duration/Duration.svelte";
   import TagsInput from "../Tag/TagsInput.svelte";
 
   import { createEventDispatcher, onMount } from "svelte";
@@ -14,7 +15,7 @@
   let id = Math.random().toString().slice(2);
   let title = "";
   let date = currentDate;
-  let duration = 0;
+  let duration = [];
   // let duration_unit: "minutes" | "hours" | "days" = "hours";
   let description = "";
   let tags_id = [];
@@ -83,8 +84,12 @@
   </div>
   <div class="duration">
     <!-- <label for="duration">{`Duration (${duration_unit}): `} </label> -->
-    <label for="duration">{`Duration: `} </label>
-    <DurationInput bind:duration bind:timerLogs />
+    <label for="duration"
+      ><span>Duration:</span><Duration
+        duration={duration.reduce((td, d) => td + d.duration, 0)}
+      />
+    </label>
+    <DurationInput bind:durationItems={duration} bind:timerLogs />
   </div>
   <div class="desc">
     <label for="description">Description: </label>
@@ -161,6 +166,9 @@
     font-size: 0.8;
     color: var(--fg-light);
     padding-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
   input {
     width: 100%;

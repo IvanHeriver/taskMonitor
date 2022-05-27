@@ -1,12 +1,15 @@
 <script lang="ts">
   import type { IProject } from "../types";
-  import Duration from "./Timer/Duration.svelte";
-  import DurationSimpleInput from "./Timer/DurationSimpleInput.svelte";
+  import Duration from "./Duration/Duration.svelte";
+  import DurationSimpleInput from "./Duration/DurationSimpleInput.svelte";
   import EditProjectInfo from "./EditProjectInfo.svelte";
 
   export let project: IProject;
 
-  $: spent = project.tasks.reduce((a, t) => a + t.duration, 0);
+  $: spent = project.tasks.reduce(
+    (a, t) => a + t.duration.reduce((b, d) => b + d.duration, 0),
+    0
+  );
   $: remaining = project.stats.allocatedDuration - spent;
 
   $: {

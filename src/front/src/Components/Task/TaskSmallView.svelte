@@ -2,7 +2,7 @@
   import type { ITag, ITask } from "../../types";
   import Tag from "../Tag/TagLabel.svelte";
   // import { project } from "../../stores";
-  import Duration from "../Timer/Duration.svelte";
+  import Duration from "../Duration/Duration.svelte";
   import { createEventDispatcher } from "svelte";
   export let task: ITask;
   export let tags: Array<ITag>;
@@ -14,7 +14,7 @@
   <div class="title">{task.title}</div>
   <div class="date">{new Date(task.date).toLocaleDateString()}</div>
   <div class="duration">
-    <Duration duration={task.duration} />
+    <Duration duration={task.duration.reduce((td, d) => td + d.duration, 0)} />
   </div>
   <div class="tags">
     {#each task.tags_id as tag_id}
