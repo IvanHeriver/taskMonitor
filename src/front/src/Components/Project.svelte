@@ -1,5 +1,6 @@
 <script lang="ts">
   import sectionResizer from "@ivanheriver/section-resizer";
+  import Stats from "./Stats/Stats.svelte";
   import Tasks from "./Task/Tasks.svelte";
   import Tags from "./Tag/Tags.svelte";
   import Timer from "./Timer/Timer.svelte";
@@ -80,13 +81,13 @@
         title="Show/hide timer panel"
         ><span class="maticons">timer</span></button
       >
-      <!-- <button
+      <button
         class="icon"
         class:selected={project.ui.statPanelOpen}
         on:click={() => (project.ui.statPanelOpen = !project.ui.statPanelOpen)}
         title="Show/hide statistics panel"
         ><span class="maticons">bar_chart</span></button
-      > -->
+      >
 
       <button
         class="icon"
@@ -103,7 +104,7 @@
       {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen || project.ui.statPanelOpen || project.ui.todoPanelOpen}
         <div class="secondary" bind:this={secondaryElement}>
           {#if project.ui.statPanelOpen}
-            <div class="stats">Stats</div>
+            <div><Stats bind:project /></div>
           {/if}
           {#if project.ui.tagPanelOpen || project.ui.timerPanelOpen || project.ui.todoPanelOpen}
             <div class="tags-utils" bind:this={terciaryElement}>
@@ -140,11 +141,11 @@
     right: 0;
     --header-size: 3.5rem;
   }
-  .stats {
+  /* .stats {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+  } */
   .content {
     display: grid;
     grid-template-columns: 50px auto;
