@@ -8,7 +8,9 @@
 </script>
 
 <div class="container">
-  <Section icon_code="bar_chart" title="Statistics" actions={headerActions} />
+  <Section icon_code="bar_chart" title="Statistics" actions={headerActions}>
+    <p>(Not available yet...)</p>
+  </Section>
 </div>
 
 <style>

@@ -61,6 +61,7 @@
     justify-content: space-between;
     outline: 1px solid var(--bg-xlight);
     padding: 0.125rem 0.25rem;
+    background-color: var(--bg-light);
   }
   .date {
     font-size: 0.8rem;

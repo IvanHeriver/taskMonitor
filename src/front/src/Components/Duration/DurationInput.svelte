@@ -104,7 +104,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    padding: 0.25rem;
+    padding: 0.5rem;
     max-height: 10rem;
     overflow-y: auto;
     outline: 1px solid var(--bg-xlight);

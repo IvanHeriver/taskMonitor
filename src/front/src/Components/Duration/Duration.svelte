@@ -2,6 +2,7 @@
   // type unit = "days" | "hours" | "minutes" | "auto" | "seconds";
   export let duration: number;
   export let showSeconds: boolean = true;
+  export let small: boolean = false;
   // export let unit: unit = "auto";
 
   // const units: Array<unit> = ["auto", "seconds", "minutes", "hours", "days"];
@@ -32,7 +33,7 @@
   }
 </script>
 
-<div class="container">
+<div class="container" class:small>
   <span class="maticons">timer</span>
   {#if mode === "days"}
     <span class="value">{d.toFixed(2)}</span>
@@ -53,6 +54,11 @@
     display: flex;
     align-items: center;
     /* cursor: pointer; */
+    font-size: 1rem;
+  }
+  .small {
+    font-size: 0.9rem;
+    color: var(--fg-xlight);
   }
   .unit,
   .value {
@@ -61,13 +67,19 @@
   .value {
     font-weight: 800;
   }
+  .container.small .value {
+    font-weight: normal;
+  }
   .text {
-    font-size: 0.8rem;
+    font-size: 0.8em;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
   .light {
     color: var(--fg-light);
+  }
+  .container.small .light {
+    color: var(--fg-xxlight);
   }
   .maticons {
     font-size: 16px;

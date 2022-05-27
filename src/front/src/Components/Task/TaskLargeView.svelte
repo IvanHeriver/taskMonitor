@@ -28,10 +28,18 @@
   <div class="content">
     <div class="time">
       <div class="date">{new Date(task.date).toLocaleDateString()}</div>
-      <div class="duration">
-        <Duration
-          duration={task.duration.reduce((td, d) => td + d.duration, 0)}
-        />
+    </div>
+    <div class="duration">
+      <Duration
+        duration={task.duration.reduce((td, d) => td + d.duration, 0)}
+      />
+
+      <div class="all-durations">
+        (
+        {#each task.duration as durationItem}
+          <Duration duration={durationItem.duration} small={true} />
+        {/each}
+        )
       </div>
     </div>
     <div class="desc">{task.description}</div>
@@ -73,6 +81,14 @@
     display: flex;
     justify-content: space-between;
   }
+  .duration {
+    display: flex;
+    gap: 0.25rem;
+  }
+  .all-durations {
+    display: flex;
+    /* gap: 0.25rem; */
+  }
   .header {
     padding: 0.25rem;
     background-color: var(--bg);
@@ -86,18 +102,13 @@
   .actions {
     display: flex;
   }
-  /* .actions > button > span {
-    font-size: 20px;
-  } */
   .title {
-    /* text-transform: uppercase; */
     color: var(--fg-strong);
     font-weight: 600;
   }
   .desc,
   .info {
     color: var(--fg-xlight);
-    /* font-weight: 200; */
   }
   .desc {
     padding-top: 0.25rem;
@@ -108,10 +119,6 @@
     flex-wrap: wrap;
   }
   .info {
-    /* padding-top: 0.25rem; */
     font-size: 0.8rem;
   }
-  /* .date-info {
-    font-weight: 400;
-  } */
 </style>

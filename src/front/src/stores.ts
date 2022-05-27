@@ -75,13 +75,10 @@ export function processLoadedProject(loadedProject: IProject): IProject {
       loadedProject.version = 1
     }
     if (loadedProject.version === 1) {
-      // do stuff here to modify the task duration element
-      // it should now be an array of IDurationItem
+
       loadedProject.tasks = loadedProject.tasks.map(task=>{
         if (Array.isArray(task.duration)) {
-          console.warn("Already done I think", task.duration)
-          // task.duration[0].id = uuid()
-          // console.warn("Already done I think", task.duration)
+          console.warn("Already done", task.duration)
         } else {
           task.duration = [{id: uuid(), date: new Date().toISOString(), duration: task.duration}]
         }
@@ -89,13 +86,8 @@ export function processLoadedProject(loadedProject: IProject): IProject {
         return task
       })
     }
-    loadedProject.ui.newTaskOpen = true
     return loadedProject;
   }
-// projects.subscribe((ps)=>{
-//   ps.
-// })
-// export const project: Writable<IProject> = writable(null);
 
 export const timers: Writable<{ [key: string]: ITimer }> = writable({});
 
