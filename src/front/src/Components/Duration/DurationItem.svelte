@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { createEventDispatcher, onMount } from "svelte";
   const eventDispatcher = createEventDispatcher();
   import type { IDurationItem } from "../../types";
@@ -42,8 +43,8 @@
           class="icon danger"
           on:click={async () => {
             const res = await window.electronAPI.askQuestion({
-              message: `Are you sure you want to delete this duration?`,
-              buttons: ["Yes", "Cancel"],
+              message: $_("message.delete_duration"),
+              buttons: [$_("yes"), $_("cancel")],
               cancelID: 1,
             });
             console.log(res);

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { overlay, registerModification } from "../stores";
   import type { IProject } from "../types";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
@@ -33,14 +34,14 @@
 <div class="outside">
   <div class="inside">
     <!-- <form on:submit|preventDefault={createNewProject}> -->
-    <div class="title">Edit project information</div>
-    <label for="name">Project name:</label>
+    <div class="title">{$_("edit_project_info")}</div>
+    <label for="name">{$_("project_name")}</label>
     <input
       type="text"
       name="name"
       id="name"
       bind:value={name}
-      placeholder="Write the project name here"
+      placeholder={$_("write_project_name_here")}
       maxlength="20"
       on:keyup={(event) => {
         if (event.key === "Enter") {
@@ -49,14 +50,14 @@
       }}
       bind:this={projectNameInputElement}
     />
-    <label for="description">Project description:</label>
+    <label for="description">{$_("project_description")}</label>
     <textarea
       rows="5"
       cols="33"
       name="description"
       id="description"
       bind:value={description}
-      placeholder="Write a project description here"
+      placeholder={$_("write_project_description_here")}
       style="resize: none"
     />
     <div class="actions">
@@ -64,9 +65,9 @@
         id="cancel"
         on:click={() => {
           eventDispatcher("done");
-        }}>Cancel</button
+        }}>{$_("cancel")}</button
       >
-      <button id="create" on:click={saveProjectInfo}>Save</button>
+      <button id="create" on:click={saveProjectInfo}>{$_("save")}</button>
     </div>
   </div>
 </div>
@@ -86,6 +87,7 @@
   .inside {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
     background-color: var(--bg);
     width: 400px;
     padding: 1rem;
@@ -95,13 +97,8 @@
     font-weight: bold;
   }
   .actions {
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     display: flex;
     justify-content: space-between;
   }
-
-  /* #description {
-    height: 5rem;
-    word-wrap: break-word;
-  } */
 </style>

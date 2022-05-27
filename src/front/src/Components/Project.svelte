@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import sectionResizer from "@ivanheriver/section-resizer";
   import Stats from "./Stats/Stats.svelte";
   import Tasks from "./Task/Tasks.svelte";
@@ -45,15 +46,8 @@
       });
     }
   }
-
-  // let taskPanel = true;
-  // let tagPanel = true;
-  // let timerPanel = true;
-
-  // let projectElement, projectElementResizer;
 </script>
 
-<!-- <div class="project" bind:this={projectElement}> -->
 <div class="project">
   <ProjectHeader bind:project />
   <div class="content">
@@ -62,7 +56,7 @@
         class="icon"
         class:selected={project.ui.taskPanelOpen}
         on:click={() => (project.ui.taskPanelOpen = !project.ui.taskPanelOpen)}
-        title="Show/hide tasks panel"
+        title={$_("tooltips.toggle_task_panel")}
       >
         <span class="maticons">assignment_turned_in</span>
       </button>
@@ -70,7 +64,7 @@
         class="icon"
         class:selected={project.ui.tagPanelOpen}
         on:click={() => (project.ui.tagPanelOpen = !project.ui.tagPanelOpen)}
-        title="Show/hide tag panel"
+        title={$_("tooltips.toggle_tag_panel")}
         ><span class="maticons">local_offer</span></button
       >
       <button
@@ -78,14 +72,14 @@
         class:selected={project.ui.timerPanelOpen}
         on:click={() =>
           (project.ui.timerPanelOpen = !project.ui.timerPanelOpen)}
-        title="Show/hide timer panel"
+        title={$_("tooltips.toggle_timer_panel")}
         ><span class="maticons">timer</span></button
       >
       <button
         class="icon"
         class:selected={project.ui.statPanelOpen}
         on:click={() => (project.ui.statPanelOpen = !project.ui.statPanelOpen)}
-        title="Show/hide statistics panel"
+        title={$_("tooltips.toggle_stat_panel")}
         ><span class="maticons">bar_chart</span></button
       >
 
@@ -93,7 +87,7 @@
         class="icon"
         class:selected={project.ui.todoPanelOpen}
         on:click={() => (project.ui.todoPanelOpen = !project.ui.todoPanelOpen)}
-        title="Show/hide todos panel"
+        title={$_("tooltips.toggle_todo_panel")}
         ><span class="maticons">checklist</span></button
       >
     </div>

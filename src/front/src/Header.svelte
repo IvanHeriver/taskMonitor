@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
 
   import Menu from "./Components/Menu/Menu.svelte";
@@ -66,7 +67,7 @@
       {` - `}
     </span>
     <span class="secondary">
-      {`Tasks Time Monitoring`}
+      {$_("app_subtitle")}
     </span>
   </div>
   <div class="right">

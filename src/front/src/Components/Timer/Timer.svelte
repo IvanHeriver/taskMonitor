@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import Section from "../Section.svelte";
   import { onDestroy, onMount } from "svelte";
   import { timers, registerModification } from "../../stores";
@@ -88,7 +89,7 @@
 </script>
 
 <div class="container">
-  <Section icon_code="timer" title="Timer" actions={[]}>
+  <Section icon_code="timer" title={$_("timer.timer")} actions={[]}>
     <div class="time">
       <div class="digits">
         <div class="h">

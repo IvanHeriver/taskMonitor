@@ -1,4 +1,6 @@
 <script>
+  import { init_i18n } from "./i18n";
+
   import Projects from "./Components/Projects.svelte";
   import Confirm from "./Components/Utils/Confirm.svelte";
   import Message from "./Components/Utils/Message.svelte";
@@ -15,6 +17,8 @@
   import Header from "./Header.svelte";
 
   onMount(async () => {
+    await init_i18n();
+    languagesLoaded = true;
     // const shouldUseDarkMode = true;
     window.electronAPI.onSetDarkMode(async (_, isDarkMode) => {
       darkMode = isDarkMode;
@@ -56,19 +60,23 @@
 
   let darkMode = true;
   let sessionRetrieved = false;
+  let languagesLoaded = false;
 </script>
 
-<Header />
+{#if sessionRetrieved && languagesLoaded}
+  <Header />
 
-<Confirm />
-<Message />
+  <Confirm />
+  <Message />
 
-<Overlay />
+  <Overlay />
 
-{#if sessionRetrieved}
   <Projects />
 {:else}
-  <div class="loading">Loading previous session...</div>
+  <div class="loading">
+    <div class="spinner" />
+    Loading...
+  </div>
 {/if}
 
 {#if $draggedDurationItem}
@@ -85,6 +93,36 @@
     justify-content: center;
     align-items: center;
     height: calc(100% - 28px);
+    position: relative;
+  }
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    --size: 10px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background-color: var(--fg-xstrong);
+    transform: translate(0, 0);
+    animation: spinner 2500ms infinite linear;
+  }
+  @keyframes spinner {
+    0% {
+      transform: translate(-100px, 0);
+    }
+    25% {
+      transform: translate(0, -100px);
+    }
+    50% {
+      transform: translate(100px, 0);
+    }
+    75% {
+      transform: translate(0, 100px);
+    }
+    100% {
+      transform: translate(-100px, 0);
+    }
   }
 
   .durationItem {

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import type { ITag, ITask, ITimerLog } from "../../types";
   import DurationInput from "../Duration/DurationInput.svelte";
   import Duration from "../Duration/Duration.svelte";
@@ -64,13 +65,13 @@
   <!-- <div class="header"> -->
   <div class="title-date">
     <div class="title">
-      <label for="title">Title: </label>
+      <label for="title">{$_("tasks.title")}: </label>
       <input
         type="text"
         name="title"
         id="title"
         bind:value={title}
-        placeholder="Title"
+        placeholder={$_("tasks.title")}
         bind:this={titleInputElement}
         on:keyup={(e) => {
           e.key === "Enter" && save();
@@ -79,21 +80,21 @@
     </div>
 
     <div class="date">
-      <label for="date">Date:</label>
+      <label for="date">{$_("tasks.date")}:</label>
       <input type="date" name="date" id="date" bind:value={date} />
     </div>
   </div>
   <div class="duration">
     <!-- <label for="duration">{`Duration (${duration_unit}): `} </label> -->
     <label for="duration"
-      ><span>Duration:</span><Duration
+      ><span>{$_("tasks.duration")}:</span><Duration
         duration={duration.reduce((td, d) => td + d.duration, 0)}
       />
     </label>
     <DurationInput bind:durationItems={duration} bind:timerLogs />
   </div>
   <div class="desc">
-    <label for="description">Description: </label>
+    <label for="description">{$_("tasks.description")}: </label>
     <textarea
       name="description"
       id="description"
@@ -105,7 +106,7 @@
   </div>
 
   <div class="tags">
-    <label for="tags">Tags: </label>
+    <label for="tags">{$_("tasks.tags")}: </label>
     <TagsInput bind:tags_id bind:tags />
   </div>
   <!-- </div> -->
@@ -114,7 +115,7 @@
       <!-- <span class="maticons">save</span> -->
 
       <span class="maticons">done</span>
-      <span>{isNew ? "Create New Task" : "Save Task"}</span>
+      <span>{isNew ? $_("tasks.create_new_task") : $_("tasks.save_task")}</span>
     </button>
     <button
       class="secondary"
@@ -124,7 +125,7 @@
       }}
     >
       <span class="maticons">close</span>
-      <span>Cancel</span>
+      <span>{$_("cancel")}</span>
     </button>
   </div>
 </div>

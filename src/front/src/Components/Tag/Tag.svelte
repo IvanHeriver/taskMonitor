@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import type { ITag } from "../../types";
   import TagView from "./TagView.svelte";
   import TagEdit from "./TagEdit.svelte";
@@ -44,8 +45,8 @@
       on:edit={() => (mode = "edit")}
       on:delete={async () => {
         const res = await window.electronAPI.askQuestion({
-          message: `Are you sure you want to delete the tag '${tag.name}'?`,
-          buttons: ["Yes", "Cancel"],
+          message: $_("messages.delete_tag"),
+          buttons: [$_("yes"), $_("cancel")],
           cancelID: 1,
         });
         console.log(res);

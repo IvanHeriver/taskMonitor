@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import type { ITag, ITask } from "../../types";
   import Tag from "../Tag/TagLabel.svelte";
   // import { project } from "../../stores";
@@ -51,7 +52,7 @@
     </div>
     <div class="info">
       <div class="created">
-        <span>Created:</span>
+        <span>{$_("tasks.created")}:</span>
         <span class="date-info">
           {`${new Date(task.created).toLocaleDateString()} ${new Date(
             task.created
@@ -59,7 +60,7 @@
         </span>
       </div>
       <div class="updated">
-        <span>Modified:</span>
+        <span>{$_("tasks.modified")}:</span>
         <span class="date-info">
           {`${new Date(task.updated).toLocaleDateString()} ${new Date(
             task.updated

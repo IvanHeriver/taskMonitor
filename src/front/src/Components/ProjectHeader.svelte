@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import type { IProject } from "../types";
   import Duration from "./Duration/Duration.svelte";
   import DurationSimpleInput from "./Duration/DurationSimpleInput.svelte";
@@ -44,7 +45,7 @@
         }}
       >
         <span class="maticons">save</span>
-        <span class="text">Save</span>
+        <span class="text">{$_("save")}</span>
       </button>
     {:else}
       <button
@@ -54,7 +55,7 @@
         }}
       >
         <span class="maticons">edit</span>
-        <span class="text">Edit</span>
+        <span class="text">{$_("edit")}</span>
       </button>
     {/if}
     <!-- <div class="desc">{project.description}</div> -->
@@ -63,7 +64,7 @@
     <div class="allocated">
       <div class="alloc">
         {#if !editAllocated}
-          <div class="label">Time allocated:</div>
+          <div class="label">{$_("time_allocated")}:</div>
         {/if}
         <div class="duration">
           {#if editAllocated}
@@ -84,7 +85,7 @@
           }}
         >
           <span class="maticons">save</span>
-          <span class="text">Save</span>
+          <span class="text">{$_("save")}</span>
         </button>
       {:else}
         <button
@@ -94,16 +95,16 @@
           }}
         >
           <span class="maticons">edit</span>
-          <span class="text">Edit</span>
+          <span class="text">{$_("edit")}</span>
         </button>
       {/if}
     </div>
     <div class="spent">
-      <div>Time spent:</div>
+      <div>{$_("time_spent")}:</div>
       <Duration bind:duration={spent} />
     </div>
     <div class="remaining">
-      <div>Time remaining:</div>
+      <div>{$_("time_remaining")}:</div>
       <Duration bind:duration={remaining} />
     </div>
   </div>

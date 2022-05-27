@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import Section from "../Section.svelte";
   import Task from "./Task.svelte";
   import NewTask from "./NewTask.svelte";
@@ -10,14 +11,14 @@
   const headerActions = [
     {
       icon_code: "add",
-      text: "Add task",
+      text: $_("tasks.add_task"),
       action: () => {
         project.ui.newTaskOpen = true;
       },
     },
     {
       icon_code: "expand_less",
-      text: "Collapse all",
+      text: $_("tasks.collapse_all"),
       action: () => {
         project.tasks = project.tasks.map((t) => {
           if (t.mode === "edit") return t;
@@ -28,7 +29,7 @@
     },
     {
       icon_code: "expand_more",
-      text: "Expand all",
+      text: $_("tasks.expand_all"),
       action: () => {
         project.tasks = project.tasks.map((t) => {
           if (t.mode === "edit") return t;
@@ -43,7 +44,7 @@
 <div class="container">
   <Section
     icon_code="assignment_turned_in"
-    title="Tasks"
+    title={$_("tasks.tasks")}
     actions={headerActions}
   >
     {#if project.ui.newTaskOpen}

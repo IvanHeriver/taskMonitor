@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import type { ITodo } from "../../types";
   import { createEventDispatcher, onMount } from "svelte";
   import { uuid } from "../../utils";
@@ -37,7 +38,7 @@
   <div class="content">
     <input
       type="text"
-      placeholder="What should be done..."
+      placeholder={$_("todos.what_should_be_done")}
       bind:value={text}
       bind:this={mainInputElement}
       on:keyup={(e) => e.key === "Enter" && save()}
@@ -46,7 +47,7 @@
   <div class="actions">
     <button class="primary" on:click={() => save()}>
       <span class="maticons">done</span>
-      <span>{isNew ? "Create New Todo" : "Save Todo"}</span>
+      <span>{isNew ? $_("todos.add_todo") : $_("todos.save_todo")}</span>
     </button>
     <button class="secondary" on:click={() => eventDispatcher("cancel")}>
       <span class="maticons">close</span>

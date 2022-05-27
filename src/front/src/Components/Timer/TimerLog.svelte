@@ -1,5 +1,5 @@
 <script lang="ts">
-  // import { project } from "../../stores";
+  import { _ } from "svelte-i18n";
   import Duration from "../Duration/Duration.svelte";
   import DateView from "./DateView.svelte";
   import type { ITimerLog } from "../../types";
@@ -26,7 +26,6 @@
     <div
       class="history-item"
       on:pointerdown={() => {
-        console.log("HEY");
         $draggedDurationItem = {
           id: uuid(),
           duration: t.duration,
@@ -36,10 +35,10 @@
     >
       <div class="handle"><span class="maticons">drag_indicator</span></div>
       <div class="start-date">
-        <span>Start: </span><DateView date={t.startDateTime} />
+        <span>{$_("timer.start")}: </span><DateView date={t.startDateTime} />
       </div>
       <div class="end-date">
-        <span>End: </span><DateView date={t.endDateTime} />
+        <span>{$_("timer.end")}: </span><DateView date={t.endDateTime} />
       </div>
       <div class="duration">
         <Duration duration={t.duration} />
@@ -94,12 +93,9 @@
   .start-date,
   .end-date {
     color: var(--fg-xlight);
-    /* font-weight: 200; */
     font-size: 0.8rem;
-    /* display: flex;
-    align-items: center; */
     display: grid;
-    grid-template-columns: 25px auto;
+    grid-template-columns: 50px auto;
   }
   .start-date {
     grid-area: start;

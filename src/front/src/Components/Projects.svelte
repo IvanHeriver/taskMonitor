@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import {
     projects,
     currentProjectId,
@@ -39,7 +40,7 @@
     });
   });
 
-  function onLoadProject(loadedProject: IProject) {
+  async function onLoadProject(loadedProject: IProject) {
     loadedProject = processLoadedProject(loadedProject);
     const index = $projects.findIndex((p) => p.id === loadedProject.id);
     if (index === -1) {
@@ -53,16 +54,15 @@
         $projects = [...$projects, loadedProject];
       } else {
         if ($projects[index].state === "unsaved") {
-          $question = {
-            title: "Overwrite unsaved project?",
-            question:
-              "This file is already loaded with unsaved modification. Do you want to proceed and overwrite the unsaved version?",
-            answer: (res) => {
-              if (res) {
-                $projects[index] = loadedProject;
-              }
-            },
-          };
+          const res = await window.electronAPI.askQuestion({
+            message: $_("messages.on_load_unsaved_loaded_project"),
+            buttons: [$_("yes"), $_("cancel")],
+            cancelID: 1,
+          });
+          console.log(res);
+          if (res.response === 0) {
+            $projects[index] = loadedProject;
+          }
         } else {
           $projects[index] = loadedProject;
         }
@@ -96,7 +96,6 @@
     saveSession();
   }
 
-  // let currentProjectId = null;
   let newProject = false;
   let editProjectInfo = false;
 
@@ -141,8 +140,8 @@
           on:click={async () => {
             if (p.state === "unsaved") {
               const res = await window.electronAPI.askQuestion({
-                message: "Do you want to save the modification?",
-                buttons: ["Yes", "No", "Cancel"],
+                message: $_("messages.on_close_unsaved_project"),
+                buttons: [$_("yes"), $_("no"), $_("cancel")],
                 cancelID: 1,
               });
               console.log(res);
@@ -156,22 +155,6 @@
               } else if (res.response === 1) {
                 closeProject(p.id);
               }
-              // $question = {
-              //   title: "Save modification?",
-              //   question: "Do you want to save the modification?",
-              //   answer: async (response) => {
-              //     if (response) {
-              //       const res = await window.electronAPI.saveProject(p);
-              //       if (!res.canceled && res.success) {
-              //         closeProject(p.id);
-              //       } else {
-              //         console.warn("Project not saved ");
-              //       }
-              //     } else {
-              //       closeProject(p.id);
-              //     }
-              //   },
-              // };
             } else {
               closeProject(p.id);
             }
@@ -183,10 +166,11 @@
     {/each}
     {#if $projects.length !== 0}
       <button class="new primary" on:click={createNewProject}>
-        <span class="maticons">add</span> <span>New Project</span>
+        <span class="maticons">add</span> <span>{$_("new_project")}</span>
       </button>
       <button class="open primary" on:click={openExistingProject}>
-        <span class="maticons">file_open</span> <span>Open Project</span>
+        <span class="maticons">file_open</span>
+        <span>{$_("open_project")}</span>
       </button>
     {/if}
   </div>
@@ -202,11 +186,11 @@
           <div class="actions">
             <button class="primary" on:click={createNewProject}>
               <span class="maticons">add</span>
-              <span>Create a new project</span>
+              <span>{$_("create_new_project")}</span>
             </button>
             <button class="primary" on:click={openExistingProject}>
               <span class="maticons">file_open</span>
-              <span>Open an existing project</span>
+              <span>{$_("open_existing_project")}</span>
             </button>
           </div>
           <div class="recent">
@@ -216,9 +200,6 @@
         </div>
       </div>
     {/each}
-    <!-- {#if $project !== null}
-      <Project />
-    {/if} -->
   </div>
 </div>
 

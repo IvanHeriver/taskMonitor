@@ -1,0 +1,90 @@
+{
+  "app_subtitle": "Gestionnaire du temps passé",
+  "yes": "Oui",
+  "no": "Non",
+  "cancel": "Annuler",
+  "not_available_yet": "Pas encore disponible",
+  "messages": {
+    "on_load_unsaved_loaded_project": "Ce fichier est déjà chargé et comporte des modifications non enregistrées. Voulez-vous vraiment écraser le fichier déjà chargé?",
+    "on_close_unsaved_project": "Voulez-vous enregistrer les modifications?",
+    "invalid_character": "Caractère non valide",
+    "forbidden_characters": "Vous ne pouvez pas utiliser de caractères spéciaux dans le nom du projet.",
+    "delete_task": "Voulez-vous vraiment supprimer cette tâche?",
+    "delete_tag": "Voulez-vous vraiment supprimer cette étiquette?",
+    "delete_duration": "Voulez-vous vraiment supprimer cette durée?"
+  },
+  "tooltips": {
+    "toggle_task_panel": "Montrer/cacher le panneau des tâches",
+    "toggle_tag_panel": "Montrer/cacher le panneau des étiquettes",
+    "toggle_timer_panel": "Montrer/cacher le panneau du chronomètre",
+    "toggle_stat_panel": "Montrer/cacher le panneau des statistiques",
+    "toggle_todo_panel": "Montrer/cacher la liste des choses à faire"
+  },
+  "new_project": "Nouveau projet",
+  "open_project": "Ouvrir un projet",
+  "create_project": "Créer un projet",
+  "create_new_project": "Créer un nouveau projet",
+  "open_existing_project": "Ouvrir un projet existant",
+  "save": "Sauvegarder",
+  "edit": "Editer",
+  "time_allocated": "Durée allouée au projet",
+  "time_spent": "Temps déjà passé sur le projet",
+  "time_remaining": "Temps restant",
+  "project_name": "Nom du projet",
+  "write_project_name_here": "Ecrivez le nom du projet ici",
+  "project_description": "Description du projet",
+  "write_project_description_here": "Ecrivez la description du projet ici",
+  "edit_project_info": "Editer les informations du projet",
+  "todos": {
+    "add_something_todo": "Ajouter une chose à faire",
+    "sort_by_status": "Trier par statue",
+    "todos": "Choses à faire",
+    "what_should_be_done": "Qu'est-ce qui doit être fait?",
+    "save_todo": "Enregistrer",
+    "add_todo": "Ajouter"
+  },
+  "timer": {
+    "start": "Début",
+    "end": "Fin",
+    "timer": "Chronomètre"
+  },
+  "tasks": {
+    "tasks": "Tâche",
+    "add_task": "Ajouter une tâche",
+    "collapse_all": "Vue minimaliste",
+    "expand_all": "Vue détaillée",
+    "created": "Création",
+    "modified": "Dernière modification",
+    "title": "Titre",
+    "date": "Date",
+    "duration": "Durée",
+    "description": "Description",
+    "tags": "Etiquettes",
+    "create_new_task": "Créer une nouvelle tâche",
+    "save_task": "Sauvegarder"
+  },
+  "tags": {
+    "tags": "Etiquettes",
+    "name": "Nom",
+    "description": "Description",
+    "create_new_tag": "Créer une nouvelle étiquette",
+    "save_tag": "Sauvegarder",
+    "color": "Couleur"
+  },
+  "statistics": {
+    "statistics": "Statistiques"
+  },
+  "duration": {
+    "work_days": "Jour de travail",
+    "hours": "Heures",
+    "minutes": "Minutes",
+    "seconds": "Secondes",
+    "add_duration": "Ajouter une durée",
+    "import": "Importer",
+    "add": "Ajouter",
+    "use_duration": "Utiliser cette durée",
+    "drag_and_drop_timer_log": "Vous pouvez glisser/déposer des durées depuis l'historique le panneau du chronomètre",
+    "durations": "Durées",
+    "no_durations": "Il n'y a auncune durée associée à cette tâche"
+  }
+}

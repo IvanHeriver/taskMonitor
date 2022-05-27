@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import type { ITag } from "../../types";
   import { createEventDispatcher, onMount } from "svelte";
   import { hslToHex, hexToHsl } from "./colors";
@@ -48,39 +49,39 @@
 >
   <div class="top">
     <div class="name">
-      <label for="name">Name:</label>
+      <label for="name">{$_("tags.name")}:</label>
       <input
         type="text"
         name="name"
         id="name"
         bind:value={name}
-        placeholder="Name"
+        placeholder={$_("tags.name")}
         bind:this={nameInputElement}
       />
     </div>
     <div class="color">
-      <label for="color">Color:</label>
+      <label for="color">{$_("tags.color")}:</label>
       <input type="color" name="color" id="color" bind:value={color} />
     </div>
   </div>
   <div class="description">
-    <label for="desc">Description:</label>
+    <label for="desc">{$_("tags.description")}:</label>
     <input
       type="text"
       name="desc"
       id="desc"
       bind:value={description}
-      placeholder="Description"
+      placeholder={$_("tags.description")}
     />
   </div>
   <div class="actions">
     <button class="primary" on:click={() => save()}>
       <span class="maticons">done</span>
-      <span>{isNew ? "Create New Tag" : "Save Tag"}</span>
+      <span>{isNew ? $_("tags.create_new_tag") : $_("tags.save_tag")}</span>
     </button>
     <button class="secondary" on:click={() => eventDispatcher("cancel")}>
       <span class="maticons">close</span>
-      <span>Cancel</span>
+      <span>{$_("cancel")}</span>
     </button>
   </div>
 </div>

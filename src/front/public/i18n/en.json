@@ -1,0 +1,90 @@
+{
+  "app_subtitle": "Task Time Monitoring",
+  "yes": "Yes",
+  "no": "No",
+  "cancel": "Cancel",
+  "not_available_yet": "Not available yet",
+  "messages": {
+    "on_load_unsaved_loaded_project": "This file is already loaded and has unsaved changed. Are you sure you want to overwrite the unsaved project?",
+    "on_close_unsaved_project": "Do you want to save the modification?",
+    "invalid_character": "Invalid character",
+    "forbidden_characters": "You cannot use special character for the project name.",
+    "delete_task": "Are you sure you wan to delete the task?",
+    "delete_tag": "Are you sure you want to delete the tag?",
+    "delete_duration": "Are you sure you want to delete the duration?"
+  },
+  "tooltips": {
+    "toggle_task_panel": "Show/hide tasks panel",
+    "toggle_tag_panel": "Show/hide tags panel",
+    "toggle_timer_panel": "Show/hide timer panel",
+    "toggle_stat_panel": "Show/hide statistics panel",
+    "toggle_todo_panel": "Show/hide todos panel"
+  },
+  "new_project": "New project",
+  "open_project": "Open project",
+  "create_project": "Create project",
+  "create_new_project": "Create a new project",
+  "open_existing_project": "Open an existing project",
+  "save": "Save",
+  "edit": "Edit",
+  "time_allocated": "Time allocated",
+  "time_spent": "Time spent",
+  "time_remaining": "Time remaining",
+  "project_name": "Project name",
+  "write_project_name_here": "Write the project name here",
+  "project_description": "Project description",
+  "write_project_description_here": "Write a project description here",
+  "edit_project_info": "Edit project information",
+  "todos": {
+    "add_something_todo": "Add something to do",
+    "sort_by_status": "Sort status",
+    "todos": "Things to do (todos)",
+    "what_should_be_done": "What sould be done...",
+    "save_todo": "Save todo",
+    "add_todo": "Add todo"
+  },
+  "timer": {
+    "start": "Start",
+    "end": "End",
+    "timer": "Stopwatch"
+  },
+  "tasks": {
+    "tasks": "Tasks",
+    "add_task": "Add task",
+    "collapse_all": "Collapse all",
+    "expand_all": "Expand_all",
+    "created": "Created",
+    "modified": "Modified",
+    "title": "Title",
+    "date": "Date",
+    "duration": "Duration",
+    "description": "Description",
+    "tags": "Tags",
+    "create_new_task": "Create new task",
+    "save_task": "Save task"
+  },
+  "tags": {
+    "tags": "Tags",
+    "name": "Name",
+    "description": "Description",
+    "create_new_tag": "Create new tag",
+    "save_tag": "Save tag",
+    "color": "Color"
+  },
+  "statistics": {
+    "statistics": "Statistics"
+  },
+  "duration": {
+    "work_days": "Work days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "add_duration": "Add a duration",
+    "import": "Import",
+    "add": "Add",
+    "use_duration": "Use this duration",
+    "drag_and_drop_timer_log": "You can drag and drop durations from the timer panel",
+    "durations": "Durations",
+    "no_durations": "There's no duration for this task"
+  }
+}

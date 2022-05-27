@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import Section from "../Section.svelte";
   import { registerModification } from "../../stores";
 
@@ -19,12 +20,12 @@
   const headerActions = [
     {
       icon_code: "add",
-      text: "Add todo",
+      text: $_("todos.add_something_todo"),
       action: () => (project.ui.newTodoOpen = true),
     },
     {
       icon_code: "sort",
-      text: "Sort by status",
+      text: $_("todos.sort_by_status"),
       action: () => {
         project.todos = [
           ...project.todos.sort((a, b) => (a.done ? 1 : 0) - (b.done ? 1 : 0)),
@@ -35,7 +36,11 @@
 </script>
 
 <div class="container">
-  <Section icon_code="checklist" title="Todos" actions={headerActions}>
+  <Section
+    icon_code="checklist"
+    title={$_("todos.todos")}
+    actions={headerActions}
+  >
     {#if project.ui.newTodoOpen}
       <Todo
         todo={null}

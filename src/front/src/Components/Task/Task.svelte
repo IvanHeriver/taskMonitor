@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import TaskLargeView from "./TaskLargeView.svelte";
   import TaskSmallView from "./TaskSmallView.svelte";
   import TaskEdit from "./TaskEdit.svelte";
@@ -34,8 +35,8 @@
       on:edit={() => changeMode("edit")}
       on:delete={async () => {
         const res = await window.electronAPI.askQuestion({
-          message: `Are you sure you want to delete the task '${task.title}'?`,
-          buttons: ["Yes", "Cancel"],
+          message: $_("messages.delete_task"),
+          buttons: [$_("yes"), $_("cancel")],
           cancelID: 1,
         });
         console.log(res);
@@ -52,8 +53,8 @@
       on:edit={() => changeMode("edit")}
       on:delete={async () => {
         const res = await window.electronAPI.askQuestion({
-          message: `Are you sure you want to delete the task '${task.title}'?`,
-          buttons: ["Yes", "Cancel"],
+          message: $_("messages.delete_task"),
+          buttons: [$_("yes"), $_("cancel")],
           cancelID: 1,
         });
         console.log(res);

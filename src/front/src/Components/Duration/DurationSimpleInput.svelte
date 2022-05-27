@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { onMount } from "svelte";
   import { uuid } from "../../utils";
 
@@ -50,13 +51,13 @@
 </script>
 
 <div class="container">
-  <label for={`days_${id}`}>Work days</label>
+  <label for={`days_${id}`}>{$_("duration.work_days")}</label>
   <span />
-  <label for={`hours_${id}`}>Hours</label>
+  <label for={`hours_${id}`}>{$_("duration.hours")}</label>
   <span />
-  <label for={`minutes_${id}`}>Minutes</label>
+  <label for={`minutes_${id}`}>{$_("duration.minutes")}</label>
   <span />
-  <label for={`seconds_${id}`}>Seconds</label>
+  <label for={`seconds_${id}`}>{$_("duration.seconds")}</label>
   <input
     type="number"
     name="days"

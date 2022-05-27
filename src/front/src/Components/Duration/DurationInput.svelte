@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import { uuid } from "../../utils";
   import type { IDurationItem, ITimerLog } from "../../types";
   import DurationSimpleInput from "./DurationSimpleInput.svelte";
@@ -18,7 +19,7 @@
 
 <div class="container">
   <div class="new-duration">
-    <label for="new-duration-input-widget">Add a duration:</label>
+    <label for="new-duration-input-widget">{$_("duration.add_duration")}</label>
     <div class="simple" id="new-duration-input-widget">
       <DurationSimpleInput bind:duration={newDuration} />
       <div class="new-duration-actions">
@@ -29,7 +30,7 @@
           <span class="maticons">
             {importDurationOpened ? "expand_less" : "expand_more"}
           </span>
-          <span> Import </span>
+          <span> {$_("duration.import")} </span>
         </button>
         <button
           on:click={() => {
@@ -42,7 +43,7 @@
           class="primary"
         >
           <span class="maticons">done</span>
-          <span> Add </span>
+          <span> {$_("duration.add")} </span>
         </button>
       </div>
     </div>
@@ -63,7 +64,7 @@
               }}
             >
               <span class="maticons">upload</span>
-              <span> Use this duration </span>
+              <span> {$_("duration.use_duration")} </span>
             </button>
           </div>
         {/each}
@@ -82,7 +83,8 @@
     }}
   >
     <div class="label">
-      Durations: <p>(You can drag and drop durations from the timer panel)</p>
+      {$_("duration.durations")}:
+      <p>({$_("duration.drag_and_drop_timer_log")})</p>
     </div>
     {#each durationItems as durationItem, i (durationItem.id)}
       <DurationItem
@@ -95,7 +97,7 @@
         }}
       />
     {:else}
-      <p>There's no duration for this task</p>
+      <p>{$_("duration.no_durations")}</p>
     {/each}
   </div>
 </div>

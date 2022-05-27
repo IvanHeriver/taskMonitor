@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   // type unit = "days" | "hours" | "minutes" | "auto" | "seconds";
   export let duration: number;
   export let showSeconds: boolean = true;
@@ -37,7 +38,7 @@
   <span class="maticons">timer</span>
   {#if mode === "days"}
     <span class="value">{d.toFixed(2)}</span>
-    <span class="unit text light">work days</span>
+    <span class="unit text light">{$_("duration.work_days")}</span>
   {:else}
     <span class="value">{h.toString().padStart(2, "0")}</span>
     <span class="unit">:</span>

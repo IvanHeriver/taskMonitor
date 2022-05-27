@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { _ } from "svelte-i18n";
   import Section from "../Section.svelte";
   import type { IProject } from "../../types";
   import Tag from "./Tag.svelte";
@@ -24,7 +25,11 @@
 </script>
 
 <div class="container">
-  <Section icon_code="local_offer" title="Tags" actions={headerActions}>
+  <Section
+    icon_code="local_offer"
+    title={$_("tags.tags")}
+    actions={headerActions}
+  >
     {#if project.ui.newTagOpen}
       <Tag
         tag={null}
