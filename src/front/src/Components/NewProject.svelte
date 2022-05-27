@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { uuid } from "../utils";
   import { projects, saveSession, message, overlay } from "../stores";
   import type { IProject } from "../types";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
@@ -56,7 +57,7 @@
     $overlay = false;
   });
 
-  const id: string = Math.random().toString().slice(2);
+  const id: string = uuid();
   let newProject: IProject;
   // let name = `Untitled-${id}`;
   let name = "";

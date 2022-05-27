@@ -4,6 +4,7 @@
   import { timers, registerModification } from "../../stores";
   import type { IProject, ITimer, ITimerLog } from "../../types";
   import TimerLog from "./TimerLog.svelte";
+  import { uuid } from "../../utils";
 
   export let project: IProject;
 
@@ -53,7 +54,7 @@
 
   function addTimerLog() {
     const newTimerLog: ITimerLog = {
-      id: Math.random().toString().slice(2),
+      id: uuid(),
       startDateTime: timer.startDateTime.toISOString(),
       endDateTime: new Date().toISOString(),
       duration: timer.currentTime / 1000 / 60,

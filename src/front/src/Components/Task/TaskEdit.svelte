@@ -5,6 +5,7 @@
   import TagsInput from "../Tag/TagsInput.svelte";
 
   import { createEventDispatcher, onMount } from "svelte";
+  import { uuid } from "../../utils";
   export let task: ITask = null;
   export let tags: Array<ITag>;
   export let timerLogs: Array<ITimerLog>;
@@ -12,7 +13,7 @@
   const eventDispatcher = createEventDispatcher();
 
   let currentDate = new Date().toISOString().slice(0, 10);
-  let id = Math.random().toString().slice(2);
+  let id = uuid();
   let title = "";
   let date = currentDate;
   let duration = [];

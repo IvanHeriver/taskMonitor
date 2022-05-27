@@ -2,6 +2,7 @@
   import type { ITag } from "../../types";
   import { createEventDispatcher, onMount } from "svelte";
   import { hslToHex, hexToHsl } from "./colors";
+  import { uuid } from "../../utils";
   const eventDispatcher = createEventDispatcher();
 
   export let tag: ITag;
@@ -16,7 +17,7 @@
     eventDispatcher("save", newTag);
   }
 
-  let id = Math.random().toString().slice(2);
+  let id = uuid();
   let name = "",
     description = "",
     color = "#808080";

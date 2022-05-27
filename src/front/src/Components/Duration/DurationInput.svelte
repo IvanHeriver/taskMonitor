@@ -3,40 +3,18 @@
   import type { IDurationItem, ITimerLog } from "../../types";
   import DurationSimpleInput from "./DurationSimpleInput.svelte";
 
-  import TimerLogDurationInput from "./TimerLogDurationInput.svelte";
   import DateView from "../Timer/DateView.svelte";
   import Duration from "./Duration.svelte";
   import DurationItem from "./DurationItem.svelte";
-  import TimerLog from "../Timer/TimerLog.svelte";
 
   export let durationItems: Array<IDurationItem>;
   export let timerLogs: Array<ITimerLog>;
 
-  // const unitName = Math.random().toString().slice(2);
-  // const unitFactors = { minutes: 1, hours: 60, days: 60 * 8 };
-
-  // let importedSelected = [];
-  // let importedDuration = 0;
-  // let durationMemory = null;
-
-  // let addDurationOpened = true;
   let importDurationOpened = false;
   let newDuration = 0;
 </script>
 
-<!-- export interface ITimerLog {
-  id: string;
-  startDateTime: string;
-  endDateTime: string;
-  duration: number;
-  used: boolean;
-} -->
-
 <div class="container">
-  <!-- <div class="actions">
-    <button on:click={() => (addDurationOpened = true)}>Add duration</button>
-  </div> -->
-  <!-- {#if addDurationOpened} -->
   <div class="new-duration">
     <label for="new-duration-input-widget">Add a duration:</label>
     <div class="simple" id="new-duration-input-widget">
@@ -109,40 +87,9 @@
       <p>There's no duration for this task</p>
     {/each}
   </div>
-
-  <!-- <div class="custom">
-    <DurationSimpleInput bind:duration />
-  </div>
-  <div class="import">
-    <TimerLogDurationInput
-      bind:duration={importedDuration}
-      bind:selected={importedSelected}
-      bind:timerLogs
-      on:apply={(event) => {
-        const newDuration = event.detail;
-        if (newDuration !== 0) {
-          duration = newDuration;
-        }
-      }}
-      on:add={(event) => {
-        const newDuration = event.detail;
-        duration += newDuration;
-      }}
-    />
-  </div> -->
 </div>
 
 <style>
-  /* .custom {
-    width: 100%;
-  }
-  .import {
-    margin-top: 0.25rem;
-    position: relative;
-    height: 10rem;
-    outline: 1px solid var(--bg-light);
-    outline-offset: -1px;
-  } */
   label,
   div.label {
     color: var(--fg-xlight);

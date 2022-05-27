@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { uuid } from "../../utils";
 
   export let duration: number;
   export let autofocus: boolean = false;
 
-  const id = Math.random().toString().slice(2);
+  const id = uuid();
 
   let d, h, m, s;
   function updateDHMS() {

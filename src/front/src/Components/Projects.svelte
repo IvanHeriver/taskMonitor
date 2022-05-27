@@ -12,6 +12,7 @@
   import NewProject from "./NewProject.svelte";
   import { onMount } from "svelte";
   import type { IProject } from "../types";
+  import { uuid } from "../utils";
   // export let tabsInfo;
   // let currentProject: tmProject = null;
 
@@ -45,7 +46,7 @@
       $projects = [...$projects, loadedProject];
     } else {
       if (loadedProject.filePath !== $projects[index].filePath) {
-        loadedProject.id = Math.random().toString().slice(2);
+        loadedProject.id = uuid();
         console.warn(
           "Duplicated IDs found with different filePath. The ID of the loaded project was changed"
         );

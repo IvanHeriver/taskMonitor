@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ITodo } from "../../types";
   import { createEventDispatcher, onMount } from "svelte";
+  import { uuid } from "../../utils";
   const eventDispatcher = createEventDispatcher();
 
   export let todo: ITodo;
@@ -15,7 +16,7 @@
     eventDispatcher("save", newTodo);
   }
 
-  let id = Math.random().toString().slice(2);
+  let id = uuid();
   let text;
   let done = false;
   let isNew = true;

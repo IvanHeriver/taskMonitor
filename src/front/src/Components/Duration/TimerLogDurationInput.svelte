@@ -3,13 +3,14 @@
   import DateView from "../Timer/DateView.svelte";
   import type { ITimerLog } from "../../types";
   import { createEventDispatcher } from "svelte";
+  import { uuid } from "../../utils";
   const eventDispatcher = createEventDispatcher();
 
   export let duration: number;
   export let selected: Array<ITimerLog>;
   export let timerLogs: Array<ITimerLog>;
 
-  const id = Math.random().toString().slice(2);
+  const id = uuid();
 
   function handleSelectionChange(target, currentId) {
     if (selected.find((s) => s.id === currentId)) {
