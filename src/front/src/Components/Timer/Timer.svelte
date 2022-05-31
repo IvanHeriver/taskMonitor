@@ -120,7 +120,7 @@
         </div>
         <div class="right">
           <button class="icon" on:click={() => addTimerLog()}>
-            <span class="maticons">download</span>
+            <span class="maticons">save</span>
           </button>
           <button class="icon" on:click={resetTimer}>
             <span class="maticons">restart_alt</span>
@@ -139,6 +139,7 @@
         </div>
       </div>
     </div>
+    <div class="history-label">{$_("timer.history")}:</div>
     <div class="history">
       <TimerLog
         bind:timerLogs={project.timerLogs}
@@ -193,14 +194,23 @@
     display: flex;
     justify-content: center;
   }
+  .history-label {
+    padding: 0.5rem;
+    border-top: 1px solid var(--fg-xxlight);
+    position: absolute;
+    top: 3.5rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: var(--fg);
+  }
   .history {
     padding: 0.25rem;
     position: absolute;
-    top: 6.5rem;
+    top: 5.5rem;
     left: 0;
     right: 0;
     bottom: 0;
     overflow: auto;
-    border-top: 1px solid var(--fg-xxlight);
   }
 </style>

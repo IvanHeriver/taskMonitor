@@ -5,6 +5,7 @@
   // import { project } from "../../stores";
   import Duration from "../Duration/Duration.svelte";
   import { createEventDispatcher } from "svelte";
+  import DateView from "../Timer/DateView.svelte";
   export let task: ITask;
   export let tags: Array<ITag>;
 
@@ -28,28 +29,46 @@
   </div>
   <div class="content">
     <div class="time">
+      <span class="label"> {$_("tasks.date")}: </span>
       <div class="date">{new Date(task.date).toLocaleDateString()}</div>
     </div>
     <div class="duration">
-      <Duration
-        duration={task.duration.reduce((td, d) => td + d.duration, 0)}
-      />
+      <div class="total-duration">
+        <span class="label"> {$_("tasks.total_duration")}:</span>
+        <Duration
+          duration={task.duration.reduce((td, d) => td + d.duration, 0)}
+        />
+      </div>
 
       <div class="all-durations">
-        (
         {#each task.duration as durationItem}
-          <Duration duration={durationItem.duration} small={true} />
+          <div class="duration-item">
+            <DateView date={durationItem.date} />
+            <Duration duration={durationItem.duration} small={true} />
+          </div>
         {/each}
-        )
       </div>
     </div>
-    <div class="desc">{task.description}</div>
+    {#if task.description !== ""}
+      <div class="desc">
+        <span class="label"> {$_("tasks.description")}:</span>
+        <span class="description">
+          {task.description}
+        </span>
+      </div>
+    {/if}
 
-    <div class="tags">
-      {#each task.tags_id as tag_id}
-        <Tag tag={tags.find((t) => t.id === tag_id)} mode="large" />
-      {/each}
-    </div>
+    {#if task.tags_id.length > 0}
+      <div class="tags">
+        <span class="label"> {$_("tasks.tags")}:</span>
+        <div class="tag-list">
+          {#each task.tags_id as tag_id}
+            <Tag tag={tags.find((t) => t.id === tag_id)} mode="large" />
+          {/each}
+        </div>
+      </div>
+    {/if}
+
     <div class="info">
       <div class="created">
         <span>{$_("tasks.created")}:</span>
@@ -73,22 +92,12 @@
 
 <style>
   .container {
-    /* padding: 0.5rem; */
     background-color: var(--bg-light);
   }
   .header,
-  .time,
   .info {
     display: flex;
     justify-content: space-between;
-  }
-  .duration {
-    display: flex;
-    gap: 0.25rem;
-  }
-  .all-durations {
-    display: flex;
-    /* gap: 0.25rem; */
   }
   .header {
     padding: 0.25rem;
@@ -99,6 +108,9 @@
   }
   .content {
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
   .actions {
     display: flex;
@@ -107,19 +119,57 @@
     color: var(--fg-strong);
     font-weight: 600;
   }
-  .desc,
   .info {
+    font-size: 0.8rem;
     color: var(--fg-xlight);
   }
-  .desc {
-    padding-top: 0.25rem;
+  .label {
+    color: var(--fg-xlight);
   }
+
+  .time {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .duration {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .total-duration {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .all-durations {
+    display: flex;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    column-gap: 1rem;
+    /* padding-left: 1rem; */
+  }
+  .duration-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--fg);
+  }
+
+  .desc {
+    display: flex;
+    flex-direction: column;
+  }
+  .desc .description {
+    color: var(--fg);
+  }
+
   .tags {
     padding: 0.25rem 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
-  .info {
-    font-size: 0.8rem;
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
   }
 </style>

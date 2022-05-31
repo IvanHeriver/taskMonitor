@@ -40,7 +40,7 @@
     background-color: var(--color);
   }
   .name {
-    /* text-transform: uppercase; */
+    text-transform: uppercase;
     padding-left: 0.25rem;
   }
   .description {

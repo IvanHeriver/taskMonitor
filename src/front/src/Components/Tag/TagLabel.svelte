@@ -48,6 +48,7 @@
     outline-offset: -1px;
     display: flex;
     margin: 1px;
+    background-color: var(--bg);
   }
   .container.selectable {
     border: 2px solid transparent;
@@ -74,5 +75,6 @@
     min-width: var(--size);
     font-weight: 500;
     font-size: 0.8rem;
+    text-transform: uppercase;
   }
 </style>

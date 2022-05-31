@@ -15,6 +15,7 @@
       action: () => {
         project.ui.newTaskOpen = true;
       },
+      primary: true,
     },
     {
       icon_code: "expand_less",
@@ -47,43 +48,48 @@
     title={$_("tasks.tasks")}
     actions={headerActions}
   >
-    {#if project.ui.newTaskOpen}
-      <NewTask
-        task={null}
-        bind:tags={project.tags}
-        bind:timerLogs={project.timerLogs}
-        on:cancel={() => {
-          project.ui.newTaskOpen = false;
-        }}
-        on:save={(event) => {
-          const newTask = event.detail;
-          console.log("newTask", newTask);
-          project.tasks = [newTask, ...project.tasks];
-          project.ui.newTaskOpen = false;
-          registerModification(project.id, "new task", ["tasks"]);
-        }}
-      />
-    {/if}
-    {#each project.tasks as task, i (task.id)}
-      <Task
-        bind:task
-        bind:tags={project.tags}
-        bind:timerLogs={project.timerLogs}
-        on:save={(e) => {
-          const newTask = e.detail;
-          project.tasks = project.tasks.map((t, i) => {
-            if (t.id !== newTask.id) return t;
-            registerModification(project.id, "modify task", ["tasks", i]);
-            return newTask;
-          });
-        }}
-        on:delete={(e) => {
-          const task_id = e.detail;
-          project.tasks = project.tasks.filter((t) => t.id !== task_id);
-          registerModification(project.id, "delete task", ["tasks"]);
-        }}
-      />
-    {/each}
+    <ul>
+      {#if project.ui.newTaskOpen}
+        <li>
+          <NewTask
+            task={null}
+            bind:tags={project.tags}
+            bind:timerLogs={project.timerLogs}
+            on:cancel={() => {
+              project.ui.newTaskOpen = false;
+            }}
+            on:save={(event) => {
+              const newTask = event.detail;
+              project.tasks = [newTask, ...project.tasks];
+              project.ui.newTaskOpen = false;
+              registerModification(project.id, "new task", ["tasks"]);
+            }}
+          />
+        </li>
+      {/if}
+      {#each project.tasks as task, i (task.id)}
+        <li>
+          <Task
+            bind:task
+            bind:tags={project.tags}
+            bind:timerLogs={project.timerLogs}
+            on:save={(e) => {
+              const newTask = e.detail;
+              project.tasks = project.tasks.map((t, i) => {
+                if (t.id !== newTask.id) return t;
+                registerModification(project.id, "modify task", ["tasks", i]);
+                return newTask;
+              });
+            }}
+            on:delete={(e) => {
+              const task_id = e.detail;
+              project.tasks = project.tasks.filter((t) => t.id !== task_id);
+              registerModification(project.id, "delete task", ["tasks"]);
+            }}
+          />
+        </li>
+      {/each}
+    </ul>
   </Section>
 </div>
 
@@ -92,5 +98,18 @@
     position: relative;
     height: 100%;
     overflow: hidden;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
   }
 </style>

@@ -4,14 +4,32 @@
   "no": "No",
   "cancel": "Cancel",
   "not_available_yet": "Not available yet",
+  "menu": {
+    "toggle_dark_theme": "Toggle dark theme",
+    "dark_is_better": "Dark is better!",
+    "open": "Open",
+    "save": "Save",
+    "exit": "Exit",
+    "change_language": "Change language"
+  },
+  "languages": {
+    "fr": "French",
+    "en": "English"
+  },
   "messages": {
     "on_load_unsaved_loaded_project": "This file is already loaded and has unsaved changed. Are you sure you want to overwrite the unsaved project?",
     "on_close_unsaved_project": "Do you want to save the modification?",
-    "invalid_character": "Invalid character",
-    "forbidden_characters": "You cannot use special character for the project name.",
     "delete_task": "Are you sure you wan to delete the task?",
     "delete_tag": "Are you sure you want to delete the tag?",
-    "delete_duration": "Are you sure you want to delete the duration?"
+    "delete_duration": "Are you sure you want to delete the duration?",
+    "project_name_invalid": {
+      "title": "Invalid characters",
+      "message": "You cannot use special character for the project name."
+    },
+    "project_name_missing": {
+      "title": "Missing project name",
+      "message": "You must specify a valid project name."
+    }
   },
   "tooltips": {
     "toggle_task_panel": "Show/hide tasks panel",
@@ -46,7 +64,8 @@
   "timer": {
     "start": "Start",
     "end": "End",
-    "timer": "Stopwatch"
+    "timer": "Stopwatch",
+    "history": "Stopwatch history"
   },
   "tasks": {
     "tasks": "Tasks",
@@ -58,6 +77,7 @@
     "title": "Title",
     "date": "Date",
     "duration": "Duration",
+    "total_duration": "Total duration",
     "description": "Description",
     "tags": "Tags",
     "create_new_task": "Create new task",
@@ -68,6 +88,7 @@
     "name": "Name",
     "description": "Description",
     "create_new_tag": "Create new tag",
+    "add_tag": "Add tag",
     "save_tag": "Save tag",
     "color": "Color"
   },

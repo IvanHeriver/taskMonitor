@@ -39,12 +39,15 @@
     padding: 0 0.25rem;
     margin: 0;
   }
-  .container:hover,
+  /* .container:hover, */
   .container:focus {
-    background-color: transparent;
+    /* background-color: transparent; */
     outline-color: var(--fg-xstrong);
   }
 
+  .container:hover {
+    background-color: var(--bg-light);
+  }
   .actions {
     display: flex;
     align-items: center;

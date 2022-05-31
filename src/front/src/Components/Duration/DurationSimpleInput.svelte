@@ -26,7 +26,6 @@
       m = 0;
     }
     let newDuration = s / 60 + m + h * 60 + d * 60 * 8;
-    console.log(newDuration);
     if (newDuration <= 0) {
       duration = 0;
       d = 0;

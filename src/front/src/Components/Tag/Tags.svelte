@@ -18,8 +18,9 @@
   const headerActions = [
     {
       icon_code: "add",
-      text: "Add tag",
+      text: $_("tags.add_tag"),
       action: () => (project.ui.newTagOpen = true),
+      primary: true,
     },
   ];
 </script>
@@ -30,44 +31,50 @@
     title={$_("tags.tags")}
     actions={headerActions}
   >
-    {#if project.ui.newTagOpen}
-      <Tag
-        tag={null}
-        mode="edit"
-        on:new={(event) => {
-          if (event.detail) {
-            const newTag = event.detail;
-            project.tags = [newTag, ...project.tags];
-            registerModification(project.id, "new tag", ["tags", 0]);
-          }
-          project.ui.newTagOpen = false;
-          registerModification(project.id, "ui", ["ui", "newTagOpen"]);
-        }}
-      />
-    {/if}
-    {#each project.tags as tag (tag.id)}
-      <Tag
-        bind:tag
-        bind:mode={modes[tag.id]}
-        on:delete={(event) => {
-          const tagId = event.detail;
-          project.tasks = project.tasks.map((t) => {
-            t.tags_id = t.tags_id.filter((i) => i !== tagId);
-            return t;
-          });
-          project.tags = project.tags.filter((t) => t.id !== tagId);
-          registerModification(project.id, "delete tag", ["tags"]);
-        }}
-        on:save={(event) => {
-          const newTag = event.detail;
-          project.tags = project.tags.map((t, i) => {
-            if (t.id !== newTag.id) return t;
-            registerModification(project.id, "modify tag", ["tags", i]);
-            return newTag;
-          });
-        }}
-      />
-    {/each}
+    <ul>
+      {#if project.ui.newTagOpen}
+        <li>
+          <Tag
+            tag={null}
+            mode="edit"
+            on:new={(event) => {
+              if (event.detail) {
+                const newTag = event.detail;
+                project.tags = [newTag, ...project.tags];
+                registerModification(project.id, "new tag", ["tags", 0]);
+              }
+              project.ui.newTagOpen = false;
+              registerModification(project.id, "ui", ["ui", "newTagOpen"]);
+            }}
+          />
+        </li>
+      {/if}
+      {#each project.tags as tag (tag.id)}
+        <li>
+          <Tag
+            bind:tag
+            bind:mode={modes[tag.id]}
+            on:delete={(event) => {
+              const tagId = event.detail;
+              project.tasks = project.tasks.map((t) => {
+                t.tags_id = t.tags_id.filter((i) => i !== tagId);
+                return t;
+              });
+              project.tags = project.tags.filter((t) => t.id !== tagId);
+              registerModification(project.id, "delete tag", ["tags"]);
+            }}
+            on:save={(event) => {
+              const newTag = event.detail;
+              project.tags = project.tags.map((t, i) => {
+                if (t.id !== newTag.id) return t;
+                registerModification(project.id, "modify tag", ["tags", i]);
+                return newTag;
+              });
+            }}
+          />
+        </li>
+      {/each}
+    </ul>
   </Section>
 </div>
 
@@ -76,5 +83,19 @@
     position: relative;
     height: 100%;
     overflow: hidden;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
   }
 </style>

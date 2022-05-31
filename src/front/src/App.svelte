@@ -10,7 +10,7 @@
   import {
     currentProjectId,
     projects,
-    message,
+    addMessage,
     processLoadedProject,
     draggedDurationItem,
   } from "./stores";
@@ -22,30 +22,18 @@
     // const shouldUseDarkMode = true;
     window.electronAPI.onSetDarkMode(async (_, isDarkMode) => {
       darkMode = isDarkMode;
-      console.log("isDarkMode", isDarkMode);
-      // console.log(await window.electronAPI.toggleDarkMode(darkMode));
       document.documentElement.setAttribute(
         "data-theme",
         darkMode ? "dark" : "light"
       );
     });
     window.electronAPI.shoudUseDarkMode();
+
     const currentAppVersion = await window.electronAPI.checkAndUpdateApp();
-    console.log("currentAppVersion", currentAppVersion);
-    window.electronAPI.onUpdateAvailable((e, args) => {
-      console.log("onUpdateAvailable", e);
-      console.log("onUpdateAvailable", args);
-    });
-    window.electronAPI.onUpdateDownloaded((e, args) => {
-      console.log("onUpdateDownloaded", e);
-      console.log("onUpdateDownloaded", args);
-    });
-    // document.documentElement.setAttribute(
-    //   "data-theme",
-    //   darkMode ? "dark" : "light"
-    // );
+    window.electronAPI.onUpdateAvailable((e, args) => {});
+    window.electronAPI.onUpdateDownloaded((e, args) => {});
     let session = await window.electronAPI.retrieveSession();
-    console.log(session);
+
     $projects = session.projects.map((p) => processLoadedProject(p));
     $currentProjectId = session.currentProjectId;
     sessionRetrieved = true;
@@ -54,6 +42,15 @@
       mouseX = e.x;
       mouseY = e.y;
     });
+
+    // for (let k = 0; k < 100; k++) {
+    //   addMessage({
+    //     title: "Random message",
+    //     message: `This is a random message (k=${k}}!`,
+    //     type: ["info", "warning", "error"][Math.floor(Math.random() * 3)],
+    //     duration: 2000 + k * 250,
+    //   });
+    // }
   });
 
   let mouseX, mouseY;

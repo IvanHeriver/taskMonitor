@@ -1,25 +1,11 @@
 import { Menu, MenuItemConstructorOptions, nativeTheme } from "electron";
 import { openProjectFromFile } from "./files";
 
-export function setupMainMenu(window, isDev, isMac = false, appName = "", t, locale, locales) {
+export function setupMainMenu(window, isDev, isMac = false, appName = "", t) {
   const menuTemplate: MenuItemConstructorOptions[] = [
     {
-      label: t("menu.change_language"),
-      sublabel: t(`languages.${locale}`),
-      submenu: locales.map(l=>{
-        return {
-          label: `${t(`languages.${l.id}`)} / ${l.label}`,
-          click: () =>{
-            console.log(`${t(`languages.${l.id}`)} / ${l.label}`)
-            console.log(l.id)
-            window.webContents.send("change-language", l.id);
-          }
-        }
-      })
-    },
-    { type: "separator" },{
-      label: t("menu.toggle_dark_theme"),
-      sublabel: t("menu.dark_is_better"),
+      label: t("Toggle Dark Mode"),
+      sublabel: "Dark is better!",
       click: () => {
         if (nativeTheme.shouldUseDarkColors) {
           nativeTheme.themeSource = "light";
@@ -34,7 +20,7 @@ export function setupMainMenu(window, isDev, isMac = false, appName = "", t, loc
     },
     { type: "separator" },
     {
-      label: t("menu.open"),
+      label: "Open",
       accelerator: "Ctrl+O",
       click: async () => {
         const response = await openProjectFromFile(window);
@@ -43,13 +29,13 @@ export function setupMainMenu(window, isDev, isMac = false, appName = "", t, loc
     },
     { type: "separator" },
     {
-      label: t("menu.save"),
+      label: "Save",
       accelerator: "Ctrl+S",
       click: () => window.webContents.send("save-project"),
     },
     { type: "separator" },
     {
-      label: t("menu.exit"),
+      label: "Exit",
       accelerator: "Alt+F4",
       role: isMac ? "close" : "quit",
     },

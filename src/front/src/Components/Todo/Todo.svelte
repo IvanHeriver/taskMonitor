@@ -3,15 +3,10 @@
   import TodoView from "./TodoView.svelte";
   import TodoEdit from "./TodoEdit.svelte";
   import { createEventDispatcher } from "svelte";
-  import { question } from "../../stores";
   const eventDispatcher = createEventDispatcher();
 
   export let todo: ITodo;
   export let mode: "edit" | "view";
-
-  // function deleteTag(tag_id) {
-  //
-  // }
 </script>
 
 <div class="container">
@@ -47,13 +42,4 @@
 </div>
 
 <style>
-  .container {
-    padding: 0 0.25rem;
-    padding-top: 0.25rem;
-    min-width: 200px;
-    user-select: none;
-  }
-  .container:first-child {
-    padding-top: 0;
-  }
 </style>

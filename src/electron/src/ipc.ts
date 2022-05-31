@@ -1,9 +1,9 @@
 import { ipcMain, Menu, MenuItem, nativeTheme, dialog } from "electron";
 import { retrieveSession, saveProjectToFile, saveSession, openProjectFromFile } from "./files";
-
+import {setupMainMenu} from "./menu"
 
 // setup Inter Process Communication (IPC)
-export function setupIPC(window: Electron.BrowserWindow, menu: Electron.Menu, app: Electron.App, autoUpdater) {
+export function setupIPC(window: Electron.BrowserWindow, menu: Electron.Menu, app: Electron.App, autoUpdater, isDev, isMac) {
   // ipcMain.handle("toggle-dark-mode", () => {
   //   if (nativeTheme.shouldUseDarkColors) {
   //     nativeTheme.themeSource = "light";
@@ -12,6 +12,50 @@ export function setupIPC(window: Electron.BrowserWindow, menu: Electron.Menu, ap
   //   }
   //   return nativeTheme.shouldUseDarkColors;
   // });
+
+  ipcMain.handle("setup-i18n", (_, config) => {
+    console.log(" config.locale",  config.locale)
+    menu = setupMainMenu(window, isDev, isMac, app.name, (key)=>{
+      const keys = key.split(".")
+      let dictionnary = {...config.translations[config.locale]}
+      for (let k of keys) {
+        if (k in dictionnary) {
+          dictionnary = dictionnary[k]
+        } else {
+          break
+        }
+      }
+      if (typeof dictionnary === "string") {
+        return dictionnary
+      } else {
+        return "undefined"
+      }
+    }, config.locale, config.languages)
+  //   const menu_template ={
+  //   label: "Language",
+  //   visible: isDev,
+  //   submenu: [
+  //     {
+  //       label: "Refresh",
+  //       accelerator: "F5",
+  //       role: "forceReload",
+  //     },
+  //     {
+  //       label: "Toggle Developer Tools",
+  //       accelerator: "Ctrl+Shift+I",
+  //       role: "toggleDevTools",
+  //     },
+  //     {
+  //       label: "Toggle Developer Tools (invisible)",
+  //       accelerator: "F12",
+  //       visible: false,
+  //       role: "toggleDevTools",
+  //     },
+  //   ],
+  // }
+  return "done"
+  })
+
   ipcMain.on("should-use-dark-mode", () => {
     window.webContents.send("set-dark-mode", nativeTheme.shouldUseDarkColors);
   })
@@ -22,7 +66,6 @@ export function setupIPC(window: Electron.BrowserWindow, menu: Electron.Menu, ap
 
   ipcMain.handle("load-project", async () => {
     const response = await openProjectFromFile(window);
-    console.log(response.project.todos)
     window.webContents.send("load-project", response);
   });
 
@@ -56,7 +99,6 @@ export function setupIPC(window: Electron.BrowserWindow, menu: Electron.Menu, ap
   ipcMain.handle('check-and-update', ()=>{
     // const currentVersion = app.getVersion()
     const currentVersion = app.getVersion()
-    console.log("App current version: ", currentVersion)
     autoUpdater.checkForUpdatesAndNotify()
     return currentVersion
   })

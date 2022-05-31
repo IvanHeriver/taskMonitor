@@ -29,8 +29,6 @@ export function registerModification(
   map: Array<string | number>
 ) {
   saveSession();
-  console.log("#".repeat(20));
-  console.log("modificationMonitor:", { projectId, type, map });
   projects.update((projs) => {
     const index = projs.findIndex((p) => p.id === projectId);
     projs[index].state = "unsaved";
@@ -75,7 +73,6 @@ export function processLoadedProject(loadedProject: IProject): IProject {
       loadedProject.version = 1
     }
     if (loadedProject.version === 1) {
-
       loadedProject.tasks = loadedProject.tasks.map(task=>{
         if (Array.isArray(task.duration)) {
           console.warn("Already done", task.duration)
@@ -86,9 +83,40 @@ export function processLoadedProject(loadedProject: IProject): IProject {
         return task
       })
     }
-    loadedProject.ui.newTaskOpen = true
+    loadedProject.ui.statPanelOpen = false
     return loadedProject;
   }
+
+export function createNewProject(): IProject {
+   const newProject: IProject = {
+        version: 2,
+        id: uuid(),
+        name: "untitle",
+        description: "",
+        filePath: "",
+        state: "unsaved",
+        tasks: [],
+        tags: [],
+        timerLogs: [],
+        todos: [],
+        created: new Date().toISOString(),
+        updated: new Date().toISOString(),
+        stats: {
+          allocatedDuration: null,
+        },
+        ui: {
+          newTagOpen: false,
+          newTaskOpen: false,
+          newTodoOpen: false,
+          taskPanelOpen: true,
+          tagPanelOpen: true,
+          timerPanelOpen: true,
+          statPanelOpen: false,
+          todoPanelOpen: true,
+        },
+      };
+    return newProject
+}
 
 export const timers: Writable<{ [key: string]: ITimer }> = writable({});
 
@@ -110,3 +138,21 @@ export const message: Writable<{
 export const overlay: Writable<boolean> = writable(false)
 
 export const draggedDurationItem: Writable<IDurationItem> = writable(null)
+
+export interface IMessage {
+  title: string;
+  message: string;
+  duration: number;
+  type: "info" | "warning" | "error";
+  id?: string;
+}
+export const messages: Writable<Array<IMessage>> = writable([])
+export function addMessage(message: IMessage) {
+  message.id = uuid()
+  if (message.duration > 0) {
+    setTimeout(()=>{
+      messages.update(messages=>messages.filter(m=>m.id!==message.id))
+    }, message.duration)
+  }
+  messages.update(messages=>[...messages, message])
+}

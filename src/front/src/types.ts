@@ -83,6 +83,8 @@ declare global {
       shoudUseDarkMode: Function;
       onSetDarkMode: Function;
       // toggleDarkMode: Function;
+      setupI18n: Function;
+      onChangeLanguage: Function;
       onSaveProject: Function;
       onLoadProject: Function;
       saveProject: Function;
@@ -117,3 +119,10 @@ export interface IMenuItem {
   type?: "separator" | "normal" | "submenu";
   submenu?: Array<IMenuItem>;
 }
+
+export  interface IProjectLayout {
+    orientation?: "vertical" | "horizontal";
+    elements?: Array<IProjectLayout>;
+    element?: string,
+    size?: number
+  }

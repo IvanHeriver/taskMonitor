@@ -7,7 +7,6 @@
 
   onMount(async () => {
     window.electronAPI.onResize((_, normal) => {
-      console.log(normal);
       isNormal = normal;
     });
     isNormal = await window.electronAPI.isNormal();

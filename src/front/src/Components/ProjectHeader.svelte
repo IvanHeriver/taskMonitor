@@ -7,19 +7,22 @@
 
   export let project: IProject;
 
+  let allocatedDurationBackup;
+
   $: spent = project.tasks.reduce(
     (a, t) => a + t.duration.reduce((b, d) => b + d.duration, 0),
     0
   );
   $: remaining = project.stats.allocatedDuration - spent;
 
-  $: {
-    console.log(
-      "project.stats.allocatedDuration",
-      project.stats.allocatedDuration
-    );
-    console.log("remaining", remaining);
-  }
+  // $: {
+  //   console.log(
+  //     "project.stats.allocatedDuration",
+  //     project.stats.allocatedDuration
+  //   );
+  //   console.log("remaining", remaining);
+  //   console.log("spent", spent);
+  // }
   let editAllocated = false;
   let editProjectInfo = false;
 </script>
@@ -37,8 +40,8 @@
     <div class="name" title={project.description}>
       {project.name}
     </div>
-    {#if editProjectInfo}
-      <button
+    {#if !editProjectInfo}
+      <!-- <button
         class="btn icon"
         on:click={() => {
           editProjectInfo = false;
@@ -46,8 +49,8 @@
       >
         <span class="maticons">save</span>
         <span class="text">{$_("save")}</span>
-      </button>
-    {:else}
+      </button> -->
+      <!-- {:else} -->
       <button
         class="btn icon"
         on:click={() => {
@@ -55,7 +58,7 @@
         }}
       >
         <span class="maticons">edit</span>
-        <span class="text">{$_("edit")}</span>
+        <!-- <span class="text">{$_("edit")}</span> -->
       </button>
     {/if}
     <!-- <div class="desc">{project.description}</div> -->
@@ -78,24 +81,37 @@
         </div>
       </div>
       {#if editAllocated}
-        <button
-          class="btn icon"
-          on:click={() => {
-            editAllocated = false;
-          }}
-        >
-          <span class="maticons">save</span>
-          <span class="text">{$_("save")}</span>
-        </button>
+        <div class="buttons">
+          <button
+            class="btn icon"
+            on:click={() => {
+              editAllocated = false;
+            }}
+          >
+            <span class="maticons">done</span>
+            <span class="text">{$_("save")}</span>
+          </button>
+          <button
+            class="btn icon"
+            on:click={() => {
+              project.stats.allocatedDuration = allocatedDurationBackup;
+              editAllocated = false;
+            }}
+          >
+            <span class="maticons">close</span>
+            <span class="text">{$_("cancel")}</span>
+          </button>
+        </div>
       {:else}
         <button
           class="btn icon"
           on:click={() => {
+            allocatedDurationBackup = project.stats.allocatedDuration;
             editAllocated = true;
           }}
         >
           <span class="maticons">edit</span>
-          <span class="text">{$_("edit")}</span>
+          <!-- <span class="text">{$_("edit")}</span> -->
         </button>
       {/if}
     </div>
@@ -157,14 +173,18 @@
     display: flex;
     justify-content: space-between;
   }
+  .allocated .buttons {
+    display: flex;
+    margin-left: 1rem;
+  }
   .alloc {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
-  .btn {
+  /* .btn {
     margin-left: 1rem;
-  }
+  } */
   .maticons {
     font-size: 1.5rem;
   }

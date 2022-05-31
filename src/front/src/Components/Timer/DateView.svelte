@@ -10,7 +10,8 @@
 <style>
   .container {
     display: flex;
-    padding: 0 0.5rem;
+    /* padding: 0 0.5rem; */
+    padding-right: 0.5rem;
   }
   .date {
     margin-right: 0.5rem;

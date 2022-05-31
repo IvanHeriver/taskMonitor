@@ -4,14 +4,32 @@
   "no": "Non",
   "cancel": "Annuler",
   "not_available_yet": "Pas encore disponible",
+  "menu": {
+    "toggle_dark_theme": "Activer/désactiver le thème sombre",
+    "dark_is_better": "C'est mieux sombre!",
+    "open": "Ouvrir",
+    "save": "Sauvegarder",
+    "exit": "Quitter",
+    "change_language": "Changer de langue"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "Anglais"
+  },
   "messages": {
     "on_load_unsaved_loaded_project": "Ce fichier est déjà chargé et comporte des modifications non enregistrées. Voulez-vous vraiment écraser le fichier déjà chargé?",
     "on_close_unsaved_project": "Voulez-vous enregistrer les modifications?",
-    "invalid_character": "Caractère non valide",
-    "forbidden_characters": "Vous ne pouvez pas utiliser de caractères spéciaux dans le nom du projet.",
     "delete_task": "Voulez-vous vraiment supprimer cette tâche?",
     "delete_tag": "Voulez-vous vraiment supprimer cette étiquette?",
-    "delete_duration": "Voulez-vous vraiment supprimer cette durée?"
+    "delete_duration": "Voulez-vous vraiment supprimer cette durée?",
+    "project_name_invalid": {
+      "title": "Caractères non valides",
+      "message": "Vous ne pouvez pas utiliser de caractères spéciaux dans le nom du projet."
+    },
+    "project_name_missing": {
+      "title": "Nom du projet manquant",
+      "message": "Vous devez spécifier un nom de projet valide."
+    }
   },
   "tooltips": {
     "toggle_task_panel": "Montrer/cacher le panneau des tâches",
@@ -46,7 +64,8 @@
   "timer": {
     "start": "Début",
     "end": "Fin",
-    "timer": "Chronomètre"
+    "timer": "Chronomètre",
+    "history": "Historique du chronomètre"
   },
   "tasks": {
     "tasks": "Tâche",
@@ -58,16 +77,18 @@
     "title": "Titre",
     "date": "Date",
     "duration": "Durée",
+    "total_duration": "Durée totale",
     "description": "Description",
-    "tags": "Etiquettes",
+    "tags": "Étiquettes",
     "create_new_task": "Créer une nouvelle tâche",
     "save_task": "Sauvegarder"
   },
   "tags": {
-    "tags": "Etiquettes",
+    "tags": "Étiquettes",
     "name": "Nom",
     "description": "Description",
     "create_new_tag": "Créer une nouvelle étiquette",
+    "add_tag": "Ajouter une étiquette",
     "save_tag": "Sauvegarder",
     "color": "Couleur"
   },
@@ -75,7 +96,7 @@
     "statistics": "Statistiques"
   },
   "duration": {
-    "work_days": "Jour de travail",
+    "work_days": "Jours de travail",
     "hours": "Heures",
     "minutes": "Minutes",
     "seconds": "Secondes",
@@ -83,7 +104,7 @@
     "import": "Importer",
     "add": "Ajouter",
     "use_duration": "Utiliser cette durée",
-    "drag_and_drop_timer_log": "Vous pouvez glisser/déposer des durées depuis l'historique le panneau du chronomètre",
+    "drag_and_drop_timer_log": "Vous pouvez glisser/déposer des durées depuis l'historique du panneau du chronomètre",
     "durations": "Durées",
     "no_durations": "Il n'y a auncune durée associée à cette tâche"
   }

@@ -10,7 +10,7 @@
   } from "../stores";
   // import type { tmProject } from "../types";
   import Project from "./Project.svelte";
-  import NewProject from "./NewProject.svelte";
+  import EditProjectInfo from "./EditProjectInfo.svelte";
   import { onMount } from "svelte";
   import type { IProject } from "../types";
   import { uuid } from "../utils";
@@ -19,7 +19,6 @@
 
   onMount(() => {
     window.electronAPI.onLoadProject((loadedProjectInfo) => {
-      console.log("loadedProjectInfo", loadedProjectInfo);
       if (!loadedProjectInfo.success) {
         console.warn("The file was not loaded");
         return;
@@ -59,7 +58,6 @@
             buttons: [$_("yes"), $_("cancel")],
             cancelID: 1,
           });
-          console.log(res);
           if (res.response === 0) {
             $projects[index] = loadedProject;
           }
@@ -73,7 +71,6 @@
 
   async function openExistingProject() {
     let response = await window.electronAPI.loadProject();
-    console.log(response);
   }
   function createNewProject() {
     newProject = true;
@@ -103,15 +100,25 @@
     if ($projects.length !== 0 && $currentProjectId === null) {
       $currentProjectId = $projects[0].id;
     }
-    console.log($projects);
   }
 </script>
 
 {#if newProject}
-  <NewProject
+  <!-- <NewProject
     on:done={(event) => {
       if (event.detail) {
         $currentProjectId = event.detail.id;
+      }
+      newProject = false;
+    }}
+  /> -->
+  <EditProjectInfo
+    project={undefined}
+    on:done={(event) => {
+      if (event.detail) {
+        const newProject = event.detail;
+        $projects = [...$projects, newProject];
+        $currentProjectId = newProject.id;
       }
       newProject = false;
     }}
@@ -144,7 +151,6 @@
                 buttons: [$_("yes"), $_("no"), $_("cancel")],
                 cancelID: 1,
               });
-              console.log(res);
               if (res.response === 0) {
                 const res = await window.electronAPI.saveProject(p);
                 if (!res.canceled && res.success) {
@@ -193,10 +199,10 @@
               <span>{$_("open_existing_project")}</span>
             </button>
           </div>
-          <div class="recent">
-            <!-- <div class="label">Recently open files:</div>
-            <div class="recent-files">...recent files...</div> -->
-          </div>
+          <!-- <div class="recent">
+            <div class="label">Recently open files:</div>
+            <div class="recent-files">...recent files...</div>
+          </div> -->
         </div>
       </div>
     {/each}

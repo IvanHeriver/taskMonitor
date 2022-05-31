@@ -18,9 +18,22 @@
   let mode: "days" | "hours";
   let sign;
   $: {
-    if (Math.abs(duration / 60 / 8) > 3) {
+    duration = Math.round(duration * 60) / 60;
+    sign = Math.sign(duration);
+    duration = Math.abs(duration);
+  }
+  $: {
+    // console.log("*************");
+    // console.log(sign);
+    // console.log(duration);
+    // console.log(duration / 60 / 8);
+    // console.log(duration / 60 / 8 > 3);
+    if (duration / 60 / 8 > 3) {
       mode = "days";
+    } else {
+      mode = "hours";
     }
+    // console.log(mode);
   }
   let d, h, m, s;
   $: {
@@ -36,6 +49,9 @@
 
 <div class="container" class:small>
   <span class="maticons">timer</span>
+  {#if sign === -1}
+    -
+  {/if}
   {#if mode === "days"}
     <span class="value">{d.toFixed(2)}</span>
     <span class="unit text light">{$_("duration.work_days")}</span>
@@ -59,7 +75,7 @@
   }
   .small {
     font-size: 0.9rem;
-    color: var(--fg-xlight);
+    /* color: var(--fg-xlight); */
   }
   .unit,
   .value {
@@ -75,9 +91,10 @@
     font-size: 0.8em;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding-left: 0.25rem;
   }
   .light {
-    color: var(--fg-light);
+    color: var(--fg-xlight);
   }
   .container.small .light {
     color: var(--fg-xxlight);

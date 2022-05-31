@@ -34,7 +34,8 @@
     width: 100%;
     max-height: 6rem;
     outline: 1px solid var(--bg-xlight);
-    background-color: var(--bg-light);
+    /* background-color: var(--bg-light); */
+    background-color: var(--bg-input);
     outline-offset: -1px;
     display: flex;
     flex-wrap: wrap;

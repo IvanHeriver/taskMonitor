@@ -8,14 +8,14 @@ import {
   nativeTheme,
   MenuItemConstructorOptions,
 } from "electron";
-import path from "path";
+import * as path from "path";
 import { setupIPC } from "./ipc";
 import { setupMainMenu } from "./menu";
 import { autoUpdater } from "electron-updater";
 // import { saveSession } from "./files";
 
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
-const isDevelopment = "ISDEV" in process.env;
+const isDev = "ISDEV" in process.env;
 const isMac = process.platform === "darwin";
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
@@ -51,7 +51,7 @@ function createMainWindow() {
   //   // }
   // });
 
-  if (isDevelopment) {
+  if (isDev) {
     // this is for me only since I have a big monitor
     // and I split my screen in a specific way when developing
     // window.setSize(1940, 1090);
@@ -64,7 +64,7 @@ function createMainWindow() {
     window.setSize(1080, 660);
   }
 
-  if (isDevelopment) {
+  if (isDev) {
     window.loadURL(`http://localhost:${8080}`);
   } else {
     const urlToLoad = path.join(
@@ -85,7 +85,7 @@ function createMainWindow() {
   window.on("ready-to-show", async () => {
     await window.show();
     // window.webContents.send("set-dark-mode", nativeTheme.shouldUseDarkColors);
-    if (isDevelopment) window.webContents.openDevTools();
+    if (isDev) window.webContents.openDevTools();
   });
 
   return window;
@@ -110,9 +110,8 @@ app.on("activate", () => {
 app.on("ready", () => {
   // app.allowRendererProcessReuse = true;
   mainWindow = createMainWindow();
-  mainMenu = setupMainMenu(mainWindow, isDevelopment, isMac, app.name);
-  console.log("App user date path:", app.getPath("userData"));
-  setupIPC(mainWindow, mainMenu, app, autoUpdater);
+  mainMenu = setupMainMenu(mainWindow, isDev, isMac, app.name, (key)=>Math.random().toString(), "en", [{id: "fr", label: "Français"}, {id: "en", label: "English"}]);
+  setupIPC(mainWindow, mainMenu, app, autoUpdater, isDev, isMac);
 });
 
 autoUpdater.on("update-available", () => {

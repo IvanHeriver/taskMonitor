@@ -4,7 +4,7 @@
   import DurationInput from "../Duration/DurationInput.svelte";
   import Duration from "../Duration/Duration.svelte";
   import TagsInput from "../Tag/TagsInput.svelte";
-
+  import { message } from "../../stores";
   import { createEventDispatcher, onMount } from "svelte";
   import { uuid } from "../../utils";
   export let task: ITask = null;
@@ -35,7 +35,15 @@
   }
 
   function save() {
-    if (title === undefined || title === "") return;
+    if (title === undefined || title === "") {
+      $message = {
+        title: $_("messages.missing_title"),
+        message: $_("messages.forbidden_characters"),
+        duration: 5000,
+        type: "error",
+      };
+      return;
+    }
 
     let created = new Date().toISOString();
     let updated = new Date().toISOString();

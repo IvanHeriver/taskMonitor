@@ -47,7 +47,6 @@
               buttons: [$_("yes"), $_("cancel")],
               cancelID: 1,
             });
-            console.log(res);
             if (res.response === 0) {
               eventDispatcher("delete");
             }

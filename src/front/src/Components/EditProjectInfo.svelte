@@ -1,13 +1,21 @@
 <script lang="ts">
   import { _ } from "svelte-i18n";
-  import { overlay, registerModification } from "../stores";
+  import {
+    overlay,
+    registerModification,
+    createNewProject,
+    addMessage,
+  } from "../stores";
   import type { IProject } from "../types";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
   const eventDispatcher = createEventDispatcher();
 
   onMount(() => {
-    name = project.name;
-    description = project.description;
+    if (!newProject) {
+      name = project.name;
+      description = project.description;
+    }
+
     projectNameInputElement.focus();
     $overlay = true;
   });
@@ -17,14 +25,39 @@
   export let project: IProject;
 
   function saveProjectInfo() {
+    if (name === "") {
+      addMessage({
+        title: $_("messages.project_name_missing.title"),
+        message: $_("messages.project_name_missing.message"),
+        type: "error",
+        duration: 5000,
+      });
+      return;
+    }
+    if (/[~`!#$%\^&*+=\-\[\]\\'();,/{}|\\":<>\?]/g.test(name)) {
+      addMessage({
+        title: $_("messages.project_name_invalid.title"),
+        message: $_("messages.project_name_invalid.message"),
+        type: "error",
+        duration: 5000,
+      });
+      return;
+    }
+    if (newProject) {
+      project = createNewProject();
+    }
     project.name = name;
     project.description = description;
-    registerModification(project.id, "edit project name", ["name"]);
-    registerModification(project.id, "edit project description", [
-      "description",
-    ]);
-    eventDispatcher("done");
+    if (!newProject) {
+      registerModification(project.id, "edit project name", ["name"]);
+      registerModification(project.id, "edit project description", [
+        "description",
+      ]);
+    }
+
+    eventDispatcher("done", project);
   }
+  let newProject = project === undefined;
   let name = "";
   let description = "";
   let projectNameInputElement;
@@ -34,7 +67,9 @@
 <div class="outside">
   <div class="inside">
     <!-- <form on:submit|preventDefault={createNewProject}> -->
-    <div class="title">{$_("edit_project_info")}</div>
+    <div class="title">
+      {newProject ? $_("create_project") : $_("edit_project_info")}
+    </div>
     <label for="name">{$_("project_name")}</label>
     <input
       type="text"

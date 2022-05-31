@@ -39,7 +39,6 @@
           buttons: [$_("yes"), $_("cancel")],
           cancelID: 1,
         });
-        console.log(res);
         if (res.response === 0) {
           deleteTask(task.id);
         }
@@ -57,7 +56,6 @@
           buttons: [$_("yes"), $_("cancel")],
           cancelID: 1,
         });
-        console.log(res);
         if (res.response === 0) {
           deleteTask(task.id);
         }
@@ -81,12 +79,12 @@
 </div>
 
 <style>
-  .task {
+  /* .task {
     padding-top: 0.25rem;
     min-width: fit-content;
     user-select: none;
   }
   .task:first-child {
     padding-top: 0;
-  }
+  } */
 </style>

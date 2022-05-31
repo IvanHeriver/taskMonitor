@@ -3,16 +3,13 @@
   import Duration from "../Duration/Duration.svelte";
   import DateView from "./DateView.svelte";
   import type { ITimerLog } from "../../types";
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher } from "svelte";
   const eventDispatcher = createEventDispatcher();
 
   import { draggedDurationItem } from "../../stores";
   import { uuid } from "../../utils";
 
   export let timerLogs: Array<ITimerLog>;
-  // function deleteHistoryItem(id) {
-  //   // $project.timerHistory = $project.timerHistory.filter((t) => t.id !== id);
-  // }
 </script>
 
 <svelte:window
@@ -22,37 +19,43 @@
 />
 
 <div class="container">
-  {#each timerLogs as t, i (t.id)}
-    <div
-      class="history-item"
-      on:pointerdown={() => {
-        $draggedDurationItem = {
-          id: uuid(),
-          duration: t.duration,
-          date: t.endDateTime,
-        };
-      }}
-    >
-      <div class="handle"><span class="maticons">drag_indicator</span></div>
-      <div class="start-date">
-        <span>{$_("timer.start")}: </span><DateView date={t.startDateTime} />
-      </div>
-      <div class="end-date">
-        <span>{$_("timer.end")}: </span><DateView date={t.endDateTime} />
-      </div>
-      <div class="duration">
-        <Duration duration={t.duration} />
-      </div>
-      <div class="actions">
-        <button
-          class="icon danger"
-          on:click={() => eventDispatcher("delete", t.id)}
+  <ul>
+    {#each timerLogs as t, i (t.id)}
+      <li>
+        <div
+          class="history-item"
+          on:pointerdown={() => {
+            $draggedDurationItem = {
+              id: uuid(),
+              duration: t.duration,
+              date: t.endDateTime,
+            };
+          }}
         >
-          <span class="maticons">delete_outline</span>
-        </button>
-      </div>
-    </div>
-  {/each}
+          <div class="handle"><span class="maticons">drag_indicator</span></div>
+          <div class="start-date">
+            <span>{$_("timer.start")}: </span><DateView
+              date={t.startDateTime}
+            />
+          </div>
+          <div class="end-date">
+            <span>{$_("timer.end")}: </span><DateView date={t.endDateTime} />
+          </div>
+          <div class="duration">
+            <Duration duration={t.duration} />
+          </div>
+          <div class="actions">
+            <button
+              class="icon danger"
+              on:click={() => eventDispatcher("delete", t.id)}
+            >
+              <span class="maticons">delete_outline</span>
+            </button>
+          </div>
+        </div>
+      </li>
+    {/each}
+  </ul>
 </div>
 
 <style>
@@ -63,6 +66,21 @@
     user-select: none;
     cursor: grab;
   }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
   .handle {
     display: flex;
     grid-area: drag;
@@ -81,15 +99,14 @@
       "drag end duration actions";
     column-gap: 0.5rem;
     align-items: center;
-    /* justify-items: center; */
     outline: 1px solid var(--bg-light);
     outline-offset: -1px;
-    margin-top: 0.25rem;
-    padding-left: 0.25rem;
+    padding: 0.125rem 0.25rem;
   }
-  .history-item:first-child {
-    margin-top: 0;
+  .history-item:hover {
+    background-color: var(--bg-light);
   }
+
   .start-date,
   .end-date {
     color: var(--fg-xlight);

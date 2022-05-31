@@ -18,6 +18,33 @@
 </script>
 
 <div class="container">
+  <div
+    class="existing-durations"
+    class:target={$draggedDurationItem !== null}
+    on:pointerup={() => {
+      if ($draggedDurationItem !== null) {
+        durationItems = [$draggedDurationItem, ...durationItems];
+      }
+    }}
+  >
+    <div class="label">
+      {$_("duration.durations")}:
+      <p>({$_("duration.drag_and_drop_timer_log")})</p>
+    </div>
+    {#each durationItems as durationItem, i (durationItem.id)}
+      <DurationItem
+        bind:durationItem
+        on:delete={() => {
+          durationItems = [
+            ...durationItems.slice(0, i),
+            ...durationItems.slice(i + 1),
+          ];
+        }}
+      />
+    {:else}
+      <p>{$_("duration.no_durations")}</p>
+    {/each}
+  </div>
   <div class="new-duration">
     <label for="new-duration-input-widget">{$_("duration.add_duration")}</label>
     <div class="simple" id="new-duration-input-widget">
@@ -72,34 +99,6 @@
     {/if}
   </div>
   <!-- {/if} -->
-  <div
-    class="existing-durations"
-    class:target={$draggedDurationItem !== null}
-    on:pointerup={() => {
-      console.log("UP HERE");
-      if ($draggedDurationItem !== null) {
-        durationItems = [$draggedDurationItem, ...durationItems];
-      }
-    }}
-  >
-    <div class="label">
-      {$_("duration.durations")}:
-      <p>({$_("duration.drag_and_drop_timer_log")})</p>
-    </div>
-    {#each durationItems as durationItem, i (durationItem.id)}
-      <DurationItem
-        bind:durationItem
-        on:delete={() => {
-          durationItems = [
-            ...durationItems.slice(0, i),
-            ...durationItems.slice(i + 1),
-          ];
-        }}
-      />
-    {:else}
-      <p>{$_("duration.no_durations")}</p>
-    {/each}
-  </div>
 </div>
 
 <style>
@@ -122,6 +121,7 @@
     overflow-y: auto;
     outline: 1px solid var(--bg-xlight);
     min-height: 5rem;
+    background-color: var(--bg-input);
   }
   .existing-durations.target {
     background-color: var(--bg-light);
@@ -190,6 +190,7 @@
   .timer-log .left {
     display: flex;
     align-items: center;
+    padding-left: 0.25rem;
   }
   .timer-log .date {
     color: var(--fg-light);

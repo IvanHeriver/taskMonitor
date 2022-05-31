@@ -3,6 +3,7 @@
     icon_code: string;
     text: string;
     action: Function;
+    primary?: boolean;
   }
   export let icon_code: string;
   export let title: string;
@@ -20,6 +21,7 @@
           on:click={() => {
             action.action();
           }}
+          class:primary={action.primary === true}
         >
           <span class="maticons">{action.icon_code}</span><span
             >{action.text}</span
@@ -41,7 +43,8 @@
     overflow: hidden;
   }
   .content {
-    padding: 0.25rem;
+    padding: 0.5rem;
+    /* padding-top: 0.5rem; */
     position: absolute;
     top: 1.5rem;
     left: 0;
@@ -54,7 +57,6 @@
     justify-content: space-between;
     align-items: stretch;
     background-color: var(--bg-light);
-    /* height:  */
   }
   .header * {
     white-space: nowrap;
@@ -78,6 +80,9 @@
     justify-content: center;
     align-items: center;
     background-color: transparent;
+  }
+  .actions > button.primary {
+    color: var(--fg-strong);
   }
   .actions > button:hover {
     color: var(--fg-xstrong);
