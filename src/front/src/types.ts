@@ -124,5 +124,6 @@ export  interface IProjectLayout {
     orientation?: "vertical" | "horizontal";
     elements?: Array<IProjectLayout>;
     element?: string,
-    size?: number
+    size?: number,
+    minSize?: number
   }

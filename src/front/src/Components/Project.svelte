@@ -30,7 +30,7 @@
           {
             orientation: "vertical",
             elements: [
-              { element: "timer" },
+              { element: "timer", minSize: 200 },
               { element: "todos" },
               { element: "tags" },
             ],

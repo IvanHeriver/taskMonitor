@@ -19,6 +19,10 @@
       mode: layout.orientation,
     });
     layout.elements.forEach((e, i) => {
+      if (e.minSize !== undefined) {
+        console.log(e.minSize);
+        resizer.configure({ index: i, min: e.minSize });
+      }
       if (e.size !== undefined) {
         resizer.resize([{ index: i, size: e.size }]);
       }
