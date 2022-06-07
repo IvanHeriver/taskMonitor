@@ -160,6 +160,7 @@
             },
           },
         ]}
+        main={false}
       >
         <TimerLog
           bind:timerLogs={project.timerLogs}

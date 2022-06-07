@@ -15,8 +15,8 @@
   --fg-xstrong: hsl(200, 100%, 50%);
   --fg-strong: hsl(200, 50%, 50%);
   --fg: hsl(200, 5%, 10%);
-  --fg-light: hsl(200, 2.5%, 30%);
-  --fg-xlight: hsl(200, 0%, 45%);
+  --fg-light: hsl(200, 5%, 20%);
+  --fg-xlight: hsl(200, 2.5%, 40%);
   --fg-xxlight: hsl(200, 0%, 60%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);
@@ -39,8 +39,8 @@
   --fg-xstrong: hsl(200, 100%, 50%);
   --fg-strong: hsl(200, 75%, 75%);
   --fg: hsl(200, 5%, 90%);
-  --fg-light: hsl(200, 2.5%, 70%);
-  --fg-xlight: hsl(200, 0%, 55%);
+  --fg-light: hsl(200, 5%, 80%);
+  --fg-xlight: hsl(200, 2.5%, 60%);
   --fg-xxlight: hsl(200, 0%, 40%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);

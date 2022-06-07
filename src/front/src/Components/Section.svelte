@@ -8,11 +8,16 @@
   export let icon_code: string;
   export let title: string;
   export let actions: Array<ItitleBarAction>;
+  export let main: boolean = true;
+  export let padding: { value: number; unit: string } = {
+    value: 0.5,
+    unit: "rem",
+  };
 </script>
 
 <div class="container">
   <div class="header">
-    <div class="title">
+    <div class="title" class:main>
       <span class="maticons">{icon_code}</span><span>{title}</span>
     </div>
     <div class="actions">
@@ -31,7 +36,7 @@
     </div>
   </div>
 
-  <div class="content">
+  <div class="content" style={`--padding: ${padding.value}${padding.unit}`}>
     <slot />
   </div>
 </div>
@@ -43,7 +48,7 @@
     overflow: hidden;
   }
   .content {
-    padding: 0.5rem;
+    padding: var(--padding, 0.5rem);
     /* padding-top: 0.5rem; */
     position: absolute;
     top: 1.5rem;
@@ -57,16 +62,21 @@
     justify-content: space-between;
     align-items: stretch;
     background-color: var(--bg-light);
+    height: 1.5rem;
   }
   .header * {
     white-space: nowrap;
   }
   .title {
     padding: 0 0.25rem;
-    font-weight: 600;
+    color: var(--fg-light);
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .title.main {
+    font-weight: 600;
+    color: var(--fg);
   }
   .title > .maticons {
     font-size: 16px;
