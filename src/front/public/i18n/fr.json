@@ -22,6 +22,7 @@
     "delete_task": "Voulez-vous vraiment supprimer cette tâche?",
     "delete_tag": "Voulez-vous vraiment supprimer cette étiquette?",
     "delete_duration": "Voulez-vous vraiment supprimer cette durée?",
+    "clear_history": "Voulez-vous vraiment supprimer l'historique du chronomètre?",
     "project_name_invalid": {
       "title": "Caractères non valides",
       "message": "Vous ne pouvez pas utiliser de caractères spéciaux dans le nom du projet."
@@ -65,7 +66,8 @@
     "start": "Début",
     "end": "Fin",
     "timer": "Chronomètre",
-    "history": "Historique du chronomètre"
+    "history": "Historique du chronomètre",
+    "clear_history": "Effacer l'historique"
   },
   "tasks": {
     "tasks": "Tâche",

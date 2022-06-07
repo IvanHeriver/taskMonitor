@@ -139,17 +139,38 @@
         </div>
       </div>
     </div>
-    <div class="history-label">{$_("timer.history")}:</div>
+    <!-- <div class="history-label">{$_("timer.history")}:</div> -->
     <div class="history">
-      <TimerLog
-        bind:timerLogs={project.timerLogs}
-        on:delete={(event) => {
-          const timerLogId = event.detail;
-          project.timerLogs = project.timerLogs.filter(
-            (t) => t.id !== timerLogId
-          );
-        }}
-      />
+      <Section
+        icon_code="history"
+        title={$_("timer.history")}
+        actions={[
+          {
+            icon_code: "delete_outline",
+            text: $_("timer.clear_history"),
+            action: async () => {
+              const res = await window.electronAPI.askQuestion({
+                message: $_("messages.clear_history"),
+                buttons: [$_("yes"), $_("cancel")],
+                cancelID: 1,
+              });
+              if (res.response === 0) {
+                project.timerLogs = [];
+              }
+            },
+          },
+        ]}
+      >
+        <TimerLog
+          bind:timerLogs={project.timerLogs}
+          on:delete={(event) => {
+            const timerLogId = event.detail;
+            project.timerLogs = project.timerLogs.filter(
+              (t) => t.id !== timerLogId
+            );
+          }}
+        />
+      </Section>
     </div>
   </Section>
 </div>
@@ -194,7 +215,7 @@
     display: flex;
     justify-content: center;
   }
-  .history-label {
+  /* .history-label {
     padding: 0.5rem;
     border-top: 1px solid var(--fg-xxlight);
     position: absolute;
@@ -203,7 +224,7 @@
     right: 0;
     bottom: 0;
     color: var(--fg);
-  }
+  } */
   .history {
     padding: 0.25rem;
     position: absolute;

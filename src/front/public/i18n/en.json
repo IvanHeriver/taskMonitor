@@ -22,6 +22,7 @@
     "delete_task": "Are you sure you wan to delete the task?",
     "delete_tag": "Are you sure you want to delete the tag?",
     "delete_duration": "Are you sure you want to delete the duration?",
+    "clear_history": "Are you sure you want to clear the stopwatch history?",
     "project_name_invalid": {
       "title": "Invalid characters",
       "message": "You cannot use special character for the project name."
@@ -65,7 +66,8 @@
     "start": "Start",
     "end": "End",
     "timer": "Stopwatch",
-    "history": "Stopwatch history"
+    "history": "Stopwatch history",
+    "clear_history": "Clear history"
   },
   "tasks": {
     "tasks": "Tasks",
