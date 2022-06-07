@@ -17,7 +17,7 @@
     });
   }
 
-  const headerActions = [
+  $: headerActions = [
     {
       icon_code: "add",
       text: $_("todos.add_something_todo"),

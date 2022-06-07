@@ -8,7 +8,7 @@
 
   export let project;
 
-  const headerActions = [
+  $: headerActions = [
     {
       icon_code: "add",
       text: $_("tasks.add_task"),

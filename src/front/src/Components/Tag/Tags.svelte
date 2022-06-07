@@ -15,7 +15,7 @@
     });
   }
 
-  const headerActions = [
+  $: headerActions = [
     {
       icon_code: "add",
       text: $_("tags.add_tag"),
