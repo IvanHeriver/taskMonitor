@@ -17,7 +17,7 @@
   --fg: hsl(200, 5%, 10%);
   --fg-light: hsl(200, 5%, 20%);
   --fg-xlight: hsl(200, 2.5%, 40%);
-  --fg-xxlight: hsl(200, 0%, 60%);
+  --fg-xxlight: hsl(200, 0%, 50%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);
   --bg-info: hsl(200, 100%, 75%);
@@ -41,7 +41,7 @@
   --fg: hsl(200, 5%, 90%);
   --fg-light: hsl(200, 5%, 80%);
   --fg-xlight: hsl(200, 2.5%, 60%);
-  --fg-xxlight: hsl(200, 0%, 40%);
+  --fg-xxlight: hsl(200, 0%, 50%);
 
   --bg-overlay: hsl(0, 0%, 0%, 0.75);
   --bg-info: hsl(200, 100%, 25%);

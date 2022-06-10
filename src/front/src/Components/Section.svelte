@@ -61,7 +61,7 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    background-color: var(--bg-light);
+    background-color: var(--bg-xxlight);
     height: 1.5rem;
   }
   .header * {
