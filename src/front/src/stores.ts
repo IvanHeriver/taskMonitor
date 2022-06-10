@@ -83,7 +83,7 @@ export function processLoadedProject(loadedProject: IProject): IProject {
         return task
       })
     }
-    loadedProject.ui.statPanelOpen = false
+    loadedProject.ui.statPanelOpen = true
     return loadedProject;
   }
 
