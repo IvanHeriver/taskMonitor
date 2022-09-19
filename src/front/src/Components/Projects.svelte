@@ -101,6 +101,16 @@
       $currentProjectId = $projects[0].id;
     }
   }
+
+  function createHoverText(p) {
+    if (p.filePath === "") {
+      return "Temporary file";
+    }
+    if (p.state === "saved") {
+      return `${p.filePath} - saved`;
+    }
+    return `${p.filePath} - unsaved changes`;
+  }
 </script>
 
 {#if newProject}
@@ -134,13 +144,22 @@
         on:click={() => {
           $currentProjectId = p.id;
         }}
-        title={p.filePath}
+        title={createHoverText(p)}
       >
         <span class="project-name">
           {p.name}
         </span>
         <span class="project-state">
-          {p.state === "saved" ? "" : "*"}
+          {#if p.filePath !== ""}
+            {#if p.state === "saved"}
+              <span class="icon-saved" />
+            {:else}
+              <span class="icon-unsaved" />
+            {/if}
+          {:else}
+            <span class="icon-no_file" />
+          {/if}
+          <!-- {p.state === "saved" ? "" : "*"} -->
         </span>
         <button
           class="icon close danger"
@@ -233,8 +252,24 @@
     row-gap: 1rem;
   }
 
+  button.title {
+    position: relative;
+    padding-right: 1.5rem;
+  }
+  button.title:hover > button.close {
+    display: flex;
+  }
+
+  button.title:hover > .project-state {
+    display: none;
+  }
+
   button.close {
-    margin-left: 0.5rem;
+    /* margin-left: 0.5rem; */
+    position: absolute;
+    inset: 0 0 0 auto;
+    display: none;
+    align-items: center;
   }
   button.close > span {
     font-size: 1.2rem;
@@ -254,10 +289,24 @@
   .content {
     position: relative;
   }
-  /* button {
-    border: none;
-  } */
   .selected {
     background-color: var(--bg-light);
+  }
+
+  .project-state {
+    font-size: 1.2rem;
+    position: absolute;
+    inset: 0 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+  .icon-saved {
+    color: var(--green);
+  }
+  .icon-unsaved {
+    color: var(--red);
+  }
+  .icon-no_file {
+    color: var(--orange);
   }
 </style>
