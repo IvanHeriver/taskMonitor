@@ -1,0 +1,8 @@
+
+.icon-restore:before { content: '\e800'; } /* '' */
+.icon-saved:before { content: '\e801'; } /* '' */
+.icon-unsaved:before { content: '\e802'; } /* '' */
+.icon-close:before { content: '\e803'; } /* '' */
+.icon-maximize:before { content: '\e804'; } /* '' */
+.icon-minimize:before { content: '\e805'; } /* '' */
+.icon-no_file:before { content: '\e806'; } /* '' */
