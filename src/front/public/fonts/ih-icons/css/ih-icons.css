@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'ih-icons';
-  src: url('../font/ih-icons.eot?63856879');
-  src: url('../font/ih-icons.eot?63856879#iefix') format('embedded-opentype'),
-       url('../font/ih-icons.woff2?63856879') format('woff2'),
-       url('../font/ih-icons.woff?63856879') format('woff'),
-       url('../font/ih-icons.ttf?63856879') format('truetype'),
-       url('../font/ih-icons.svg?63856879#ih-icons') format('svg');
+  src: url('../font/ih-icons.eot?91580708');
+  src: url('../font/ih-icons.eot?91580708#iefix') format('embedded-opentype'),
+       url('../font/ih-icons.woff2?91580708') format('woff2'),
+       url('../font/ih-icons.woff?91580708') format('woff'),
+       url('../font/ih-icons.ttf?91580708') format('truetype'),
+       url('../font/ih-icons.svg?91580708#ih-icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'ih-icons';
-    src: url('../font/ih-icons.svg?63856879#ih-icons') format('svg');
+    src: url('../font/ih-icons.svg?91580708#ih-icons') format('svg');
   }
 }
 */
@@ -54,10 +54,13 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-restore:before { content: '\e800'; } /* '' */
-.icon-saved:before { content: '\e801'; } /* '' */
-.icon-unsaved:before { content: '\e802'; } /* '' */
-.icon-close:before { content: '\e803'; } /* '' */
-.icon-maximize:before { content: '\e804'; } /* '' */
-.icon-minimize:before { content: '\e805'; } /* '' */
-.icon-no_file:before { content: '\e806'; } /* '' */
+.icon-saved:before { content: '\e800'; } /* '' */
+.icon-saved_file:before { content: '\e801'; } /* '' */
+.icon-temp_file:before { content: '\e802'; } /* '' */
+.icon-unsaved:before { content: '\e803'; } /* '' */
+.icon-unsaved_file:before { content: '\e804'; } /* '' */
+.icon-close:before { content: '\e805'; } /* '' */
+.icon-maximize:before { content: '\e806'; } /* '' */
+.icon-minimize:before { content: '\e807'; } /* '' */
+.icon-no_file:before { content: '\e808'; } /* '' */
+.icon-restore:before { content: '\e809'; } /* '' */

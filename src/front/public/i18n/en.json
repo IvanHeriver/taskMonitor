@@ -54,6 +54,9 @@
   "project_description": "Project description",
   "write_project_description_here": "Write a project description here",
   "edit_project_info": "Edit project information",
+  "saved": "Saved",
+  "unsaved": "Unsaved changes",
+  "temp_file": "Temporary file",
   "todos": {
     "add_something_todo": "Add something to do",
     "sort_by_status": "Sort status",

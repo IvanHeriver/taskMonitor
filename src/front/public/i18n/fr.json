@@ -54,6 +54,9 @@
   "project_description": "Description du projet",
   "write_project_description_here": "Ecrivez la description du projet ici",
   "edit_project_info": "Editer les informations du projet",
+  "saved": "Sauvegardé",
+  "unsaved": "Modifications non sauvegardées",
+  "temp_file": "Fichier temporaire",
   "todos": {
     "add_something_todo": "Ajouter une chose à faire",
     "sort_by_status": "Trier par statue",

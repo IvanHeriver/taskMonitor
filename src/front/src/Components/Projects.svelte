@@ -104,12 +104,12 @@
 
   function createHoverText(p) {
     if (p.filePath === "") {
-      return "Temporary file";
+      return $_("temp_file");
     }
     if (p.state === "saved") {
-      return `${p.filePath} - saved`;
+      return `${p.filePath} - ${$_("saved")}`;
     }
-    return `${p.filePath} - unsaved changes`;
+    return `${p.filePath} - ${$_("unsaved")}`;
   }
 </script>
 
@@ -152,12 +152,12 @@
         <span class="project-state">
           {#if p.filePath !== ""}
             {#if p.state === "saved"}
-              <span class="icon-saved" />
+              <span class="icon-saved_file" />
             {:else}
-              <span class="icon-unsaved" />
+              <span class="icon-unsaved_file" />
             {/if}
           {:else}
-            <span class="icon-no_file" />
+            <span class="icon-temp_file" />
           {/if}
           <!-- {p.state === "saved" ? "" : "*"} -->
         </span>
@@ -294,19 +294,19 @@
   }
 
   .project-state {
-    font-size: 1.2rem;
+    font-size: 1rem;
     position: absolute;
     inset: 0 0 0 auto;
     display: flex;
     align-items: center;
   }
-  .icon-saved {
+  .icon-saved_file {
     color: var(--green);
   }
-  .icon-unsaved {
+  .icon-unsaved_file {
     color: var(--red);
   }
-  .icon-no_file {
+  .icon-temp_file {
     color: var(--orange);
   }
 </style>
