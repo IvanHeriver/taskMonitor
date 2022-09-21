@@ -88,6 +88,11 @@ function createMainWindow() {
     if (isDev) window.webContents.openDevTools();
   });
 
+  window.on("close", async (e) => {
+    window.webContents.send("exit");
+    e.preventDefault();
+  });
+
   return window;
 }
 
@@ -110,7 +115,18 @@ app.on("activate", () => {
 app.on("ready", () => {
   // app.allowRendererProcessReuse = true;
   mainWindow = createMainWindow();
-  mainMenu = setupMainMenu(mainWindow, isDev, isMac, app.name, (key)=>Math.random().toString(), "en", [{id: "fr", label: "Français"}, {id: "en", label: "English"}]);
+  mainMenu = setupMainMenu(
+    mainWindow,
+    isDev,
+    isMac,
+    app.name,
+    (key) => Math.random().toString(),
+    "en",
+    [
+      { id: "fr", label: "Français" },
+      { id: "en", label: "English" },
+    ]
+  );
   setupIPC(mainWindow, mainMenu, app, autoUpdater, isDev, isMac);
 });
 

@@ -2,6 +2,7 @@ import { dialog } from "electron";
 import fs from "fs";
 import path from "path";
 import type { IProject } from "../../front/src/types";
+const { watch } = require("fs/promises");
 
 export async function saveProjectToFile(
   browserWindow,
@@ -10,7 +11,10 @@ export async function saveProjectToFile(
   let filePath = project.filePath;
   let canceled = false;
   if (filePath === "") {
-    const res = await dialog.showSaveDialog(browserWindow, {filters:[{name: "Tatimo file", extensions: ["ttm"]}], defaultPath: project.name});
+    const res = await dialog.showSaveDialog(browserWindow, {
+      filters: [{ name: "Tatimo file", extensions: ["ttm"] }],
+      defaultPath: project.name,
+    });
     canceled = res.canceled;
     filePath = res.filePath;
   }
@@ -33,14 +37,19 @@ export async function saveProject(
 }
 
 export async function openProjectFromFile(
-  browserWindow
+  browserWindow,
+  filePath = ""
 ): Promise<{ canceled: boolean; success: boolean; project: IProject }> {
-  let filePath;
-  let canceled = false;
-  const res = await dialog.showOpenDialog(browserWindow);
-  canceled = res.canceled;
-  filePath = res.filePaths[0];
-  if (canceled) return { canceled: false, success: false, project: null };
+  // let filePath;
+  if (filePath === "") {
+    let canceled = false;
+    const res = await dialog.showOpenDialog(browserWindow, {
+      filters: [{ name: "Tatimo file", extensions: ["ttm"] }],
+    });
+    canceled = res.canceled;
+    filePath = res.filePaths[0];
+    if (canceled) return { canceled: false, success: false, project: null };
+  }
   const response = await openProject(filePath);
   if (response.success) response.project.filePath = filePath;
   return { canceled: false, ...response };
@@ -56,10 +65,25 @@ export async function openProject(
   });
 }
 
+export function watchFile(filePath, callbackOnChange) {
+  const ac = new AbortController();
+  const { signal } = ac;
+
+  return {
+    start: async () => {
+      const watcher = watch(filePath, { signal });
+      for await (const event of watcher) {
+        callbackOnChange(event);
+      }
+    },
+    stop: () => ac.abort(),
+  };
+}
+
 export function saveSession(
   projects: Array<IProject>,
   currentProjectId: string,
-  userDataPath: string,
+  userDataPath: string
 ) {
   fs.writeFileSync(
     path.join(userDataPath, "last_session"),

@@ -28,9 +28,9 @@ export interface ITask {
 }
 
 export interface IDurationItem {
-  id: string,
-  date: string,
-  duration: number
+  id: string;
+  date: string;
+  duration: number;
 }
 
 export interface ITag {
@@ -101,6 +101,8 @@ declare global {
       checkAndUpdateApp: Function;
       onUpdateAvailable: Function;
       onUpdateDownloaded: Function;
+      onExitRequired: Function;
+      exit: Function;
       askQuestion: (config: {
         message: string;
         buttons: Array<string>;
@@ -120,10 +122,10 @@ export interface IMenuItem {
   submenu?: Array<IMenuItem>;
 }
 
-export  interface IProjectLayout {
-    orientation?: "vertical" | "horizontal";
-    elements?: Array<IProjectLayout>;
-    element?: string,
-    size?: number,
-    minSize?: number
-  }
+export interface IProjectLayout {
+  orientation?: "vertical" | "horizontal";
+  elements?: Array<IProjectLayout>;
+  element?: string;
+  size?: number;
+  minSize?: number;
+}

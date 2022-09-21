@@ -18,13 +18,13 @@
   // let currentProject: tmProject = null;
 
   onMount(() => {
-    window.electronAPI.onLoadProject((loadedProjectInfo) => {
-      if (!loadedProjectInfo.success) {
-        console.warn("The file was not loaded");
-        return;
-      }
-      onLoadProject(loadedProjectInfo.project);
-    });
+    // window.electronAPI.onLoadProject((loadedProjectInfo) => {
+    //   if (!loadedProjectInfo.success) {
+    //     console.warn("The file was not loaded");
+    //     return;
+    //   }
+    //   onLoadProject(loadedProjectInfo.project);
+    // });
     window.electronAPI.onSaveProject(async () => {
       const currentProject = $projects.find((p) => p.id === $currentProjectId);
       if (currentProject) {

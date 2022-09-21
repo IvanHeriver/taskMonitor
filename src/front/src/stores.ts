@@ -1,6 +1,6 @@
 import { Writable, writable, get } from "svelte/store";
 import type { IDurationItem, IProject, ITag, ITask, ITimer } from "./types";
-import {uuid} from "./utils"
+import { uuid } from "./utils";
 
 // export const projects: Writable<Array<IProject>> = writable([]);
 function createProjectsStore() {
@@ -63,59 +63,66 @@ export function saveSession() {
 }
 
 export function processLoadedProject(loadedProject: IProject): IProject {
-    if (!("version" in loadedProject)) {
-      loadedProject.version = 0;
-    }
-    if (loadedProject.version === 0) {
-      loadedProject.todos = [];
-      loadedProject.ui.newTodoOpen = false
-      loadedProject.ui.todoPanelOpen = true
-      loadedProject.version = 1
-    }
-    if (loadedProject.version === 1) {
-      loadedProject.tasks = loadedProject.tasks.map(task=>{
-        if (Array.isArray(task.duration)) {
-          console.warn("Already done", task.duration)
-        } else {
-          task.duration = [{id: uuid(), date: new Date().toISOString(), duration: task.duration}]
-        }
-        loadedProject.version = 2
-        return task
-      })
-    }
-    loadedProject.ui.statPanelOpen = true
-    return loadedProject;
+  if (!("version" in loadedProject)) {
+    loadedProject.version = 0;
   }
+  if (loadedProject.version === 0) {
+    loadedProject.todos = [];
+    loadedProject.ui.newTodoOpen = false;
+    loadedProject.ui.todoPanelOpen = true;
+    loadedProject.version = 1;
+  }
+  if (loadedProject.version === 1) {
+    loadedProject.tasks = loadedProject.tasks.map((task) => {
+      if (Array.isArray(task.duration)) {
+        console.warn("Already done", task.duration);
+      } else {
+        task.duration = [
+          {
+            id: uuid(),
+            date: new Date().toISOString(),
+            duration: task.duration,
+          },
+        ];
+      }
+      loadedProject.version = 2;
+      return task;
+    });
+  }
+  console.log(loadedProject);
+  loadedProject.ui.statPanelOpen = true;
+  return loadedProject;
+}
 
 export function createNewProject(): IProject {
-   const newProject: IProject = {
-        version: 2,
-        id: uuid(),
-        name: "untitle",
-        description: "",
-        filePath: "",
-        state: "unsaved",
-        tasks: [],
-        tags: [],
-        timerLogs: [],
-        todos: [],
-        created: new Date().toISOString(),
-        updated: new Date().toISOString(),
-        stats: {
-          allocatedDuration: null,
-        },
-        ui: {
-          newTagOpen: false,
-          newTaskOpen: false,
-          newTodoOpen: false,
-          taskPanelOpen: true,
-          tagPanelOpen: true,
-          timerPanelOpen: true,
-          statPanelOpen: false,
-          todoPanelOpen: true,
-        },
-      };
-    return newProject
+  const newProject: IProject = {
+    version: 2,
+    id: uuid(),
+    name: "untitle",
+    description: "",
+    filePath: "",
+    state: "unsaved",
+    tasks: [],
+    tags: [],
+    timerLogs: [],
+    todos: [],
+    created: new Date().toISOString(),
+    updated: new Date().toISOString(),
+    stats: {
+      allocatedDuration: null,
+    },
+    ui: {
+      newTagOpen: false,
+      newTaskOpen: false,
+      newTodoOpen: false,
+      taskPanelOpen: true,
+      tagPanelOpen: true,
+      timerPanelOpen: true,
+      statPanelOpen: false,
+      todoPanelOpen: true,
+    },
+  };
+  return newProject;
 }
 
 export const timers: Writable<{ [key: string]: ITimer }> = writable({});
@@ -126,7 +133,6 @@ export const question: Writable<{
   answer: Function;
 }> = writable(null);
 
-
 export const message: Writable<{
   title: string;
   message: string;
@@ -134,10 +140,9 @@ export const message: Writable<{
   type: string;
 }> = writable(null);
 
+export const overlay: Writable<boolean> = writable(false);
 
-export const overlay: Writable<boolean> = writable(false)
-
-export const draggedDurationItem: Writable<IDurationItem> = writable(null)
+export const draggedDurationItem: Writable<IDurationItem> = writable(null);
 
 export interface IMessage {
   title: string;
@@ -146,13 +151,15 @@ export interface IMessage {
   type: "info" | "warning" | "error";
   id?: string;
 }
-export const messages: Writable<Array<IMessage>> = writable([])
+export const messages: Writable<Array<IMessage>> = writable([]);
 export function addMessage(message: IMessage) {
-  message.id = uuid()
+  message.id = uuid();
   if (message.duration > 0) {
-    setTimeout(()=>{
-      messages.update(messages=>messages.filter(m=>m.id!==message.id))
-    }, message.duration)
+    setTimeout(() => {
+      messages.update((messages) =>
+        messages.filter((m) => m.id !== message.id)
+      );
+    }, message.duration);
   }
-  messages.update(messages=>[...messages, message])
+  messages.update((messages) => [...messages, message]);
 }
